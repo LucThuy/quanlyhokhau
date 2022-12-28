@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: -black-5;" styleClass="sub-stage" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerFormDetailHoKhau">
+	<bottom>
+		<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="bottom" BorderPane.alignment="CENTER">
+			<children>
+				<Button mnemonicParsing="false" onAction="#addHoKhauNhanKhau" style="-fx-pref-width: 130;" text="THÊM THÀNH VIÊN" />
+				<Button fx:id="buttonLuuThayDoi" mnemonicParsing="false" onAction="#editHoKhau" text="LƯU THAY ĐỔI" />
+				<Button mnemonicParsing="false" onAction="#deleteHoKhau" text="XÓA" />
+				<Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="HỦY BỎ" />
+			</children>
+		</HBox>
+	</bottom>
+	<top>
+		<HBox alignment="CENTER" styleClass="top">
+			<children>
+				<Label styleClass="title" text="CHI TIẾT HỘ KHẨU" BorderPane.alignment="CENTER">
+					<HBox.margin>
+						<Insets bottom="20.0" top="20.0" />
+					</HBox.margin>
+				</Label>
+			</children>
+			<BorderPane.margin>
+				<Insets />
+			</BorderPane.margin>
+		</HBox>
+	</top>
+	<center>
+		<GridPane fx:id="gridpane">
+			<columnConstraints>
+				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+					<center>
+						<GridPane fx:id="gridpane" maxWidth="-Infinity" prefWidth="960.0" styleClass="center" BorderPane.alignment="CENTER">
+							<columnConstraints>
+								<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" />
+								<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="65.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="-Infinity" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+								<Label text="HỌ TÊN CHỦ HỘ" />
+								<Label text="ĐỊA CHỈ" GridPane.rowIndex="2" />
+								<TextField fx:id="textfieldHoTenChuHo" scaleShape="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+								<TextField fx:id="textfieldDiaChi" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+								<Button fx:id="buttonTimKiem" mnemonicParsing="false" onAction="#searchNhanKhau" styleClass="search-icon" text="OK" GridPane.columnIndex="2" />
+								<TableView fx:id="tableviewNhanKhau" prefHeight="200.0" prefWidth="200.0" styleClass="sub-table-view" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
+									<columns>
+										<TableColumn fx:id="tablecolumnHoTen" prefWidth="75.0" text="HỌ TÊN" />
+										<TableColumn fx:id="tablecolumnNgaySinh" prefWidth="75.0" text="NGÀY SINH" />
+										<TableColumn fx:id="tablecolumnGioiTinh" prefWidth="75.0" text="GIỚI TÍNH" />
+										<TableColumn fx:id="tablecolumnCCCD" prefWidth="75.0" text="CCCD" />
+									</columns>
+									<columnResizePolicy>
+										<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+									</columnResizePolicy>
+								</TableView>
+							</children>
+							<BorderPane.margin>
+								<Insets left="20.0" right="20.0" />
+							</BorderPane.margin>
+						</GridPane>
+					</center>
+					<bottom>
+						<Label fx:id="labelThongBao" styleClass="notice" BorderPane.alignment="CENTER" />
+					</bottom>
+				</BorderPane>
+				<TableView fx:id="tableviewHoKhauNhanKhau" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+					<columns>
+						<TableColumn fx:id="tablecolumnHoTenHKNKNhanKhau" minWidth="50.0" prefWidth="75.0" text="HỌ TÊN THÀNH VIÊN" />
+						<TableColumn fx:id="tablecolumnNgaySinhHKNKNhanKhau" minWidth="0.0" prefWidth="75.0" text="NGÀY SINH" />
+						<TableColumn fx:id="tablecolumnGioiTinhHKNKNhanKhau" minWidth="0.0" prefWidth="75.0" text="GIỚI TÍNH" />
+						<TableColumn fx:id="tablecolumnCCCDHKNKNhanKhau" minWidth="0.0" prefWidth="75.0" text="CCCD" />
+						<TableColumn fx:id="tablecolumnQuanHe" minWidth="50.0" prefWidth="75.0" text="QUAN HỆ VỚI CHỦ HỘ" />
+					</columns>
+					<columnResizePolicy>
+						<TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+					</columnResizePolicy>
+					<styleClass>
+						<String fx:value="bottom" />
+						<String fx:value="sub-table-view" />
+					</styleClass>
+				</TableView>
+			</children>
+		</GridPane>
+	</center>
+</BorderPane>
