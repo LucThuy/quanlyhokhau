@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: -black-5;" styleClass="sub-stage" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerFormDetailNhanKhau">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="60.0" spacing="30.0" styleClass="bottom" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonLuuThayDoi" mnemonicParsing="false" onAction="#editNhanKhau" text="LƯU THAY ĐỔI" />
+            <Button mnemonicParsing="false" onAction="#deleteNhanKhau" text="XÓA" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="HỦY BỎ" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" styleClass="top">
+         <children>
+            <Label styleClass="title" text="CHI TIẾT NHÂN KHẨU" BorderPane.alignment="CENTER">
+               <HBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <GridPane maxWidth="-Infinity" prefWidth="960.0" styleClass="center" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="HỌ TÊN" />
+                  <Label text="NGÀY SINH" GridPane.rowIndex="2" />
+                  <Label text="GIỚI TÍNH" GridPane.rowIndex="3" />
+                  <Label text="CCCD" GridPane.rowIndex="4" />
+                  <TextField fx:id="textfieldHoTen" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="datepickerNgaySinh" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="40.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="NAM">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="togglegroupGioiTinh" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="NỮ" toggleGroup="$togglegroupGioiTinh" />
+                        <RadioButton mnemonicParsing="false" text="KHÁC" toggleGroup="$togglegroupGioiTinh" />
+                     </children>
+                  </HBox>
+                  <Label text="DÂN TỘC" GridPane.rowIndex="6" />
+                  <TextField fx:id="textfieldDanToc" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <Label text="NƠI THƯỜNG TRÚ" GridPane.rowIndex="7" />
+                  <Label text="TRÌNH ĐỘ HỌC VẤN" GridPane.rowIndex="8" />
+                  <TextField fx:id="textfieldTrinhDoHocVan" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label text="TRÌNH ĐỘ NGOẠI NGỮ" GridPane.rowIndex="9" />
+                  <Label text="NGHỀ NGHIỆP" GridPane.rowIndex="10" />
+                  <Label text="TÔN GIÁO" GridPane.rowIndex="11" />
+                  <Label text="QUỐC TỊCH" GridPane.rowIndex="12" />
+                  <Label text="TRÌNH ĐỘ CHUYÊN MÔN" GridPane.rowIndex="13" />
+                  <Label text="GHI CHÚ" GridPane.rowIndex="14" />
+                  <TextField fx:id="textfieldTrinhDoNgoaiNgu" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="textfieldTonGiao" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <TextField fx:id="textfieldQuocTich" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <TextField fx:id="textfieldTrinhDoChuyenMon" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                  <TextField fx:id="textfieldGhiChu" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                  <Label text="BÍ DANH" GridPane.rowIndex="1" />
+                  <TextField fx:id="textfieldBiDanh" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <TextField fx:id="textfieldCCCD" />
+                        <Label text="NGÀY CẤP" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <DatePicker fx:id="datepickerNgayCap" GridPane.columnIndex="2" />
+                        <Label text="NƠI CẤP" GridPane.columnIndex="3">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="textfieldNoiCap" GridPane.columnIndex="4" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="241.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="10.0" prefWidth="16.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.0" minWidth="10.0" prefWidth="94.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="76.0" minWidth="10.0" prefWidth="22.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="91.0" minWidth="10.0" prefWidth="41.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Label text="NGUYÊN QUÁN" GridPane.rowIndex="5" />
+                  <TextField fx:id="textfieldNguyenQuan" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="10">
+                     <children>
+                        <TextField fx:id="textfieldNgheNghiep" />
+                        <Label text="NƠI LÀM VIỆC" textAlignment="RIGHT" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="15.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="textfieldNoiLamViec" GridPane.columnIndex="2" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="353.0" minWidth="10.0" prefWidth="198.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="13.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="203.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <children>
+                        <TextField fx:id="textfieldNoiThuongTru" />
+                        <Label text="NGÀY ĐĂNG KÝ THƯỜNG TRÚ" textAlignment="RIGHT" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <DatePicker fx:id="datepickerNgayDangKyThuongTru" GridPane.columnIndex="2" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="159.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="201.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="54.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </BorderPane.margin>
+            </GridPane>
+         </center>
+         <bottom>
+            <Label fx:id="labelThongBao" styleClass="notice" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </center>
+</BorderPane>
