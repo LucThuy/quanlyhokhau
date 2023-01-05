@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerTamTruTamVang">
+   <center>
+      <TabPane>
+         <tabs>
+            <Tab closable="false" text="TẠM TRÚ">
+               <content>
+                  <TableView fx:id="tableviewTamTru" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="tablecolumnHoTenTamTru" minWidth="150.0" text="HỌ TÊN" />
+                        <TableColumn fx:id="tablecolumnNoiTamTruTamTru" minWidth="0.0" text="NƠI TẠM TRÚ" />
+                        <TableColumn fx:id="tablecolumnNgayHieuLucTamTru" minWidth="50.0" text="TỪ NGÀY" />
+                        <TableColumn fx:id="tablecolumnNgayHetHieuLucTamTru" prefWidth="75.0" text="ĐẾN NGÀY" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </content>
+            </Tab>
+            <Tab closable="false" text="TẠM VẮNG">
+               <content>
+                  <TableView fx:id="tableviewTamVang">
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                     <columns>
+                        <TableColumn fx:id="tablecolumnHoTenTamVang" minWidth="150.0" text="HỌ TÊN" />
+                        <TableColumn fx:id="tablecolumnNoiTamTruTamVang" minWidth="0.0" text="NƠI TẠM TRÚ" />
+                        <TableColumn fx:id="tablecolumnNgayHieuLucTamVang" minWidth="50.0" text="TỪ NGÀY" />
+                        <TableColumn fx:id="tablecolumnNgayHetHieuLucTamVang" prefWidth="75.0" text="ĐẾN NGÀY" />
+                     </columns>
+                  </TableView>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="80.0" spacing="40.0" styleClass="bottom" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonDangKyTamTru" mnemonicParsing="false" onAction="#addTamTru" text="TẠM TRÚ" />
+            <Button fx:id="buttonDangKyTamVang" mnemonicParsing="false" onAction="#addTamVang" text="TẠM VẮNG" />
+            <Button fx:id="buttonChiTiet" mnemonicParsing="false" text="CHI TIẾT" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
