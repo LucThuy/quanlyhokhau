@@ -13,6 +13,7 @@ import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelTamTru;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -380,6 +381,7 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 	public void deleteNhanKhau() {
 		List<ModelHoKhau> listHoKhau = Connector.searchHoKhauByIdNhanKhau(data.getIdNhanKhau());
 		List<ModelHoKhauNhanKhau> listHoKhauNhanKhau = Connector.searchHoKhauNhanKhauByIdNhanKhau(data.getIdNhanKhau());
+		List<ModelTamTru> listTamTru = Connector.searchTamTruByIdNhanKhau(data.getIdNhanKhau());
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.getDialogPane().getStylesheets().add(App.class.getResource("css/main.css").toExternalForm());
@@ -392,6 +394,9 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			for(ModelHoKhauNhanKhau hoKhauNhanKhau: listHoKhauNhanKhau) {
 				contentText += hoKhauNhanKhau.getHoTenNhanKhauHoKhau() + " - " + hoKhauNhanKhau.getDiaChiHoKhau() + " - " + hoKhauNhanKhau.getQuanHe() + "\n";
 			}
+			for(ModelTamTru tamTru: listTamTru) {
+				contentText += tamTru.getHoTenNhanKhau() + "\n";
+			}
 			alert.setContentText(contentText);
 		}
 		Optional<ButtonType> result = alert.showAndWait();
@@ -401,6 +406,9 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			}
 			for(ModelHoKhau hoKhau: listHoKhau) {
 				Connector.deleteHoKhau(hoKhau);
+			}
+			for(ModelTamTru tamTru: listTamTru) {
+				Connector.deleteTamTru(tamTru);
 			}
 			if(Connector.deleteNhanKhau(data)) {
 				controllerNhanKhau.refreshNhanKhau();

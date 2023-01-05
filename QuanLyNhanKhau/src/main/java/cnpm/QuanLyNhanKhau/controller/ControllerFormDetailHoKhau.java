@@ -96,12 +96,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 				buttonTimKiem.fire();
 			}
 		});
-
-//		textfieldDiaChi.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
-//			if (e.getCode() == KeyCode.ENTER) {
-//				buttonLuuThayDoi.fire();
-//			}
-//		});
 		
 		textfieldSoNha.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
@@ -133,13 +127,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 				textfieldHoTenChuHo.getStyleClass().removeAll("inputfield-error");
 			}
 		});
-
-//		textfieldDiaChi.focusedProperty().addListener((obs, oldVal, newVal) -> {
-//			if (newVal) {
-//				labelThongBao.setText("");
-//				textfieldDiaChi.getStyleClass().removeAll("inputfield-error");
-//			}
-//		});
 		
 		textfieldSoNha.focusedProperty().addListener((obs, oldVal, newVal) -> {
 			if (newVal) {
@@ -182,7 +169,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 					gridpane.getRowConstraints().get(1).setPrefHeight(0);
 					tableviewNhanKhau.setVisible(false);
 					textfieldSoNha.requestFocus();
-//					textfieldDiaChi.requestFocus();
 				}
 			});
 			return row;
@@ -323,7 +309,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 
 		textfieldHoTenChuHo.setText(data.getHoTenNhanKhau());
 		chuHo = Connector.getNhanKhau(data.getIdNhanKhau());
-//		textfieldDiaChi.setText(data.getDiaChi());
 		textfieldSoNha.setText(data.getSoNha());
 		textfieldDuongPho.setText(data.getDuongPho());
 		textfieldPhuong.setText(data.getPhuong());

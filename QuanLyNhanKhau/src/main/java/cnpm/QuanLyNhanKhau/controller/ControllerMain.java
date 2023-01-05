@@ -16,11 +16,15 @@ public class ControllerMain implements Initializable {
 	private Button buttonNhanKhau;
 	@FXML
 	private Button buttonHoKhau;
+	@FXML
+	private Button buttonTamTruTamVang;
 	
 	@FXML
 	private Parent viewNhanKhau;
 	@FXML
 	private Parent viewHoKhau;
+	@FXML
+	private Parent viewTamTruTamVang;
 	
 	private Button currentButton;
 	private Parent currentView;
@@ -44,6 +48,11 @@ public class ControllerMain implements Initializable {
 	@FXML
 	public void setViewHoKhau() {
 		setView(viewHoKhau, buttonHoKhau);
+	}
+	
+	@FXML
+	public void setViewTamTruTamVang() {
+		setView(viewTamTruTamVang, buttonTamTruTamVang);
 	}
 
 	private void setView(Parent view, Button button) {

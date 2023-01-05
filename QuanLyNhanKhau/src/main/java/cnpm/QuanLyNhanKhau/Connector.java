@@ -15,6 +15,8 @@ import java.util.List;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelTamTru;
+import cnpm.QuanLyNhanKhau.model.ModelTamVang;
 import cnpm.QuanLyNhanKhau.model.ModelUser;
 
 public class Connector {
@@ -246,7 +248,8 @@ public class Connector {
 		boolean done = false;
 
 		deleteLsNhanKhau(data.getIdNhanKhau());
-		deleteDangKyTamVang(data.getIdNhanKhau());
+		deleteLsTamTru(data.getIdNhanKhau());
+		deleteLsTamVang(data.getIdNhanKhau());
 
 		String query = "DELETE FROM quanlynhankhau.nhankhau\n" + "WHERE idNhanKhau = ?";
 		PreparedStatement ps;
@@ -738,11 +741,13 @@ public class Connector {
 		return modelHoKhauNhanKhau;
 	}
 	
-	public static boolean dangKyTamVang(int idNhanKhau, String noiTamTru, LocalDate ngayHieuLuc, LocalDate ngayHetHieuLuc) {
+	public static boolean addTamTru(int idNhanKhau, String noiTamTru, LocalDate ngayHieuLuc, LocalDate ngayHetHieuLuc,
+							String lyDo) {
 		boolean done = false;
 
-		String query = "INSERT INTO quanlynhankhau.tamvang (`idNhanKhau`, `noiTamTru`, `ngayHieuLuc`, `ngayHetHieuLuc`)"
-				+ " VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO quanlynhankhau.tamtru (`idNhanKhau`, `noiTamTru`, `ngayHieuLuc`, `ngayHetHieuLuc`,"
+				+ "`lyDo`)"
+				+ " VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
@@ -750,10 +755,11 @@ public class Connector {
 			ps.setString(2, noiTamTru);
 			ps.setDate(3, Date.valueOf(ngayHieuLuc));
 			ps.setDate(4, Date.valueOf(ngayHetHieuLuc));
+			ps.setString(5, lyDo);
 
 			ps.executeUpdate();
-//			ModelNhanKhau modelNhanKhau = queryNhanKhauByCCCD(cccd);
-//			lsAddNhanKhau(modelNhanKhau.getIdNhanKhau());
+			ModelTamTru modelTamTru = getTamTru(idNhanKhau, noiTamTru);
+			lsAddTamTru(modelTamTru.getIdTamTru());
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -761,19 +767,343 @@ public class Connector {
 		return done;
 	}
 	
-	private static void deleteDangKyTamVang(int idNhanKhau) {
-		String query = "DELETE FROM quanlynhankhau.tamvang\n" + "WHERE idNhanKhau = ?";
+	public static ModelTamTru getTamTru(int idTamTru) {
+		ModelTamTru modelTamTru = null;
+
+		String query = "SELECT * FROM quanlynhankhau.tamtru\n" + "WHERE idTamTru = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idTamTru);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelTamTru = new ModelTamTru(rs.getInt("idTamTru"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"), rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelTamTru.setModelNhanKhau(modelNhanKhau);
+				lsGetTamTru(idTamTru);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelTamTru;
+	}
+	
+	public static boolean editTamTru(ModelTamTru data) {
+		boolean done = false;
+
+		String query = "UPDATE quanlynhankhau.tamtru SET idNhanKhau = ?, noiTamTru = ?, ngayHieuLuc = ?,"
+				+ "ngayHetHieuLuc = ?, lyDo = ?"
+				+ "WHERE idTamTru = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getIdNhanKhau());
+			ps.setString(2, data.getNoiTamTru());
+			ps.setDate(3, data.getNgayHieuLuc());
+			ps.setDate(4, data.getNgayHetHieuLuc());
+			ps.setString(5, data.getLyDo());
+			ps.setInt(6, data.getIdTamTru());
+
+			ps.executeUpdate();
+			lsEditTamTru(data.getIdTamTru());
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static List<ModelTamTru> getAllTamTru(){
+		List<ModelTamTru> listTamTru = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.tamtru";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelTamTru modelTamTru = new ModelTamTru(rs.getInt("idTamTru"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"),rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelTamTru.setModelNhanKhau(modelNhanKhau);
+				listTamTru.add(modelTamTru);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listTamTru;
+	}
+	
+	public static boolean deleteTamTru(ModelTamTru data) {
+		boolean done = false;
+
+		deleteLsTamTru(data.getIdTamTru());
+
+		String query = "DELETE FROM quanlynhankhau.tamtru\n" + "WHERE idTamTru = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getIdTamTru());
+
+			ps.executeUpdate();
+			lsDeleteTamTru();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static List<ModelTamTru> searchTamTruByIdNhanKhau(int idNhanKhau) {
+		List<ModelTamTru> listTamTru = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.tamtru\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelTamTru modelTamTru = new ModelTamTru(rs.getInt("idTamTru"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"),rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelTamTru.setModelNhanKhau(modelNhanKhau);
+				listTamTru.add(modelTamTru);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listTamTru;
+	}
+	
+	public static boolean addTamVang(int idNhanKhau, String noiTamTru, LocalDate ngayHieuLuc, LocalDate ngayHetHieuLuc,
+							String lyDo) {
+		boolean done = false;
+
+		String query = "INSERT INTO quanlynhankhau.tamvang (`idNhanKhau`, `noiTamTru`, `ngayHieuLuc`, `ngayHetHieuLuc`,"
+				+ "`lyDo`)"
+				+ " VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+			ps.setString(2, noiTamTru);
+			ps.setDate(3, Date.valueOf(ngayHieuLuc));
+			ps.setDate(4, Date.valueOf(ngayHetHieuLuc));
+			ps.setString(5, lyDo);
+
+			ps.executeUpdate();
+			ModelTamVang modelTamVang = getTamVang(idNhanKhau, noiTamTru);
+			lsAddTamVang(modelTamVang.getIdTamVang());
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return done;
+	}
+	
+	public static ModelTamVang getTamVang(int idTamVang) {
+		ModelTamVang modelTamVang = null;
+
+		String query = "SELECT * FROM quanlynhankhau.tamvang\n" + "WHERE idTamVang = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idTamVang);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelTamVang = new ModelTamVang(rs.getInt("idTamVang"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"), rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelTamVang.setModelNhanKhau(modelNhanKhau);
+				lsGetTamVang(idTamVang);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelTamVang;
+	}
+	
+	public static boolean editTamVang(ModelTamVang data) {
+		boolean done = false;
+
+		String query = "UPDATE quanlynhankhau.tamvang SET idNhanKhau = ?, noiTamTru = ?, ngayHieuLuc = ?,"
+				+ "ngayHetHieuLuc = ?, lyDo = ?"
+				+ "WHERE idTamVang = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getIdNhanKhau());
+			ps.setString(2, data.getNoiTamTru());
+			ps.setDate(3, data.getNgayHieuLuc());
+			ps.setDate(4, data.getNgayHetHieuLuc());
+			ps.setString(5, data.getLyDo());
+			ps.setInt(6, data.getIdTamVang());
+
+			ps.executeUpdate();
+			lsEditTamVang(data.getIdTamVang());
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static List<ModelTamVang> getAllTamVang(){
+		List<ModelTamVang> listTamVang = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.tamvang";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelTamVang modelTamVang = new ModelTamVang(rs.getInt("idTamVang"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"),rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelTamVang.setModelNhanKhau(modelNhanKhau);
+				listTamVang.add(modelTamVang);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listTamVang;
+	}
+	
+
+	public static boolean deleteTamVang(ModelTamVang data) {
+		boolean done = false;
+
+		deleteLsTamVang(data.getIdTamVang());
+
+		String query = "DELETE FROM quanlynhankhau.tamvang\n" + "WHERE idTamVang = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getIdTamVang());
+
+			ps.executeUpdate();
+			lsDeleteTamVang();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static List<ModelTamVang> searchTamVangByIdNhanKhau(int idNhanKhau) {
+		List<ModelTamVang> listTamVang = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.tamvang\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelTamVang modelTamVang = new ModelTamVang(rs.getInt("idTamVang"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"),rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelTamVang.setModelNhanKhau(modelNhanKhau);
+				listTamVang.add(modelTamVang);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listTamVang;
+	}
+	
+	private static ModelTamTru getTamTru(int idNhanKhau, String noiTamTru) {
+		ModelTamTru modelTamTru = null;
+
+		String query = "SELECT * FROM quanlynhankhau.tamtru\n" + "WHERE idNhanKhau = ? AND noiTamTru = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+			ps.setString(2, noiTamTru);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelTamTru = new ModelTamTru(rs.getInt("idTamTru"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"),rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelTamTru;
+	}
+	
+	private static ModelTamVang getTamVang(int idNhanKhau, String noiTamTru) {
+		ModelTamVang modelTamVang = null;
+
+		String query = "SELECT * FROM quanlynhankhau.tamvang\n" + "WHERE idNhanKhau = ? AND noiTamTru = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+			ps.setString(2, noiTamTru);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelTamVang = new ModelTamVang(rs.getInt("idTamVang"), rs.getInt("idNhanKhau"),
+						rs.getString("noiTamTru"),rs.getDate("ngayHieuLuc"), rs.getDate("ngayHetHieuLuc"),
+						rs.getString("lyDo"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelTamVang;
+	}
+	
+	
+	public static boolean addTamTruTamVang(int idNhanKhau) {
+		boolean done = false;
+
+		String query = "INSERT INTO quanlynhankhau.tamtrutamvang (`idNhanKhau`)"
+				+ " VALUES (?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, idNhanKhau);
 
 			ps.executeUpdate();
+			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return done;
 	}
-
+	
+	
 	private static void lsSignIn() {
 		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
 		PreparedStatement ps;
@@ -1040,6 +1370,158 @@ public class Connector {
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, idHoKhauNhanKhau);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsAddTamTru(int idTamTru) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idTamTru`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "themTamTru");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idTamTru);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsGetTamTru(int idTamTru) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idTamTru`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "xemTamTru");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idTamTru);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsEditTamTru(int idTamTru) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idTamTru`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "suaTamTru");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idTamTru);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsDeleteTamTru() {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "xoaTamTru");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void deleteLsTamTru(int idTamTru) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idTamTru = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idTamTru);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsAddTamVang(int idTamVang) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idTamVang`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "themTamVang");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idTamVang);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsGetTamVang(int idTamVang) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idTamTru`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "xemTamVang");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idTamVang);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsEditTamVang(int idTamVang) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idTamVang`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "suaTamVang");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idTamVang);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsDeleteTamVang() {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "xoaTamVang");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void deleteLsTamVang(int idTamVang) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idTamVang = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idTamVang);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {

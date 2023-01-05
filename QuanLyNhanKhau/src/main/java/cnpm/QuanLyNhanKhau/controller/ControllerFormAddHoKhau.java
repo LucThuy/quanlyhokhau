@@ -70,12 +70,6 @@ public class ControllerFormAddHoKhau implements Initializable {
 			}
 		});
 		
-//		textfieldDiaChi.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
-//			if (e.getCode() == KeyCode.ENTER) {
-//				textfieldSoNha.requestFocus();
-//			}
-//		});
-		
 		textfieldSoNha.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				textfieldDuongPho.requestFocus();
@@ -106,13 +100,6 @@ public class ControllerFormAddHoKhau implements Initializable {
 				textfieldHoTenChuHo.getStyleClass().removeAll("inputfield-error");
 			}
 		});
-
-//		textfieldDiaChi.focusedProperty().addListener((obs, oldVal, newVal) -> {
-//			if (newVal) {
-//				labelThongBao.setText("");
-//				textfieldDiaChi.getStyleClass().removeAll("inputfield-error");
-//			}
-//		});
 		
 		textfieldSoNha.focusedProperty().addListener((obs, oldVal, newVal) -> {
 			if (newVal) {

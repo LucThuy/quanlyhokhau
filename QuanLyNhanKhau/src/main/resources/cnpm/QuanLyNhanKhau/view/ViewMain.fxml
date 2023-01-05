@@ -12,6 +12,7 @@
 			<children>
 				<Button fx:id="buttonNhanKhau" mnemonicParsing="false" onAction="#setViewNhanKhau" text="NHÂN KHẨU" />
 				<Button fx:id="buttonHoKhau" mnemonicParsing="false" onAction="#setViewHoKhau" text="HỘ KHẨU" />
+            <Button fx:id="buttonTamTruTamVang" mnemonicParsing="false" onAction="#setViewTamTruTamVang" text="TẠM TRÚ TẠM VẮNG" />
 			</children>
 			<padding>
 				<Insets top="10.0" />
@@ -27,6 +28,7 @@
 			<children>
 				<fx:include fx:id="viewNhanKhau" source="ViewNhanKhau.fxml" />
 				<fx:include fx:id="viewHoKhau" source="ViewHoKhau.fxml" />
+				<fx:include fx:id="viewTamTruTamVang" source="ViewTamTruTamVang.fxml" />
 			</children>
 		</StackPane>
 	</center>

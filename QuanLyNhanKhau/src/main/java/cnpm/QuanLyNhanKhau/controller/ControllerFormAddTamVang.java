@@ -37,7 +37,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
 
-public class ControllerFormDangKyTamVang implements Initializable {
+public class ControllerFormAddTamVang implements Initializable {
 	
 	@FXML
 	private GridPane gridpane;
@@ -50,6 +50,11 @@ public class ControllerFormDangKyTamVang implements Initializable {
 	private DatePicker datepickerNgayHieuLuc;
 	@FXML
 	private DatePicker datepickerNgayHetHieuLuc;
+	@FXML
+	private TextField textfieldLyDo;
+	
+	@FXML
+	private Button buttonTimKiem;
 	
 	@FXML
 	private TableView<ModelNhanKhau> tableviewNhanKhau;
@@ -70,7 +75,7 @@ public class ControllerFormDangKyTamVang implements Initializable {
 	
 	private ModelNhanKhau nguoiDangKy;
 	
-	private static ControllerNhanKhau controllerNhanKhau;
+	private static ControllerTamTruTamVang controllerTamTruTamVang;
 
 
 	
@@ -78,7 +83,7 @@ public class ControllerFormDangKyTamVang implements Initializable {
 		
 		textfieldHoTenNguoiDangKy.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
-				textfieldNoiTamTru.requestFocus();
+				buttonTimKiem.fire();
 			}
 		});
 		
@@ -95,6 +100,12 @@ public class ControllerFormDangKyTamVang implements Initializable {
 		});
 		
 		datepickerNgayHieuLuc.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				textfieldLyDo.requestFocus();
+			}
+		});
+		
+		textfieldLyDo.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				buttonDangKy.fire();
 			}
@@ -125,6 +136,13 @@ public class ControllerFormDangKyTamVang implements Initializable {
 			if (newVal) {
 				labelThongBao.setText("");
 				datepickerNgayHetHieuLuc.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
+		textfieldLyDo.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				labelThongBao.setText("");
+				textfieldLyDo.getStyleClass().removeAll("inputfield-error");
 			}
 		});
 		
@@ -166,15 +184,21 @@ public class ControllerFormDangKyTamVang implements Initializable {
 	}
 	
 	@FXML
-	public void dangKyTamVang() {
+	public void addTamVang() {
 		if(isMissingField()) {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
-		if (Connector.dangKyTamVang(nguoiDangKy.getIdNhanKhau(), textfieldNoiTamTru.getText(), 
-				datepickerNgayHieuLuc.getValue(), datepickerNgayHetHieuLuc.getValue())) {
-//			controllerNhanKhau.refreshNhanKhau();
-			App.closeStageForm();
+		if (Connector.addTamTruTamVang(nguoiDangKy.getIdNhanKhau())) {
+			if(Connector.addTamVang(nguoiDangKy.getIdNhanKhau(), textfieldNoiTamTru.getText(), 
+				datepickerNgayHieuLuc.getValue(), datepickerNgayHetHieuLuc.getValue(),
+				textfieldLyDo.getText())) {
+				controllerTamTruTamVang.refreshTamVang();
+				App.closeStageForm();
+			}
+			else {
+				labelThongBao.setText("Nhân khẩu không hợp lệ");
+			}
 		}
 	}
 	
@@ -197,20 +221,23 @@ public class ControllerFormDangKyTamVang implements Initializable {
 			datepickerNgayHieuLuc.getStyleClass().add("inputfield-error");
 			check = true;
 		}
-		
 		if (datepickerNgayHetHieuLuc.getValue() == null) {
 			datepickerNgayHetHieuLuc.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldLyDo.getText().isEmpty()) {
+			textfieldLyDo.getStyleClass().add("inputfield-error");
 			check = true;
 		}
 		return check;
 	}
 	
-	public static ControllerNhanKhau getControllerNhanKhau() {
-		return controllerNhanKhau;
+	public static ControllerTamTruTamVang getControllerTamTruTamVang() {
+		return controllerTamTruTamVang;
 	}
 
-	public static void setControllerNhanKhau(ControllerNhanKhau controllerNhanKhau) {
-		ControllerFormDangKyTamVang.controllerNhanKhau = controllerNhanKhau;
+	public static void setControllerTamTruTamVang(ControllerTamTruTamVang controllerTamTruTamVang) {
+		ControllerFormAddTamVang.controllerTamTruTamVang = controllerTamTruTamVang;
 	}
 	
 }

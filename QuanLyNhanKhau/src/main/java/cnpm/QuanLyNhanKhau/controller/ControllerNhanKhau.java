@@ -20,6 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 
+
 public class ControllerNhanKhau implements Initializable{
 
 	@FXML
@@ -38,9 +39,7 @@ public class ControllerNhanKhau implements Initializable{
 	@FXML
 	private Button buttonLamMoi;
 	@FXML
-	private Button buttonDangKyTamTru;
-	@FXML
-	private Button buttonDangKyTamVang;
+	private Button buttonChiTiet;
 	
 	private ModelNhanKhau nhanKhau;
 	
@@ -54,17 +53,12 @@ public class ControllerNhanKhau implements Initializable{
 		tableviewNhanKhau.setRowFactory( val -> {
 			TableRow<ModelNhanKhau> row = new TableRow<>();
 			row.setOnMouseClicked(e -> {
-				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					nhanKhau = row.getItem();
 					List<Integer> listId = new ArrayList<>();
 					listId.add(nhanKhau.getIdNhanKhau());
-					Holder.getInstance().setId(listId);
-					try {
-						App.addStageForm("view/ViewFormDetailNhanKhau");
-						ControllerFormDetailNhanKhau.setControllerNhanKhau(this);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					Holder.getInstance().setId(listId);	
+				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
+					showDetailNhanKhau();
 				}
 			});
 			return row;
@@ -98,12 +92,12 @@ public class ControllerNhanKhau implements Initializable{
 	}
 	
 	@FXML
-	public void dangKyTamVang() {
+	public void showDetailNhanKhau() {
 		try {
-			App.addStageForm("view/ViewFormDangKyTamVang");
-			ControllerFormDangKyTamVang.setControllerNhanKhau(this);
-		} catch (IOException e){
-			e.printStackTrace();
-		}
+			App.addStageForm("view/ViewFormDetailNhanKhau");
+			ControllerFormDetailNhanKhau.setControllerNhanKhau(this);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}	
 	}
 }

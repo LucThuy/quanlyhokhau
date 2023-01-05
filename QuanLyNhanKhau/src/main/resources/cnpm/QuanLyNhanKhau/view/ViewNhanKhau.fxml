@@ -27,8 +27,7 @@
          <children>
             <Button fx:id="buttonThemMoi" mnemonicParsing="false" onAction="#addNhanKhau" text="THÊM MỚI" />
             <Button fx:id="buttonLamMoi" mnemonicParsing="false" onAction="#refreshNhanKhau" text="LÀM MỚI" />
-            <Button fx:id="buttonDangKyTamTru" mnemonicParsing="false" text="ĐK TẠM TRÚ" />
-            <Button fx:id="buttonDangKyTamVang" mnemonicParsing="false" onAction="#dangKyTamVang" text="TẠM VẮNG" />
+            <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetailNhanKhau" text="CHI TIẾT" />
          </children>
       </HBox>
    </bottom>

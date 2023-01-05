@@ -61,27 +61,22 @@ public class ControllerHoKhau implements Initializable {
 					tableviewHoKhauNhanKhau.setVisible(true);
 					gridpane.getRowConstraints().get(1).setPrefHeight(150);
 					refreshHoKhauNhanKhau();
+					hoKhau = row.getItem();
+					List<Integer> listId = new ArrayList<Integer>();
+					listId.add(hoKhau.getIdHoKhau());
+					Holder.getInstance().setId(listId);
 				}
 				if (e.getButton().equals(MouseButton.PRIMARY) && row.isEmpty()) {
 					tableviewHoKhauNhanKhau.setVisible(false);
 					gridpane.getRowConstraints().get(1).setPrefHeight(0);
 				}
 				if (e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
-					hoKhau = row.getItem();
-					List<Integer> listId = new ArrayList<Integer>();
-					listId.add(hoKhau.getIdHoKhau());
-					Holder.getInstance().setId(listId);
-					try {
-						App.addStageForm("view/ViewFormDetailHoKhau");
-						ControllerFormDetailHoKhau.setControllerHoKhau(this);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+					showDetailHoKhau();
 				}
 			});
 			return row;
 		});
-
+		
 		tablecolumnHoTenHKNKNhanKhau.setCellValueFactory(new PropertyValueFactory<>("hoTen"));
 		tablecolumnNgaySinhHKNKNhanKhau.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
 		tablecolumnGioiTinhHKNKNhanKhau.setCellValueFactory(new PropertyValueFactory<>("gioiTinh"));
@@ -132,6 +127,16 @@ public class ControllerHoKhau implements Initializable {
 		listNhanKhau.forEach(nhanKhau -> {
 			tableviewHoKhauNhanKhau.getItems().add(nhanKhau);
 		});
+	}
+	
+	@FXML
+	private void showDetailHoKhau() {
+		try {
+			App.addStageForm("view/ViewFormDetailHoKhau");
+			ControllerFormDetailHoKhau.setControllerHoKhau(this);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }

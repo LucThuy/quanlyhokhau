@@ -52,6 +52,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#addHoKhau" text="THÊM MỚI" />
             <Button mnemonicParsing="false" onAction="#refreshHoKhau" text="LÀM MỚI" />
+            <Button mnemonicParsing="false" onAction="#showDetailHoKhau" text="CHI TIẾT" />
          </children>
       </HBox>
    </bottom>

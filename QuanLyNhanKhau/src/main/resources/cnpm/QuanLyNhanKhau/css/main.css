@@ -162,6 +162,53 @@
 	-fx-pref-width: 70;
 }
 
+.tab-header-area .tab-header-background {
+ 	-fx-background-color: -black-5;
+ 	-fx-border-color: -white-2;
+	-fx-border-width: 1 0; 
+}
+
+.tab-header-area {
+	-fx-padding: 0;
+	-fx-background-insets: 0 0 0 0;
+	-fx-background-radius: 0 0 0 0;
+}
+
+.tab-pane {
+	-fx-tab-min-width: 100px;
+	-fx-tab-min-height: 30px;
+	-fx-tab-max-height: 30px;
+}
+
+.tab {
+	-fx-background-color: -black-4;
+	-fx-border-color: -white-2;
+	-fx-border-width: 0 1;
+	-fx-background-insets: 0 0 0 0;
+	-fx-background-radius: 0 0 0 0;
+}
+
+.tab .tab-label {
+	-fx-text-fill: -white-3;
+	-fx-font-weight: 700;
+}
+
+.tab:selected {
+	-fx-background-color: -black-3;
+	-fx-pref-width: 150;
+	-fx-padding: 0 0 0 20;
+}
+
+.tab:selected .tab-label {
+	-fx-text-fill: -white-1;
+}
+
+.tab-pane:focused .tab-header-area .headers-region .tab:selected .focus-indicator {
+ 	-fx-border-width: 0;
+	-fx-border-insets: 0 0 0 0;
+	-fx-border-radius: 0;
+}
+
 .choice-box, .date-picker{
 	-fx-padding: 0;
 	-fx-background-insets: none;
