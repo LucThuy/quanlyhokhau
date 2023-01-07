@@ -50,7 +50,7 @@
          <children>
             <Button fx:id="buttonDangKyTamTru" mnemonicParsing="false" onAction="#addTamTru" text="TẠM TRÚ" />
             <Button fx:id="buttonDangKyTamVang" mnemonicParsing="false" onAction="#addTamVang" text="TẠM VẮNG" />
-            <Button fx:id="buttonChiTiet" mnemonicParsing="false" text="CHI TIẾT" />
+            <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetail" text="CHI TIẾT" />
          </children>
       </HBox>
    </bottom>

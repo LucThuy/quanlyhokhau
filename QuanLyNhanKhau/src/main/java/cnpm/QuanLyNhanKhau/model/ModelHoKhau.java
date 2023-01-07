@@ -25,6 +25,10 @@ public class ModelHoKhau {
 		this.quan       = quan;
 	}
 	
+	public ModelHoKhau() {
+		
+	}
+	
 	public int getIdHoKhau() {
 		return idHoKhau;
 	}

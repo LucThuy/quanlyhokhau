@@ -34,7 +34,7 @@ import javafx.scene.input.KeyEvent;
 public class ControllerFormDetailNhanKhau implements Initializable {
 
 	@FXML
-	private TextField textfieldHoTen;
+	private Label labelHoTen;
 	@FXML
 	private TextField textfieldBiDanh;
 	@FXML
@@ -85,12 +85,6 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadData(Holder.getInstance().getId());
-
-		textfieldHoTen.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
-			if (e.getCode() == KeyCode.ENTER) {
-				textfieldBiDanh.requestFocus();
-			}
-		});
 		
 		textfieldBiDanh.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
@@ -198,13 +192,6 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 		textfieldGhiChu.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if(e.getCode() == KeyCode.ENTER) {
 				buttonLuuThayDoi.fire();
-			}
-		});
-
-		textfieldHoTen.focusedProperty().addListener((obs, oldVal, newVal) -> {
-			if (newVal) {
-				labelThongBao.setText("");
-				textfieldHoTen.getStyleClass().removeAll("inputfield-error");
 			}
 		});
 		
@@ -350,7 +337,7 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 		}
 		RadioButton selectedRadioButton = (RadioButton) togglegroupGioiTinh.getSelectedToggle();
 
-		data.setHoTen(textfieldHoTen.getText());
+		data.setHoTen(labelHoTen.getText());
 		data.setBiDanh(textfieldBiDanh.getText());
 		data.setNgaySinh(Date.valueOf(datepickerNgaySinh.getValue()));
 		data.setGioiTinh(selectedRadioButton.getText());
@@ -379,18 +366,16 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 
 	@FXML
 	public void deleteNhanKhau() {
-		List<ModelHoKhau> listHoKhau = Connector.searchHoKhauByIdNhanKhau(data.getIdNhanKhau());
+		ModelHoKhau modelHoKhau = Connector.searchHoKhauByIdNhanKhau(data.getIdNhanKhau());
 		List<ModelHoKhauNhanKhau> listHoKhauNhanKhau = Connector.searchHoKhauNhanKhauByIdNhanKhau(data.getIdNhanKhau());
 		List<ModelTamTru> listTamTru = Connector.searchTamTruByIdNhanKhau(data.getIdNhanKhau());
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.getDialogPane().getStylesheets().add(App.class.getResource("css/main.css").toExternalForm());
 		alert.setHeaderText("Xóa mục được chọn?");
-		if(!listHoKhau.isEmpty() || !listHoKhauNhanKhau.isEmpty()) {
+		if(modelHoKhau != null || !listHoKhauNhanKhau.isEmpty()) {
 			String contentText = "Các mục liên quan sau cũng sẽ bị xóa:\n";
-			for(ModelHoKhau hoKhau: listHoKhau) {
-				contentText += hoKhau.getHoTenNhanKhau() + " - " + hoKhau.getDiaChi() + "\n";
-			}
+			contentText += modelHoKhau.getHoTenNhanKhau() + " - " + modelHoKhau.getDiaChi() + "\n";
 			for(ModelHoKhauNhanKhau hoKhauNhanKhau: listHoKhauNhanKhau) {
 				contentText += hoKhauNhanKhau.getHoTenNhanKhauHoKhau() + " - " + hoKhauNhanKhau.getDiaChiHoKhau() + " - " + hoKhauNhanKhau.getQuanHe() + "\n";
 			}
@@ -404,9 +389,7 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			for(ModelHoKhauNhanKhau hoKhauNhanKhau: listHoKhauNhanKhau) {
 				Connector.deleteHoKhauNhanKhau(hoKhauNhanKhau);
 			}
-			for(ModelHoKhau hoKhau: listHoKhau) {
-				Connector.deleteHoKhau(hoKhau);
-			}
+			Connector.deleteHoKhau(modelHoKhau);
 			for(ModelTamTru tamTru: listTamTru) {
 				Connector.deleteTamTru(tamTru);
 			}
@@ -425,7 +408,7 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 	private void loadData(List<Integer> listId) {
 		data = Connector.getNhanKhau(listId.get(0));
 
-		textfieldHoTen.setText(data.getHoTen());
+		labelHoTen.setText(data.getHoTen());
 		textfieldBiDanh.setText(data.getBiDanh());
 		datepickerNgaySinh.setValue(new Date(data.getNgaySinh().getTime()).toLocalDate());
 		togglegroupGioiTinh.getToggles().forEach(toggle -> {
@@ -453,10 +436,6 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 
 	private boolean isMissingField() {
 		boolean check = false;
-		if (textfieldHoTen.getText().isEmpty()) {
-			textfieldHoTen.getStyleClass().add("inputfield-error");
-			check = true;
-		}
 		if (datepickerNgaySinh.getValue() == null) {
 			datepickerNgaySinh.getStyleClass().add("inputfield-error");
 			check = true;
@@ -468,14 +447,6 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			});
 			check = true;
 		}
-//		if (textfieldCCCD.getText().isEmpty()) {
-//			textfieldCCCD.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldDanToc.getText().isEmpty()) {
-//			textfieldDanToc.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
 		if (textfieldNoiThuongTru.getText().isEmpty()) {
 			textfieldNoiThuongTru.getStyleClass().add("inputfield-error");
 			check = true;

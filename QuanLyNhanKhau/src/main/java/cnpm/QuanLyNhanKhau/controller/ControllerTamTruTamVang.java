@@ -55,6 +55,7 @@ public class ControllerTamTruTamVang implements Initializable {
 	
 	private ModelTamTru nhanKhauTamTru;
 	private ModelTamVang nhanKhauTamVang;
+	private boolean showChiTiet;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resoursces) {
@@ -70,8 +71,9 @@ public class ControllerTamTruTamVang implements Initializable {
 					List<Integer> listId = new ArrayList<>();
 					listId.add(nhanKhauTamTru.getIdTamTru());
 					Holder.getInstance().setId(listId);	
+					showChiTiet = true;
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
-					showDetailNhanKhauTamTru();
+					showDetail();
 				}
 			});
 			return row;
@@ -92,8 +94,9 @@ public class ControllerTamTruTamVang implements Initializable {
 					List<Integer> listId = new ArrayList<>();
 					listId.add(nhanKhauTamVang.getIdTamVang());
 					Holder.getInstance().setId(listId);	
+					showChiTiet = false;
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
-					showDetailNhanKhauTamVang();
+					showDetail();
 				}
 			});
 			return row;
@@ -168,6 +171,15 @@ public class ControllerTamTruTamVang implements Initializable {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}	
+	}
+	
+	@FXML
+	public void showDetail() {
+		if(showChiTiet) {
+			showDetailNhanKhauTamTru();
+		} else {
+			showDetailNhanKhauTamVang();
+		}
 	}
 	
 }

@@ -510,9 +510,8 @@ public class Connector {
 		return listHoKhau;
 	}
 	
-	public static List<ModelHoKhau> searchHoKhauByIdNhanKhau(int idNhanKhau) {
-		List<ModelHoKhau> listHoKhau = new ArrayList<>();
-
+	public static ModelHoKhau searchHoKhauByIdNhanKhau(int idNhanKhau) {
+		ModelHoKhau modelHoKhau = null;
 		String query = "SELECT * FROM quanlynhankhau.hokhau\n" + "WHERE idNhanKhau = ?";
 		PreparedStatement ps;
 		try {
@@ -520,19 +519,18 @@ public class Connector {
 			ps.setInt(1, idNhanKhau);
 
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				ModelHoKhau modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"),
+			if (rs.next()) {
+				modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"),
 						rs.getString("diaChi"), rs.getString("soNha"), rs.getString("duongPho"),
 						rs.getString("phuong"), rs.getString("quan"));
 				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				modelHoKhau.setModelNhanKhau(modelNhanKhau);
-				listHoKhau.add(modelHoKhau);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return listHoKhau;
+		return modelHoKhau;
 	}
 	
 	public static boolean addHoKhauNhanKhau(int idHoKhau, int idNhanKhau, String quanHe) {
@@ -551,6 +549,25 @@ public class Connector {
 			lsAddHoKhauNhanKhau(modelHoKhauNhanKhau.getIdHoKhauNhanKhau());
 			ModelHoKhau modelHoKhau = getHoKhau(idHoKhau);
 			IsChangeNoiThuongTruNhanKhau(idNhanKhau, modelHoKhau.getDiaChi());
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return done;
+	}
+	
+	public static boolean addChuHoToHoKhauNhanKhau(int idHoKhau, int idNhanKhau) {
+		boolean done = false;
+
+		String query = "INSERT INTO quanlynhankhau.hokhaunhankhau (`idHoKhau`, `idNhanKhau`, `quanHe`) VALUES (?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idHoKhau);
+			ps.setInt(2, idNhanKhau);
+			ps.setString(3, "Chủ Hộ");
+			
+			ps.executeUpdate();
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -847,6 +864,7 @@ public class Connector {
 		boolean done = false;
 
 		deleteLsTamTru(data.getIdTamTru());
+		deleteTamTruTamVang(data.getIdNhanKhau());
 
 		String query = "DELETE FROM quanlynhankhau.tamtru\n" + "WHERE idTamTru = ?";
 		PreparedStatement ps;
@@ -996,6 +1014,7 @@ public class Connector {
 		boolean done = false;
 
 		deleteLsTamVang(data.getIdTamVang());
+		deleteTamTruTamVang(data.getIdNhanKhau());
 
 		String query = "DELETE FROM quanlynhankhau.tamvang\n" + "WHERE idTamVang = ?";
 		PreparedStatement ps;
@@ -1085,15 +1104,16 @@ public class Connector {
 	}
 	
 	
-	public static boolean addTamTruTamVang(int idNhanKhau) {
+	public static boolean addTamTruToTamTruTamVang(int idNhanKhau) {
 		boolean done = false;
 
-		String query = "INSERT INTO quanlynhankhau.tamtrutamvang (`idNhanKhau`)"
-				+ " VALUES (?)";
+		String query = "INSERT INTO quanlynhankhau.tamtrutamvang (`idNhanKhau`, `trangThai`)"
+				+ " VALUES (?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, idNhanKhau);
+			ps.setString(2, "Tạm Trú");
 
 			ps.executeUpdate();
 			done = true;
@@ -1101,6 +1121,38 @@ public class Connector {
 			e.printStackTrace();
 		}
 		return done;
+	}
+	
+	public static boolean addTamVangToTamTruTamVang(int idNhanKhau) {
+		boolean done = false;
+
+		String query = "INSERT INTO quanlynhankhau.tamtrutamvang (`idNhanKhau`, `trangThai`)"
+				+ " VALUES (?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+			ps.setString(2, "Tạm Vắng");
+
+			ps.executeUpdate();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return done;
+	}
+	
+	public static void deleteTamTruTamVang(int idNhanKhau) {
+		String query = "DELETE FROM quanlynhankhau.tamtrutamvang\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

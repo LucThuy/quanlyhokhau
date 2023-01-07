@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
+import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,8 +30,6 @@ public class ControllerFormAddHoKhau implements Initializable {
 	
 	@FXML
 	private TextField textfieldHoTenChuHo;
-//	@FXML
-//	private TextField textfieldDiaChi;
 	@FXML
 	private TextField textfieldSoNha;
 	@FXML
@@ -61,6 +60,10 @@ public class ControllerFormAddHoKhau implements Initializable {
 	
 	private ModelNhanKhau chuHo;
 	private static ControllerHoKhau controllerHoKhau;
+
+	private ModelHoKhau data;
+	
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -146,7 +149,6 @@ public class ControllerFormAddHoKhau implements Initializable {
 					gridpane.getRowConstraints().get(1).setPrefHeight(0);
 					tableviewNhanKhau.setVisible(false);
 					textfieldSoNha.requestFocus();
-//					textfieldDiaChi.requestFocus();
 				}
 			});
 			return row;
@@ -172,11 +174,28 @@ public class ControllerFormAddHoKhau implements Initializable {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
+		data = new ModelHoKhau();
+		data.setIdNhanKhau(chuHo.getIdNhanKhau());
+		data.setModelNhanKhau(chuHo);
+		data.setDiaChi(textfieldSoNha.getText() + " - " + textfieldDuongPho.getText() + " - " + textfieldPhuong.getText() +
+				" - " + textfieldQuan.getText());
+		data.setSoNha(textfieldSoNha.getText());
+		data.setDuongPho(textfieldDuongPho.getText());
+		data.setPhuong(textfieldPhuong.getText());
+		data.setQuan(textfieldQuan.getText());
+		
 		if(Connector.addHoKhau(chuHo.getIdNhanKhau(), textfieldSoNha.getText() + " - " + textfieldDuongPho.getText() +
 				" - " + textfieldPhuong.getText() + " - " + textfieldQuan.getText(),
 				textfieldSoNha.getText(), textfieldDuongPho.getText(), textfieldPhuong.getText(), textfieldQuan.getText())) {
-			controllerHoKhau.refreshHoKhau();
-			App.closeStageForm();
+			if(Connector.addChuHoToHoKhauNhanKhau(Connector.searchHoKhauByIdNhanKhau(chuHo.getIdNhanKhau()).getIdHoKhau(), chuHo.getIdNhanKhau())) {
+				controllerHoKhau.refreshHoKhau();
+				App.closeStageForm();
+			} else {
+				Connector.deleteHoKhau(data);
+				labelThongBao.setText("Nhân khẩu không hợp lệ");
+			}
+		} else {
+			labelThongBao.setText("Nhân khẩu không hợp lệ");
 		}
 	}
 
@@ -191,10 +210,6 @@ public class ControllerFormAddHoKhau implements Initializable {
 			textfieldHoTenChuHo.getStyleClass().add("inputfield-error");
 			check = true;
 		}
-//		if (textfieldDiaChi.getText().isEmpty()) {
-//			textfieldDiaChi.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
 		if (textfieldSoNha.getText().isEmpty()) {
 			textfieldSoNha.getStyleClass().add("inputfield-error");
 			check = true;

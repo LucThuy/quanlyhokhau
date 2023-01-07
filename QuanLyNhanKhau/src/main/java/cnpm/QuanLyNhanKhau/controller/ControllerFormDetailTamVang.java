@@ -38,7 +38,7 @@ public class ControllerFormDetailTamVang implements Initializable {
 	private GridPane gridpane;
 	
 	@FXML
-	private TextField textfieldHoTenNguoiDangKy;
+	private Label labelHoTenNguoiDangKy;
 	@FXML
 	private TextField textfieldNoiTamTru;
 	@FXML
@@ -48,8 +48,6 @@ public class ControllerFormDetailTamVang implements Initializable {
 	@FXML
 	private TextField textfieldLyDo;
 	
-	@FXML
-	private Button buttonTimKiem;
 
 	@FXML
 	private Label labelThongBao;
@@ -76,12 +74,6 @@ public class ControllerFormDetailTamVang implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		loadData(Holder.getInstance().getId());
 		
-		textfieldHoTenNguoiDangKy.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
-			if (e.getCode() == KeyCode.ENTER) {
-				buttonTimKiem.fire();
-			}
-		});
-		
 		textfieldNoiTamTru.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				datepickerNgayHieuLuc.requestFocus();
@@ -105,14 +97,7 @@ public class ControllerFormDetailTamVang implements Initializable {
 				buttonLuuThayDoi.fire();
 			}
 		});
-		
-		textfieldHoTenNguoiDangKy.focusedProperty().addListener((obs, oldVal, newVal) -> {
-			if (newVal) {
-				labelThongBao.setText("");
-				textfieldHoTenNguoiDangKy.getStyleClass().removeAll("inputfield-error");
-			}
-		});
-		
+
 		textfieldNoiTamTru.focusedProperty().addListener((obs, oldVal, newVal) -> {
 			if (newVal) {
 				labelThongBao.setText("");
@@ -150,11 +135,11 @@ public class ControllerFormDetailTamVang implements Initializable {
 			row.setOnMouseClicked(e -> {
 				if(e.getClickCount() == 1 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					nguoiDangKy = row.getItem();
-					textfieldHoTenNguoiDangKy.setText(nguoiDangKy.getHoTen());
+					labelHoTenNguoiDangKy.setText(nguoiDangKy.getHoTen());
 				}
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					nguoiDangKy = row.getItem();
-					textfieldHoTenNguoiDangKy.setText(nguoiDangKy.getHoTen());
+					labelHoTenNguoiDangKy.setText(nguoiDangKy.getHoTen());
 					gridpane.getRowConstraints().get(1).setPrefHeight(0);
 					tableviewNhanKhau.setVisible(false);
 					textfieldNoiTamTru.requestFocus();
@@ -166,7 +151,7 @@ public class ControllerFormDetailTamVang implements Initializable {
 	
 	@FXML
 	public void searchNhanKhau() {
-		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(textfieldHoTenNguoiDangKy.getText());
+		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(labelHoTenNguoiDangKy.getText());
 		
 		tableviewNhanKhau.getItems().clear();
 		listNhanKhau.forEach(nhanKhau -> {
@@ -226,7 +211,7 @@ public class ControllerFormDetailTamVang implements Initializable {
 	private void loadData(List<Integer> listId) {
 		data = Connector.getTamVang(listId.get(0));
 		
-		textfieldHoTenNguoiDangKy.setText(data.getHoTenNhanKhau());
+		labelHoTenNguoiDangKy.setText(data.getHoTenNhanKhau());
 		nguoiDangKy = Connector.getNhanKhau(data.getIdNhanKhau());
 		textfieldNoiTamTru.setText(data.getNoiTamTru());
 		datepickerNgayHieuLuc.setValue(new Date(data.getNgayHieuLuc().getTime()).toLocalDate());
@@ -237,10 +222,6 @@ public class ControllerFormDetailTamVang implements Initializable {
 	
 	private boolean isMissingField() {
 		boolean check = false;
-		if (textfieldHoTenNguoiDangKy.getText().isEmpty()) {
-			textfieldHoTenNguoiDangKy.getStyleClass().add("inputfield-error");
-			check = true;
-		}
 		if (textfieldNoiTamTru.getText().isEmpty()) {
 			textfieldNoiTamTru.getStyleClass().add("inputfield-error");
 			check = true;

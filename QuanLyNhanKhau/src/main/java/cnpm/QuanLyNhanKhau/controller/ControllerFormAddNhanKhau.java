@@ -339,7 +339,7 @@ public class ControllerFormAddNhanKhau implements Initializable {
 				textfieldQuocTich.getText(), textfieldTrinhDoChuyenMon.getText(), textfieldGhiChu.getText())) {
 			controllerNhanKhau.refreshNhanKhau();
 			App.closeStageForm();
-		}
+		} 
 	}
 	
 	@FXML
@@ -364,14 +364,6 @@ public class ControllerFormAddNhanKhau implements Initializable {
 			});
 			check = true;
 		}
-//		if (textfieldCCCD.getText().isEmpty()) {
-//			textfieldCCCD.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldDanToc.getText().isEmpty()) {
-//			textfieldDanToc.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
 		if (textfieldNoiThuongTru.getText().isEmpty()) {
 			textfieldNoiThuongTru.getStyleClass().add("inputfield-error");
 			check = true;

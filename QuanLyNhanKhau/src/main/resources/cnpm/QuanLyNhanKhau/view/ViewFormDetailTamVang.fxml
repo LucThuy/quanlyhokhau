@@ -20,7 +20,7 @@
 	<top>
 		<HBox alignment="CENTER" styleClass="top">
 			<children>
-				<Label styleClass="title" text="CHI TIẾT TẠM TRÚ" BorderPane.alignment="CENTER">
+				<Label styleClass="title" text="CHI TIẾT TẠM VẮNG" BorderPane.alignment="CENTER">
 					<HBox.margin>
 						<Insets bottom="20.0" top="20.0" />
 					</HBox.margin>
@@ -38,9 +38,7 @@
                <children>
                   <Label text="HỌ TÊN" />
                   <Label text="NƠI TẠM TRÚ" GridPane.rowIndex="2" />
-                  <TextField fx:id="textfieldHoTenNguoiDangKy" scaleShape="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
                   <TextField fx:id="textfieldNoiTamTru" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
-                  <Button fx:id="buttonTimKiem" mnemonicParsing="false" onAction="#searchNhanKhau" styleClass="search-icon" text="OK" GridPane.columnIndex="2" />
                   <TableView fx:id="tableviewNhanKhau" prefHeight="200.0" prefWidth="200.0" styleClass="sub-table-view" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -76,6 +74,7 @@
                   </GridPane>
                   <Label text="LÝ DO" GridPane.rowIndex="4" />
                   <TextField fx:id="textfieldLyDo" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
+                  <Label fx:id="labelHoTenNguoiDangKy" GridPane.columnIndex="1" />
                </children>
                <columnConstraints>
                   <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" />

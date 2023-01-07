@@ -37,9 +37,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	private GridPane gridpane;
 
 	@FXML
-	private TextField textfieldHoTenChuHo;
-//	@FXML
-//	private TextField textfieldDiaChi;
+	private Label labelHoTenChuHo;
 	@FXML
 	private TextField textfieldSoNha;
 	@FXML
@@ -90,12 +88,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadData(Holder.getInstance().getId());
-
-		textfieldHoTenChuHo.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
-			if (e.getCode() == KeyCode.ENTER) {
-				buttonTimKiem.fire();
-			}
-		});
 		
 		textfieldSoNha.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
@@ -118,13 +110,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 		textfieldQuan.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				buttonLuuThayDoi.fire();
-			}
-		});
-
-		textfieldHoTenChuHo.focusedProperty().addListener((obs, oldVal, newVal) -> {
-			if (newVal) {
-				labelThongBao.setText("");
-				textfieldHoTenChuHo.getStyleClass().removeAll("inputfield-error");
 			}
 		});
 		
@@ -165,7 +150,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 			row.setOnMouseClicked(e -> {
 				if (e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					chuHo = row.getItem();
-					textfieldHoTenChuHo.setText(chuHo.getHoTen());
+					labelHoTenChuHo.setText(chuHo.getHoTen());
 					gridpane.getRowConstraints().get(1).setPrefHeight(0);
 					tableviewNhanKhau.setVisible(false);
 					textfieldSoNha.requestFocus();
@@ -205,7 +190,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 
 	@FXML
 	public void searchNhanKhau() {
-		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(textfieldHoTenChuHo.getText());
+		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(labelHoTenChuHo.getText());
 
 		tableviewNhanKhau.getItems().clear();
 		listNhanKhau.forEach(nhanKhau -> {
@@ -237,7 +222,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
-
+		
 		data.setIdNhanKhau(chuHo.getIdNhanKhau());
 		data.setModelNhanKhau(chuHo);
 		data.setDiaChi(textfieldSoNha.getText() + " - " + textfieldDuongPho.getText() + " - " + textfieldPhuong.getText() +
@@ -307,7 +292,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	private void loadData(List<Integer> listId) {
 		data = Connector.getHoKhau(listId.get(0));
 
-		textfieldHoTenChuHo.setText(data.getHoTenNhanKhau());
+		labelHoTenChuHo.setText(data.getHoTenNhanKhau());
 		chuHo = Connector.getNhanKhau(data.getIdNhanKhau());
 		textfieldSoNha.setText(data.getSoNha());
 		textfieldDuongPho.setText(data.getDuongPho());
@@ -317,14 +302,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 
 	private boolean isMissingField() {
 		boolean check = false;
-		if (textfieldHoTenChuHo.getText().isEmpty()) {
-			textfieldHoTenChuHo.getStyleClass().add("inputfield-error");
-			check = true;
-		}
-//		if (textfieldDiaChi.getText().isEmpty()) {
-//			textfieldDiaChi.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
 		if (textfieldSoNha.getText().isEmpty()) {
 			textfieldSoNha.getStyleClass().add("inputfield-error");
 			check = true;
