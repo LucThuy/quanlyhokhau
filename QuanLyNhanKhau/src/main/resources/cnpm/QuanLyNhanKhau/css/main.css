@@ -183,7 +183,7 @@
 .tab {
 	-fx-background-color: -black-4;
 	-fx-border-color: -white-2;
-	-fx-border-width: 0 1;
+	-fx-border-width: 0 1 1 1;
 	-fx-background-insets: 0 0 0 0;
 	-fx-background-radius: 0 0 0 0;
 }

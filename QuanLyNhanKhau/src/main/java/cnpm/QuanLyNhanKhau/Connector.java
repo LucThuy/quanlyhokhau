@@ -21,13 +21,13 @@ import cnpm.QuanLyNhanKhau.model.ModelUser;
 
 public class Connector {
 
-//	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
-//	private static String user = "root";
-//	private static String password = "Minh_0112";
-	
 	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 	private static String user = "root";
-	private static String password = "namanh202";
+	private static String password = "Minh_0112";
+	
+//	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
+//	private static String user = "root";
+//	private static String password = "namanh202";
 
 	private static ModelUser currentUser;
 
@@ -52,13 +52,14 @@ public class Connector {
 	public static boolean signUp(String taiKhoan, String matKhau, String tenNguoiDung) {
 		boolean done = false;
 
-		String query = "INSERT INTO quanlynhankhau.user (`taiKhoan`, `matKhau`, `tenNguoiDung`) VALUES (?, ?, ?)";
+		String query = "INSERT INTO quanlynhankhau.user (`taiKhoan`, `matKhau`, `tenNguoiDung`, `role`) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, taiKhoan);
 			ps.setString(2, matKhau);
 			ps.setString(3, tenNguoiDung);
+			ps.setString(4, "DANG KY");
 
 			ps.executeUpdate();
 			ModelUser modelUser = getUser(taiKhoan, matKhau);
@@ -68,6 +69,127 @@ public class Connector {
 			e.printStackTrace();
 		}
 		return done;
+	}
+	
+	public static ModelUser queryUserByTaiKhoanAndMatKhau(String taiKhoan, String matKhau) {
+		ModelUser modelUser = null;
+
+		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE taiKhoan = ? AND matKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, taiKhoan);
+			ps.setString(2, matKhau);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelUser = new ModelUser(rs.getInt("idUser"),
+						rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"),
+						rs.getString("matKhau"),
+						rs.getString("role")
+						);
+				currentUser = modelUser;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelUser;
+	}
+	
+	public static boolean editUser(ModelUser data) {
+		boolean done = false;
+
+		String query = "UPDATE quanlynhankhau.user SET tenNguoiDung = ?, taiKhoan = ?, matKhau = ?, role = ?\n"
+				+ "WHERE idUser = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, data.getTenNguoiDung());
+			ps.setString(2, data.getTaiKhoan());
+			ps.setString(3, data.getMatKhau());
+			ps.setString(4, data.getRole());
+			
+			ps.setInt(5, data.getIdUser());
+			
+			ps.executeUpdate();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static boolean deleteUser(ModelUser data) {
+		boolean done = false;
+
+		deleteLsUser(data.getIdUser());
+		
+		String query = "DELETE FROM quanlynhankhau.user\n" + "WHERE idUser = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getIdUser());
+
+			ps.executeUpdate();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static List<ModelUser> getAllUser() {
+		List<ModelUser> listUser = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.user";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelUser modelUser = new ModelUser(rs.getInt("idUser"),
+						rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"),
+						rs.getString("matKhau"),
+						rs.getString("role"));
+				listUser.add(modelUser);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listUser;
+	}
+	
+	public static List<ModelUser> getAllUserByRole(String role) {
+		List<ModelUser> listUser = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE role = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, role);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelUser modelUser = new ModelUser(rs.getInt("idUser"),
+						rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"),
+						rs.getString("matKhau"),
+						rs.getString("role"));
+				listUser.add(modelUser);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listUser;
 	}
 	
 //	public static boolean addNhanKhau(ModelNhanKhau nhanKhau) {
@@ -705,7 +827,7 @@ public class Connector {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				modelUser = new ModelUser(rs.getInt("idUser"), rs.getString("tenNguoiDung"), rs.getString("taiKhoan"),
-						rs.getString("matKhau"));
+						rs.getString("matKhau"), rs.getString("role"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1185,7 +1307,7 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}
-
+	
 	private static void lsAddNhanKhau(int idNhanKhau) {
 		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idNhanKhau`) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps;
@@ -1390,6 +1512,19 @@ public class Connector {
 		}
 	}
 
+	private static void deleteLsUser(int idUser) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idUser = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idUser);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private static void deleteLsNhanKhau(int idNhanKhau) {
 		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idNhanKhau = ?";
 		PreparedStatement ps;

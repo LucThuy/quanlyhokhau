@@ -6,12 +6,15 @@ public class ModelUser {
 	private String taiKhoan;
 	private String matKhau;
 	
-	public ModelUser(int idUser, String tenNguoiDung, String taiKhoan, String matKhau) {
+	private String role;
+	
+	public ModelUser(int idUser, String tenNguoiDung, String taiKhoan, String matKhau, String role) {
 		super();
 		this.idUser = idUser;
 		this.tenNguoiDung = tenNguoiDung;
 		this.taiKhoan = taiKhoan;
 		this.matKhau = matKhau;
+		this.role = role;
 	}
 
 	public int getIdUser() {
@@ -37,5 +40,11 @@ public class ModelUser {
 	}
 	public void setMatKhau(String matKhau) {
 		this.matKhau = matKhau;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
 }

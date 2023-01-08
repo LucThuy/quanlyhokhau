@@ -36,6 +36,7 @@ public class ControllerMain implements Initializable {
 		
 		buttonNhanKhau.setTranslateX(-10);
 		buttonHoKhau.setTranslateX(-10);
+		buttonTamTruTamVang.setTranslateX(-10);
 		
 		setViewNhanKhau();
 	}

@@ -59,20 +59,23 @@ public class ControllerSignIn implements Initializable {
 	}
 
 	@FXML
-	public void signIn() {
+	public void signIn() throws IOException {
 		if(isMissingField()) {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
-		if (Connector.signIn(textfieldTaiKhoan.getText(), passwordfieldMatKhau.getText())) {
-			try {
-				App.setRoot("view/ViewMain");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		ModelUser user = Connector.queryUserByTaiKhoanAndMatKhau(textfieldTaiKhoan.getText(), passwordfieldMatKhau.getText());
+		if(user == null) {
+			labelThongBao.setText("Tài khoản hoặc mật khẩu không chính xác");
+		}
+		else if(user.getRole().equals("TO TRUONG")) {
+			App.setRoot("view/ViewMainAdmin");
+		}
+		else if(user.getRole().equals("NHAN VIEN")){
+			App.setRoot("view/ViewMain");
 		}
 		else {
-			labelThongBao.setText("Tài khoản hoặc mật khẩu không chính xác");
+			labelThongBao.setText("Tài khoản của bạn đang chờ được cấp phép");
 		}
 	}
 
