@@ -67,11 +67,13 @@ public class ControllerTamTruTamVang implements Initializable {
 		tableviewTamTru.setRowFactory( val -> {
 			TableRow<ModelTamTru> row = new TableRow<>();
 			row.setOnMouseClicked(e -> {
+				if(!row.isEmpty()) {
 					nhanKhauTamTru = row.getItem();
 					List<Integer> listId = new ArrayList<>();
 					listId.add(nhanKhauTamTru.getIdTamTru());
 					Holder.getInstance().setId(listId);	
 					showChiTiet = true;
+				}
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					showDetail();
 				}
@@ -90,11 +92,13 @@ public class ControllerTamTruTamVang implements Initializable {
 		tableviewTamVang.setRowFactory( val -> {
 			TableRow<ModelTamVang> row = new TableRow<>();
 			row.setOnMouseClicked(e -> {
+				if(!row.isEmpty()) {
 					nhanKhauTamVang = row.getItem();
 					List<Integer> listId = new ArrayList<>();
 					listId.add(nhanKhauTamVang.getIdTamVang());
 					Holder.getInstance().setId(listId);	
 					showChiTiet = false;
+				}
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					showDetail();
 				}

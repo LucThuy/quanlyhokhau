@@ -53,10 +53,6 @@ public class ControllerNhanKhau implements Initializable{
 		tableviewNhanKhau.setRowFactory( val -> {
 			TableRow<ModelNhanKhau> row = new TableRow<>();
 			row.setOnMouseClicked(e -> {
-					nhanKhau = row.getItem();
-					List<Integer> listId = new ArrayList<>();
-					listId.add(nhanKhau.getIdNhanKhau());
-					Holder.getInstance().setId(listId);	
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					showDetailNhanKhau();
 				}
@@ -93,6 +89,10 @@ public class ControllerNhanKhau implements Initializable{
 	
 	@FXML
 	public void showDetailNhanKhau() {
+		nhanKhau = tableviewNhanKhau.getSelectionModel().getSelectedItem();
+		List<Integer> listId = new ArrayList<>();
+		listId.add(nhanKhau.getIdNhanKhau());
+		Holder.getInstance().setId(listId);	
 		try {
 			App.addStageForm("view/ViewFormDetailNhanKhau");
 			ControllerFormDetailNhanKhau.setControllerNhanKhau(this);
