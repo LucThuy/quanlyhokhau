@@ -17,6 +17,7 @@ import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -24,7 +25,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -37,7 +37,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	private GridPane gridpane;
 
 	@FXML
-	private Label labelHoTenChuHo;
+	private TextField textfieldHoTenChuHo;
 	@FXML
 	private TextField textfieldSoNha;
 	@FXML
@@ -78,6 +78,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	private TableColumn<ModelNhanKhau, String> tablecolumnCCCDHKNKNhanKhau;
 	@FXML
 	private TableColumn<ModelNhanKhau, String> tablecolumnQuanHe;
+	
 
 	private ModelHoKhau data;
 	private ModelNhanKhau chuHo;
@@ -88,6 +89,12 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadData(Holder.getInstance().getId());
+		
+		textfieldHoTenChuHo.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				buttonTimKiem.fire();
+			}
+		});
 		
 		textfieldSoNha.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
@@ -110,6 +117,13 @@ public class ControllerFormDetailHoKhau implements Initializable {
 		textfieldQuan.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				buttonLuuThayDoi.fire();
+			}
+		});
+		
+		textfieldHoTenChuHo.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				labelThongBao.setText("");
+				textfieldHoTenChuHo.getStyleClass().removeAll("inputfield-error");
 			}
 		});
 		
@@ -150,7 +164,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 			row.setOnMouseClicked(e -> {
 				if (e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					chuHo = row.getItem();
-					labelHoTenChuHo.setText(chuHo.getHoTen());
+					textfieldHoTenChuHo.setText(chuHo.getHoTen());
 					gridpane.getRowConstraints().get(1).setPrefHeight(0);
 					tableviewNhanKhau.setVisible(false);
 					textfieldSoNha.requestFocus();
@@ -190,7 +204,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 
 	@FXML
 	public void searchNhanKhau() {
-		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(labelHoTenChuHo.getText());
+		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(textfieldHoTenChuHo.getText());
 
 		tableviewNhanKhau.getItems().clear();
 		listNhanKhau.forEach(nhanKhau -> {
@@ -292,7 +306,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	private void loadData(List<Integer> listId) {
 		data = Connector.getHoKhau(listId.get(0));
 
-		labelHoTenChuHo.setText(data.getHoTenNhanKhau());
+		textfieldHoTenChuHo.setText(data.getHoTenNhanKhau());
 		chuHo = Connector.getNhanKhau(data.getIdNhanKhau());
 		textfieldSoNha.setText(data.getSoNha());
 		textfieldDuongPho.setText(data.getDuongPho());

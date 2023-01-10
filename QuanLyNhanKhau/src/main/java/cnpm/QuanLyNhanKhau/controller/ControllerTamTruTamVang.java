@@ -51,7 +51,9 @@ public class ControllerTamTruTamVang implements Initializable {
 	@FXML
 	private Button buttonDangKyTamVang;
 	@FXML
-	private Button buttonChiTiet;
+	private Button buttonChiTietTamTru;
+	@FXML
+	private Button buttonChiTietTamVang;
 	
 	private ModelTamTru nhanKhauTamTru;
 	private ModelTamVang nhanKhauTamVang;
@@ -72,10 +74,9 @@ public class ControllerTamTruTamVang implements Initializable {
 					List<Integer> listId = new ArrayList<>();
 					listId.add(nhanKhauTamTru.getIdTamTru());
 					Holder.getInstance().setId(listId);	
-					showChiTiet = true;
 				}
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
-					showDetail();
+					showDetailNhanKhauTamTru();
 				}
 			});
 			return row;
@@ -97,10 +98,9 @@ public class ControllerTamTruTamVang implements Initializable {
 					List<Integer> listId = new ArrayList<>();
 					listId.add(nhanKhauTamVang.getIdTamVang());
 					Holder.getInstance().setId(listId);	
-					showChiTiet = false;
 				}
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
-					showDetail();
+					showDetailNhanKhauTamVang();
 				}
 			});
 			return row;
@@ -175,15 +175,6 @@ public class ControllerTamTruTamVang implements Initializable {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}	
-	}
-	
-	@FXML
-	public void showDetail() {
-		if(showChiTiet) {
-			showDetailNhanKhauTamTru();
-		} else {
-			showDetailNhanKhauTamVang();
-		}
 	}
 	
 }

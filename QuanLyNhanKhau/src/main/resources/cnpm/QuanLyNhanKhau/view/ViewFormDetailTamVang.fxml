@@ -74,7 +74,8 @@
                   </GridPane>
                   <Label text="LÝ DO" GridPane.rowIndex="4" />
                   <TextField fx:id="textfieldLyDo" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
-                  <Label fx:id="labelHoTenNguoiDangKy" GridPane.columnIndex="1" />
+                  <TextField fx:id="textfieldHoTenNguoiDangKy" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+                  <Button fx:id="buttonTimKiem" mnemonicParsing="false" onAction="#searchNhanKhau" styleClass="search-icon" text="OK" GridPane.columnIndex="2" />
                </children>
                <columnConstraints>
                   <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" />

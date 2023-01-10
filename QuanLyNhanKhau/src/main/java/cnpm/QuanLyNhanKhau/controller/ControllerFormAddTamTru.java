@@ -189,16 +189,15 @@ public class ControllerFormAddTamTru implements Initializable {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
-		if (Connector.addTamTruToTamTruTamVang(nguoiDangKy.getIdNhanKhau())) {
-			
-			if(Connector.addTamTru(nguoiDangKy.getIdNhanKhau(), textfieldNoiTamTru.getText(), 
-				datepickerNgayHieuLuc.getValue(), datepickerNgayHetHieuLuc.getValue(),
-				textfieldLyDo.getText())) {
-				controllerTamTruTamVang.refreshTamTru();
-				App.closeStageForm();
-			}
-		} else {
+		if(nguoiDangKy.getTrangThai().equals("Tạm Vắng") || nguoiDangKy.getTrangThai().equals("Tạm Trú") ||
+				!Connector.addTamTru(nguoiDangKy.getIdNhanKhau(), textfieldNoiTamTru.getText(), 
+						datepickerNgayHieuLuc.getValue(), datepickerNgayHetHieuLuc.getValue(),
+						textfieldLyDo.getText())) {
 			labelThongBao.setText("Nhân khẩu không hợp lệ");
+		} 
+		else {
+			controllerTamTruTamVang.refreshTamTru();
+			App.closeStageForm();
 		}
 	}
 	

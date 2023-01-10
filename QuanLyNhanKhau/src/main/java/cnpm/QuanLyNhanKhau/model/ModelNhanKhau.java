@@ -5,6 +5,7 @@ import java.sql.Date;
 public class ModelNhanKhau {
 	private int idNhanKhau;
 	private String hoTen;
+	private String biDanh;
 	private Date ngaySinh;
 	private String gioiTinh;
 	private String cccd;
@@ -22,7 +23,7 @@ public class ModelNhanKhau {
 	private String quocTich;
 	private String trinhDoChuyenMon;
 	private String ghiChu;
-	private String biDanh;
+	private String trangThai;
 	
 
 	private ModelHoKhauNhanKhau modelHoKhauNhanKhau;
@@ -30,7 +31,8 @@ public class ModelNhanKhau {
 	public ModelNhanKhau(int idNhanKhau, String hoTen, String biDanh, Date ngaySinh, String gioiTinh, String cccd,
 						Date ngayCap, String noiCap, String nguyenQuan, String danToc,String noiThuongTru,
 						Date ngayDangKyThuongTru, String trinhDoHocVan, String trinhDoNgoaiNgu,String ngheNghiep,
-						String noiLamViec, String tonGiao, String quocTich, String trinhDoChuyenMon, String ghiChu) {
+						String noiLamViec, String tonGiao, String quocTich, String trinhDoChuyenMon, String ghiChu,
+						String trangThai) {
 		super();
 		this.idNhanKhau          = idNhanKhau;
 		this.hoTen               = hoTen;
@@ -52,6 +54,7 @@ public class ModelNhanKhau {
 		this.quocTich            = quocTich;
 		this.trinhDoChuyenMon    = trinhDoChuyenMon;
 		this.ghiChu              = ghiChu;
+		this.trangThai           = trangThai;
 	}
 	
 	public int getIdNhanKhau() {
@@ -174,7 +177,13 @@ public class ModelNhanKhau {
 	public void setGhiChu(String ghiChu) {
 		this.ghiChu = ghiChu;
 	}
-	
+	public String getTrangThai() {
+		return trangThai;
+	}
+	public void setTrangThai(String trangThai) {
+		this.trangThai = trangThai;
+	}
+
 	public ModelHoKhauNhanKhau getModelHoKhauNhanKhau() {
 		return modelHoKhauNhanKhau;
 	}

@@ -54,7 +54,7 @@
 				</Button>
             <HBox alignment="CENTER">
                <children>
-                  <Label styleClass="normal-text" text="Chưa có tài khoản?" />
+                  <Label styleClass="normal-text" text="Đã có tài khoản?" />
                   <Hyperlink fx:id="hyperlinkDangNhap" onAction="#switchToViewSignIn" text="Đăng nhập" />
                </children>
                <VBox.margin>

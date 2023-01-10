@@ -21,13 +21,13 @@ import cnpm.QuanLyNhanKhau.model.ModelUser;
 
 public class Connector {
 
-	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
-	private static String user = "root";
-	private static String password = "Minh_0112";
-	
 //	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 //	private static String user = "root";
-//	private static String password = "namanh202";
+//	private static String password = "Minh_0112";
+	
+	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
+	private static String user = "root";
+	private static String password = "namanh202";
 
 	private static ModelUser currentUser;
 
@@ -209,8 +209,9 @@ public class Connector {
 
 		String query = "INSERT INTO quanlynhankhau.nhankhau (`hoTen`, `biDanh`, `ngaySinh`, `gioiTinh`, `cccd`,"
 				+ "`ngayCap`, `noiCap`, `nguyenQuan`, `danToc`, `noiThuongTru`, `ngayDangKyThuongTru`, `trinhDoHocVan`,"
-				+ " `trinhDoNgoaiNgu`, `ngheNghiep`, `noiLamViec`, `tonGiao`, `quocTich`, `trinhDoChuyenMon`, `ghiChu`)"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " `trinhDoNgoaiNgu`, `ngheNghiep`, `noiLamViec`, `tonGiao`, `quocTich`, `trinhDoChuyenMon`, `ghiChu`,"
+				+ "`trangThai`)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
@@ -233,6 +234,7 @@ public class Connector {
 			ps.setString(17, quocTich);
 			ps.setString(18, trinhDoChuyenMon);
 			ps.setString(19, ghiChu);
+			ps.setString(20, "Vô gia cư");
 
 			ps.executeUpdate();
 			ModelNhanKhau modelNhanKhau = queryNhanKhauByCCCD(cccd);
@@ -261,7 +263,7 @@ public class Connector {
 						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
-						rs.getString("ghiChu"));
+						rs.getString("ghiChu"), rs.getString("trangThai"));
 				lsGetNhanKhau(idNhanKhau);
 			}
 		} catch (SQLException e) {
@@ -288,7 +290,7 @@ public class Connector {
 						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
-						rs.getString("ghiChu"));
+						rs.getString("ghiChu"), rs.getString("trangThai"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -314,7 +316,7 @@ public class Connector {
 						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
-						rs.getString("ghiChu"));
+						rs.getString("ghiChu"), rs.getString("trangThai"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -406,7 +408,7 @@ public class Connector {
 						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
-						rs.getString("ghiChu"));
+						rs.getString("ghiChu"), rs.getString("trangThai"));
 				listNhanKhau.add(modelNhanKhau);
 			}
 //			lsGetAllNhanKhau();
@@ -435,7 +437,7 @@ public class Connector {
 						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
-						rs.getString("ghiChu"));
+						rs.getString("ghiChu"), rs.getString("trangThai"));
 				listNhanKhau.add(modelNhanKhau);
 			}
 		} catch (SQLException e) {
@@ -443,6 +445,33 @@ public class Connector {
 		}
 
 		return listNhanKhau;
+	}
+	
+	public static ModelNhanKhau searchNhanKhauByIdNhanKhau(int idNhanKhau) {
+		ModelNhanKhau modelNhanKhau = null;
+
+		String query = "SELECT * FROM quanlynhankhau.nhankhau WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelNhanKhau = new ModelNhanKhau(rs.getInt("idNhanKhau"), rs.getString("hoTen"),
+						rs.getString("biDanh"), rs.getDate("ngaySinh"), rs.getString("gioiTinh"), rs.getString("cccd"),
+						rs.getDate("ngayCap"), rs.getString("noiCap"), rs.getString("nguyenQuan"),rs.getString("danToc"),
+						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
+						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
+						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
+						rs.getString("ghiChu"), rs.getString("trangThai"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelNhanKhau;
 	}
 	
 	public static List<ModelNhanKhau> searchNhanKhauByIdHoKhau(int idHoKhau) {
@@ -465,7 +494,7 @@ public class Connector {
 						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
-						rs.getString("ghiChu"));
+						rs.getString("ghiChu"), rs.getString("trangThai"));
 				ModelHoKhauNhanKhau modelHoKhauNhanKhau = new ModelHoKhauNhanKhau(rs.getInt("idHoKhauNhanKhau"), rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("quanHe"));
 				modelNhanKhau.setModelHoKhauNhanKhau(modelHoKhauNhanKhau);
 				listNhanKhau.add(modelNhanKhau);
@@ -498,6 +527,7 @@ public class Connector {
 			ModelHoKhau modelHoKhau = getHoKhau(idNhanKhau, diaChi);
 			lsAddHoKhau(modelHoKhau.getIdHoKhau());
 			IsChangeNoiThuongTruNhanKhau(idNhanKhau, diaChi);
+			updateTrangThai(idNhanKhau, true);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -599,12 +629,35 @@ public class Connector {
 
 			ps.executeUpdate();
 			lsDeleteHoKhau();
+			updateTrangThai(data.getIdNhanKhau(), false);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return done;
+	}
+	
+	public static void updateTrangThai(int idNhanKhau, boolean addHoKhau) {
+		if(!searchNhanKhauByIdNhanKhau(idNhanKhau).getTrangThai().equals("Tạm Vắng") && 
+				!searchNhanKhauByIdNhanKhau(idNhanKhau).getTrangThai().equals("Tạm Trú")) {
+			String query = "UPDATE quanlynhankhau.nhankhau SET trangThai = ?"
+				+ "WHERE idNhanKhau = ?";
+			PreparedStatement ps;
+			try {
+				ps = connection.prepareStatement(query);
+				if(addHoKhau) {
+					ps.setString(1, "Có Hộ Khẩu");
+				}
+				else {
+				ps.setString(1, "Vô Gia Cư");
+				}
+				ps.setInt(2, idNhanKhau);
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static List<ModelHoKhau> getAllHoKhau(){
@@ -764,8 +817,8 @@ public class Connector {
 		return done;
 	}
 	
-	public static List<ModelHoKhauNhanKhau> searchHoKhauNhanKhauByIdNhanKhau(int idNhanKhau) {
-		List<ModelHoKhauNhanKhau> listHoKhauNhanKhau = new ArrayList<>();
+	public static ModelHoKhauNhanKhau searchHoKhauNhanKhauByIdNhanKhau(int idNhanKhau) {
+		ModelHoKhauNhanKhau modelHoKhauNhanKhau = null;
 
 		String query = "SELECT * FROM quanlynhankhau.hokhaunhankhau\n" + "WHERE idNhanKhau = ?";
 		PreparedStatement ps;
@@ -774,19 +827,18 @@ public class Connector {
 			ps.setInt(1, idNhanKhau);
 
 			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				ModelHoKhauNhanKhau modelHoKhauNhanKhau = new ModelHoKhauNhanKhau(rs.getInt("idHoKhauNhanKhau"), rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("quanHe"));
+			if (rs.next()) {
+				modelHoKhauNhanKhau = new ModelHoKhauNhanKhau(rs.getInt("idHoKhauNhanKhau"), rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("quanHe"));
 				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				ModelHoKhau modelHoKhau = queryHoKhauByIdHoKhau(rs.getInt("idHoKhau"));
 				modelHoKhauNhanKhau.setModelNhanKhau(modelNhanKhau);
 				modelHoKhauNhanKhau.setModelHoKhau(modelHoKhau);
-				listHoKhauNhanKhau.add(modelHoKhauNhanKhau);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return listHoKhauNhanKhau;
+		return modelHoKhauNhanKhau;
 	}
 	
 	public static List<ModelHoKhauNhanKhau> searchHoKhauNhanKhauByIdHoKhau(int idHoKhau) {
@@ -899,6 +951,7 @@ public class Connector {
 			ps.executeUpdate();
 			ModelTamTru modelTamTru = getTamTru(idNhanKhau, noiTamTru);
 			lsAddTamTru(modelTamTru.getIdTamTru());
+			updateTrangThaiTamTru(idNhanKhau, true);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -986,7 +1039,6 @@ public class Connector {
 		boolean done = false;
 
 		deleteLsTamTru(data.getIdTamTru());
-		deleteTamTruTamVang(data.getIdNhanKhau());
 
 		String query = "DELETE FROM quanlynhankhau.tamtru\n" + "WHERE idTamTru = ?";
 		PreparedStatement ps;
@@ -996,12 +1048,39 @@ public class Connector {
 
 			ps.executeUpdate();
 			lsDeleteTamTru();
+			updateTrangThaiTamTru(data.getIdNhanKhau(), false);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return done;
+	}
+	
+	public static void updateTrangThaiTamTru(int idNhanKhau, boolean addTamTru) {
+
+		String query = "UPDATE quanlynhankhau.nhankhau SET trangThai = ?"
+				+ "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			if(addTamTru) {
+				ps.setString(1, "Tạm Trú");
+			}
+			else {
+				if(searchHoKhauNhanKhauByIdNhanKhau(idNhanKhau) == null) {
+					ps.setString(1, "Vô Gia Cư");
+				}
+				else{
+					ps.setString(1, "Có Hộ Khẩu");
+				}
+			}
+			ps.setInt(2, idNhanKhau);
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static List<ModelTamTru> searchTamTruByIdNhanKhau(int idNhanKhau) {
@@ -1048,6 +1127,7 @@ public class Connector {
 			ps.executeUpdate();
 			ModelTamVang modelTamVang = getTamVang(idNhanKhau, noiTamTru);
 			lsAddTamVang(modelTamVang.getIdTamVang());
+			updateTrangThaiTamVang(idNhanKhau, true);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1136,7 +1216,6 @@ public class Connector {
 		boolean done = false;
 
 		deleteLsTamVang(data.getIdTamVang());
-		deleteTamTruTamVang(data.getIdNhanKhau());
 
 		String query = "DELETE FROM quanlynhankhau.tamvang\n" + "WHERE idTamVang = ?";
 		PreparedStatement ps;
@@ -1146,12 +1225,40 @@ public class Connector {
 
 			ps.executeUpdate();
 			lsDeleteTamVang();
+			updateTrangThaiTamVang(data.getIdNhanKhau(), false);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return done;
+	}
+	
+	public static void updateTrangThaiTamVang(int idNhanKhau, boolean addTamVang) {
+
+		String query = "UPDATE quanlynhankhau.nhankhau SET trangThai = ?"
+				+ "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			if(addTamVang) {
+				ps.setString(1, "Tạm Vắng");
+			}
+			else {
+				if(searchHoKhauNhanKhauByIdNhanKhau(idNhanKhau) == null) {
+					ps.setString(1, "Vô Gia Cư");
+				}
+				else{
+					ps.setString(1, "Có Hộ Khẩu");
+				}
+			}
+			ps.setInt(2, idNhanKhau);
+			
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static List<ModelTamVang> searchTamVangByIdNhanKhau(int idNhanKhau) {
@@ -1223,58 +1330,6 @@ public class Connector {
 		}
 
 		return modelTamVang;
-	}
-	
-	
-	public static boolean addTamTruToTamTruTamVang(int idNhanKhau) {
-		boolean done = false;
-
-		String query = "INSERT INTO quanlynhankhau.tamtrutamvang (`idNhanKhau`, `trangThai`)"
-				+ " VALUES (?, ?)";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idNhanKhau);
-			ps.setString(2, "Tạm Trú");
-
-			ps.executeUpdate();
-			done = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return done;
-	}
-	
-	public static boolean addTamVangToTamTruTamVang(int idNhanKhau) {
-		boolean done = false;
-
-		String query = "INSERT INTO quanlynhankhau.tamtrutamvang (`idNhanKhau`, `trangThai`)"
-				+ " VALUES (?, ?)";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idNhanKhau);
-			ps.setString(2, "Tạm Vắng");
-
-			ps.executeUpdate();
-			done = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return done;
-	}
-	
-	public static void deleteTamTruTamVang(int idNhanKhau) {
-		String query = "DELETE FROM quanlynhankhau.tamtrutamvang\n" + "WHERE idNhanKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idNhanKhau);
-
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	

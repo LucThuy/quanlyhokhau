@@ -189,7 +189,7 @@ public class ControllerFormAddTamVang implements Initializable {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
-		if(!Connector.addTamVangToTamTruTamVang(nguoiDangKy.getIdNhanKhau()) ||
+		if(nguoiDangKy.getTrangThai().equals("Tạm Vắng") || nguoiDangKy.getTrangThai().equals("Tạm Trú") ||
 				!Connector.addTamVang(nguoiDangKy.getIdNhanKhau(), textfieldNoiTamTru.getText(), 
 						datepickerNgayHieuLuc.getValue(), datepickerNgayHetHieuLuc.getValue(),
 						textfieldLyDo.getText())) {

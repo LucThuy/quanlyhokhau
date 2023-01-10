@@ -19,7 +19,7 @@
                         <HBox alignment="CENTER" prefHeight="80.0" spacing="40.0" styleClass="bottom" BorderPane.alignment="CENTER">
                            <children>
                               <Button fx:id="buttonDangKyTamTru" mnemonicParsing="false" onAction="#addTamTru" text="TẠM TRÚ" />
-                              <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetail" text="CHI TIẾT" />
+                              <Button fx:id="buttonChiTietTamTru" mnemonicParsing="false" onAction="#showDetailNhanKhauTamTru" text="CHI TIẾT" />
                            </children>
                         </HBox>
                      </bottom>
@@ -46,7 +46,7 @@
                         <HBox alignment="CENTER" prefHeight="80.0" spacing="40.0" styleClass="bottom" BorderPane.alignment="CENTER">
                            <children>
                               <Button fx:id="buttonDangKyTamVang" mnemonicParsing="false" onAction="#addTamVang" text="TẠM VẮNG" />
-                              <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetail" text="CHI TIẾT" />
+                              <Button fx:id="buttonChiTietTamVang" mnemonicParsing="false" onAction="#showDetailNhanKhauTamVang" text="CHI TIẾT" />
                            </children>
                         </HBox>
                      </bottom>
