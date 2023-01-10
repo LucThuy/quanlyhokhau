@@ -724,6 +724,7 @@ public class Connector {
 			lsAddHoKhauNhanKhau(modelHoKhauNhanKhau.getIdHoKhauNhanKhau());
 			ModelHoKhau modelHoKhau = getHoKhau(idHoKhau);
 			IsChangeNoiThuongTruNhanKhau(idNhanKhau, modelHoKhau.getDiaChi());
+			updateTrangThai(idNhanKhau, true);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -809,6 +810,7 @@ public class Connector {
 
 			ps.executeUpdate();
 			lsDeleteHoKhauNhanKhau();
+			updateTrangThai(data.getIdNhanKhau(), false);
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
