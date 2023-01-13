@@ -14,6 +14,7 @@ import java.util.List;
 
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelLichSu;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelTamTru;
 import cnpm.QuanLyNhanKhau.model.ModelTamVang;
@@ -98,6 +99,7 @@ public class Connector {
 		return modelUser;
 	}
 	
+	
 	public static boolean editUser(ModelUser data) {
 		boolean done = false;
 
@@ -140,6 +142,27 @@ public class Connector {
 		}
 
 		return done;
+	}
+	
+	public static ModelUser getUser(int idUser) {
+		ModelUser modelUser = null;
+
+		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE idUser = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idUser);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelUser = new ModelUser(rs.getInt("idUser"), rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"), rs.getString("matKhau"), rs.getString("role"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelUser;
 	}
 	
 	public static List<ModelUser> getAllUser() {
@@ -1771,6 +1794,53 @@ public class Connector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static ModelLichSu getLichSu(int idLichSu) {
+		ModelLichSu modelLichSu = null;
+
+		String query = "SELECT * FROM quanlynhankhau.lichsu\n" + "WHERE idLichSu = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idLichSu);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelLichSu = new ModelLichSu(rs.getInt("idLichSu"), rs.getString("thaoTac"),
+						rs.getInt("idUser"), rs.getTimestamp("thoiGian"));
+				ModelUser modelUser = getUser(rs.getInt("idUser"));
+//				modelLichSu.setModelUser(modelUser);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelLichSu;
+	}
+	
+	public static List<ModelLichSu> searchLichSuByIdUser(int idUser) {
+		List<ModelLichSu> listLichSu = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.lichSu\n"
+				+ "WHERE idUser = ?";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idUser);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelLichSu modelLichSu = new ModelLichSu(rs.getInt("idLichSu"), rs.getString("thaoTac"),
+						rs.getInt("idUser"), rs.getTimestamp("thoiGian"));
+				listLichSu.add(modelLichSu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listLichSu;
 	}
 	
 	private static void IsChangeNoiThuongTruNhanKhau(int idNhanKhau, String diaChi) {
