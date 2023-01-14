@@ -21,13 +21,13 @@ import cnpm.QuanLyNhanKhau.model.ModelUser;
 
 public class Connector {
 
-//	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
-//	private static String user = "root";
-//	private static String password = "Minh_0112";
-	
 	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 	private static String user = "root";
-	private static String password = "namanh202";
+	private static String password = "Minh_0112";
+	
+//	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
+//	private static String user = "root";
+//	private static String password = "namanh202";
 
 	private static ModelUser currentUser;
 

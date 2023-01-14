@@ -36,11 +36,6 @@ public class ControllerQuanLy implements Initializable{
 	@FXML
 	private TableColumn<ModelUser, String> tablecolumnMatKhauNV;
 	
-	@FXML
-	private Button buttonPheDuyet;
-	@FXML
-	private Button buttonTuChoi;
-	
 	private ModelUser user;
 	private ModelUser userNV;
 	

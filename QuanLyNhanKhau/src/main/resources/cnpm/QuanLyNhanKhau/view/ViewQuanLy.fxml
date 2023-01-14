@@ -18,7 +18,7 @@
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="bottom" BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetailUser" text="CHI TIẾT" />
+                              <Button mnemonicParsing="false" onAction="#showDetailUser" text="CHI TIẾT" />
                            </children>
                         </HBox>
                      </bottom>
@@ -55,8 +55,8 @@
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="bottom" BorderPane.alignment="CENTER">
                            <children>
-                              <Button fx:id="buttonPheDuyet" mnemonicParsing="false" onAction="#confirmUser" text="PHÊ DUYỆT" />
-                              <Button fx:id="buttonTuChoi" mnemonicParsing="false" onAction="#declineUser" text="TỪ CHỐI" />
+                              <Button mnemonicParsing="false" onAction="#confirmUser" text="PHÊ DUYỆT" />
+                              <Button mnemonicParsing="false" onAction="#declineUser" text="TỪ CHỐI" />
                            </children>
                         </HBox>
                      </bottom>
@@ -66,4 +66,15 @@
         </tabs>
       </TabPane>
    </center>
+   <top>
+      <HBox alignment="CENTER" styleClass="top">
+         <children>
+            <Label styleClass="title" text="QUẢN LÝ" BorderPane.alignment="CENTER">
+               <HBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

@@ -83,8 +83,11 @@
                         <Button fx:id="buttonTimKiem" mnemonicParsing="false" onAction="#searchNhanKhau" styleClass="search-icon" text="OK" GridPane.columnIndex="2" />
 							</children>
 							<BorderPane.margin>
-								<Insets left="20.0" right="20.0" />
+								<Insets />
 							</BorderPane.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
 						</GridPane>
 					</center>
 					<bottom>

@@ -62,7 +62,7 @@
 
 .table-view .column-header{
 	-fx-background-color: -black-3;
-	-fx-border-width: 0 1;
+	-fx-border-width: 1;
 	-fx-border-color: -white-2;
 	-fx-pref-height: 40;
 }
@@ -181,9 +181,10 @@
 }
 
 .tab {
-	-fx-background-color: -black-4;
+	-fx-background-color: -black-3;
+	-fx-opacity: 0.8;
 	-fx-border-color: -white-2;
-	-fx-border-width: 0 1 1 1;
+	-fx-border-width: 1 1 1 1;
 	-fx-background-insets: 0 0 0 0;
 	-fx-background-radius: 0 0 0 0;
 }
@@ -194,13 +195,15 @@
 }
 
 .tab:selected {
-	-fx-background-color: -black-3;
+	-fx-background-color: -white-2;
+	-fx-opacity: 1;
+	-fx-border-color: -black-2;
 	-fx-pref-width: 150;
 	-fx-padding: 0 0 0 20;
 }
 
 .tab:selected .tab-label {
-	-fx-text-fill: -white-1;
+	-fx-text-fill: -black-2;
 }
 
 .tab-pane:focused .tab-header-area .headers-region .tab:selected .focus-indicator {
@@ -288,12 +291,12 @@
 	-fx-text-fill: -red-1;
 }
 
-.notice-green{
-	-fx-text-fill: -green-1;
-}
-
 .normal-text{
 	-fx-text-fill: -white-1;
+}
+
+.notice-green{
+	-fx-text-fill: -green-1;
 }
 
 .inputfield-error{ 
@@ -314,6 +317,7 @@
 
 .side-bar .button{
 	-fx-background-radius: 0 5 5 0;
+	-fx-opacity: 0.8;
 	-fx-border-radius: 0 5 5 0;
 	-fx-pref-width: 150;
 	-fx-pref-height: 50;
@@ -322,6 +326,7 @@
 
 .side-bar .button.active{
 	-fx-background-color: -white-2;
+	-fx-opacity: 1;
 	-fx-text-fill: -black-2;
 }
 
