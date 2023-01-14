@@ -24,11 +24,11 @@ public class Connector {
 
 	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 	private static String user = "root";
-	private static String password = "Minh_0112";
+//	private static String password = "Minh_0112";
 	
 //	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 //	private static String user = "root";
-//	private static String password = "namanh202";
+	private static String password = "namanh202";
 
 	private static ModelUser currentUser;
 
@@ -50,17 +50,20 @@ public class Connector {
 		return true;
 	}
 
-	public static boolean signUp(String taiKhoan, String matKhau, String tenNguoiDung) {
+	public static boolean signUp(String taiKhoan, String matKhau, String tenNguoiDung, String chucVu) {
 		boolean done = false;
 
-		String query = "INSERT INTO quanlynhankhau.user (`taiKhoan`, `matKhau`, `tenNguoiDung`, `role`) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO quanlynhankhau.user (`taiKhoan`, `matKhau`, `tenNguoiDung`, `role`,"
+				+ "`capQuyen`) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, taiKhoan);
 			ps.setString(2, matKhau);
 			ps.setString(3, tenNguoiDung);
-			ps.setString(4, "DANG KY");
+			ps.setString(4, chucVu);
+			ps.setString(5, "Chưa cấp quyền");
+			
 
 			ps.executeUpdate();
 			ModelUser modelUser = getUser(taiKhoan, matKhau);
@@ -84,18 +87,14 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				modelUser = new ModelUser(rs.getInt("idUser"),
-						rs.getString("tenNguoiDung"),
-						rs.getString("taiKhoan"),
-						rs.getString("matKhau"),
-						rs.getString("role")
-						);
+				modelUser = new ModelUser(rs.getInt("idUser"), rs.getString("tenNguoiDung"),						rs.getString("taiKhoan"),
+						rs.getString("matKhau"), rs.getString("role"), rs.getString("capQuyen"));
 				currentUser = modelUser;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		
 		return modelUser;
 	}
 	
@@ -103,7 +102,7 @@ public class Connector {
 	public static boolean editUser(ModelUser data) {
 		boolean done = false;
 
-		String query = "UPDATE quanlynhankhau.user SET tenNguoiDung = ?, taiKhoan = ?, matKhau = ?, role = ?\n"
+		String query = "UPDATE quanlynhankhau.user SET tenNguoiDung = ?, taiKhoan = ?, matKhau = ?, role = ?, capQuyen = ?\n"
 				+ "WHERE idUser = ?";
 		PreparedStatement ps;
 		try {
@@ -112,8 +111,9 @@ public class Connector {
 			ps.setString(2, data.getTaiKhoan());
 			ps.setString(3, data.getMatKhau());
 			ps.setString(4, data.getRole());
+			ps.setString(5, data.getCapQuyen());
 			
-			ps.setInt(5, data.getIdUser());
+			ps.setInt(6, data.getIdUser());
 			
 			ps.executeUpdate();
 			done = true;
@@ -155,8 +155,9 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				modelUser = new ModelUser(rs.getInt("idUser"), rs.getString("tenNguoiDung"),
-						rs.getString("taiKhoan"), rs.getString("matKhau"), rs.getString("role"));
+				modelUser = new ModelUser(rs.getInt("idUser"),rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"), rs.getString("matKhau"), rs.getString("role"),
+						rs.getString("capQuyen"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -176,11 +177,9 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ModelUser modelUser = new ModelUser(rs.getInt("idUser"),
-						rs.getString("tenNguoiDung"),
-						rs.getString("taiKhoan"),
-						rs.getString("matKhau"),
-						rs.getString("role"));
+				ModelUser modelUser = new ModelUser(rs.getInt("idUser"),rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"), rs.getString("matKhau"), rs.getString("role"),
+						rs.getString("capQuyen"));
 				listUser.add(modelUser);
 			}
 		} catch (SQLException e) {
@@ -190,22 +189,43 @@ public class Connector {
 		return listUser;
 	}
 	
-	public static List<ModelUser> getAllUserByRole(String role) {
+	public static List<ModelUser> getAllUserByCapQuyen(String capQuyen) {
 		List<ModelUser> listUser = new ArrayList<>();
 
-		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE role = ?";
+		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE capQuyen = ?";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, role);
+			ps.setString(1, capQuyen);
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ModelUser modelUser = new ModelUser(rs.getInt("idUser"),
-						rs.getString("tenNguoiDung"),
-						rs.getString("taiKhoan"),
-						rs.getString("matKhau"),
-						rs.getString("role"));
+				ModelUser modelUser = new ModelUser(rs.getInt("idUser"),rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"), rs.getString("matKhau"), rs.getString("role"),
+						rs.getString("capQuyen"));
+				listUser.add(modelUser);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listUser;
+	}
+	
+	public static List<ModelUser> getAllUserExceptToTruong() {
+		List<ModelUser> listUser = new ArrayList<>();
+		
+		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE role != ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "Tổ Trưởng");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelUser modelUser = new ModelUser(rs.getInt("idUser"),rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"), rs.getString("matKhau"), rs.getString("role"),
+						rs.getString("capQuyen"));
 				listUser.add(modelUser);
 			}
 		} catch (SQLException e) {
@@ -903,8 +923,9 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				modelUser = new ModelUser(rs.getInt("idUser"), rs.getString("tenNguoiDung"), rs.getString("taiKhoan"),
-						rs.getString("matKhau"), rs.getString("role"));
+				modelUser = new ModelUser(rs.getInt("idUser"),rs.getString("tenNguoiDung"),
+						rs.getString("taiKhoan"), rs.getString("matKhau"), rs.getString("role"),
+						rs.getString("capQuyen"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

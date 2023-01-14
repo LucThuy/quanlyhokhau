@@ -32,6 +32,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
 						<Label text="TÀI KHOẢN" GridPane.rowIndex="1" />
@@ -40,6 +41,8 @@
                   <Label text="TÊN NGƯỜI DÙNG" />
                   <TextField fx:id="textfieldTenNguoiDung" GridPane.columnIndex="1" />
                   <TextField fx:id="textfieldMatKhau" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="CHỨC VỤ" GridPane.rowIndex="3" />
+                  <ChoiceBox fx:id="choiceboxChucVu" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 					</children>
 				</GridPane>
             <Label fx:id="labelThongBao" styleClass="notice">

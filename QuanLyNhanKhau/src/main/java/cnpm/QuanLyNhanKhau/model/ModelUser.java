@@ -7,14 +7,17 @@ public class ModelUser {
 	private String matKhau;
 	
 	private String role;
+	private String capQuyen;
 	
-	public ModelUser(int idUser, String tenNguoiDung, String taiKhoan, String matKhau, String role) {
+	public ModelUser(int idUser, String tenNguoiDung, String taiKhoan, String matKhau, String role,
+			String capQuyen) {
 		super();
-		this.idUser = idUser;
+		this.idUser       = idUser;
 		this.tenNguoiDung = tenNguoiDung;
-		this.taiKhoan = taiKhoan;
-		this.matKhau = matKhau;
-		this.role = role;
+		this.taiKhoan     = taiKhoan;
+		this.matKhau      = matKhau;
+		this.role         = role;
+		this.capQuyen     = capQuyen;
 	}
 
 	public int getIdUser() {
@@ -46,5 +49,11 @@ public class ModelUser {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getCapQuyen() {
+		return capQuyen;
+	}
+	public void setCapQuyen(String capQuyen) {
+		this.capQuyen = capQuyen;
 	}
 }

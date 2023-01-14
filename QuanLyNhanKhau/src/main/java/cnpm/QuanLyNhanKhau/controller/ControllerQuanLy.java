@@ -2,7 +2,6 @@ package cnpm.QuanLyNhanKhau.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -10,11 +9,9 @@ import java.util.ResourceBundle;
 import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
 import cnpm.QuanLyNhanKhau.Holder;
-import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelUser;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -29,7 +26,7 @@ public class ControllerQuanLy implements Initializable{
 	@FXML
 	private TableColumn<ModelUser, String> tablecolumnTenNguoiDung;
 	@FXML
-	private TableColumn<ModelUser, Date> tablecolumnTaiKhoan;
+	private TableColumn<ModelUser, String> tablecolumnTaiKhoan;
 	@FXML
 	private TableColumn<ModelUser, String> tablecolumnMatKhau;
 	
@@ -38,7 +35,7 @@ public class ControllerQuanLy implements Initializable{
 	@FXML
 	private TableColumn<ModelUser, String> tablecolumnTenNguoiDungNV;
 	@FXML
-	private TableColumn<ModelUser, Date> tablecolumnTaiKhoanNV;
+	private TableColumn<ModelUser, String> tablecolumnTaiKhoanNV;
 	@FXML
 	private TableColumn<ModelUser, String> tablecolumnMatKhauNV;
 	
@@ -82,7 +79,7 @@ public class ControllerQuanLy implements Initializable{
 	private void refreshTableViewUser() {
 		tableviewUser.getItems().clear();
 		
-		List<ModelUser> listUser = Connector.getAllUserByRole("DANG KY");
+		List<ModelUser> listUser = Connector.getAllUserByCapQuyen("Chưa cấp quyền");
 		listUser.forEach(user -> {
 			tableviewUser.getItems().add(user);
 		});
@@ -91,7 +88,7 @@ public class ControllerQuanLy implements Initializable{
 	public void refreshTableViewUserNV() {
 		tableviewUserNV.getItems().clear();
 		
-		List<ModelUser> listUser = Connector.getAllUserByRole("NHAN VIEN");
+		List<ModelUser> listUser = Connector.getAllUserExceptToTruong();
 		listUser.forEach(user -> {
 			tableviewUserNV.getItems().add(user);
 		});
@@ -99,7 +96,7 @@ public class ControllerQuanLy implements Initializable{
 	
 	@FXML
 	public void confirmUser() {
-		user.setRole("NHAN VIEN");
+		user.setCapQuyen("Đã cấp quyền");
 		Connector.editUser(user);
 		
 		refreshTableViewUser();

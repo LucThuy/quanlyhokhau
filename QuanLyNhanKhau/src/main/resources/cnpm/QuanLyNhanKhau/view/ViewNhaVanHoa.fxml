@@ -12,13 +12,13 @@
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-            <Tab text="NHÂN VIÊN">
+            <Tab text="THỐNG KÊ">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="bottom" BorderPane.alignment="CENTER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addQuanLy" text="QUẢN LÝ" />
+                              <Button mnemonicParsing="false" onAction="#addQuanLyNhaVanHoa" text="QUẢN LÝ" />
                            </children>
                         </HBox>
                      </bottom>
@@ -28,9 +28,13 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                            <columns>
-                              <TableColumn fx:id="tablecolumnTenNguoiDungNV" editable="false" prefWidth="75.0" text="TÊN NGƯỜI DÙNG" />
-                              <TableColumn fx:id="tablecolumnTaiKhoanNV" editable="false" prefWidth="75.0" text="TÀI KHOẢN" />
-                              <TableColumn fx:id="tablecolumnMatKhauNV" editable="false" prefWidth="75.0" text="MẬT KHẨU" />
+                              <TableColumn fx:id="tablecolumnTenNguoiDungNV" editable="false" prefWidth="75.0" text="NGÀY KIỂM TRA" />
+                              <TableColumn fx:id="tablecolumnTaiKhoanNV" editable="false" prefWidth="75.0" text="BÀN" />
+                              <TableColumn fx:id="tablecolumnMatKhauNV" editable="false" prefWidth="75.0" text="GHẾ" />
+                              <TableColumn prefWidth="75.0" text="LOA" />
+                              <TableColumn prefWidth="75.0" text="ĐÀI" />
+                              <TableColumn prefWidth="75.0" text="MÀN HÌNH" />
+                              <TableColumn prefWidth="75.0" text="ĐÈN" />
                            </columns>
                         </TableView>
                      </center>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="480.0" prefWidth="640.0" style="-fx-background-color: -black-5;" styleClass="sub-stage" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerFormAddNhanKhau">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="60.0" spacing="30.0" styleClass="bottom" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonThemMoi" mnemonicParsing="false" onAction="#addNhanKhau" text="THÊM MỚI" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="HỦY BỎ" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" styleClass="top">
+         <children>
+            <Label styleClass="title" text="QUẢN LÝ NHÀ VĂN HOÁ" BorderPane.alignment="CENTER">
+               <HBox.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <ScrollPane fitToWidth="true" prefViewportHeight="320.0" prefViewportWidth="600.0">
+               <content>
+                  <GridPane maxWidth="-Infinity" prefWidth="960.0" styleClass="center" vgap="30.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="42.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="58.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="BÀN" />
+                        <TextField fx:id="textfieldHoTen" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+                        <Label GridPane.rowIndex="1" />
+                        <Label GridPane.rowIndex="3" />
+                        <Label text="LOA" GridPane.rowIndex="4" />
+                        <Label GridPane.rowIndex="5" />
+                        <Label text="ĐÀI" GridPane.rowIndex="6" />
+                        <Label GridPane.rowIndex="7" />
+                        <Label text="MÀN HÌNH" GridPane.rowIndex="8" />
+                        <Label GridPane.rowIndex="9" />
+                        <Label text="ĐÈN" GridPane.rowIndex="10" />
+                        <TextField fx:id="textfieldDanToc" GridPane.columnIndex="1" GridPane.rowIndex="3" />                
+                        <TextField fx:id="textfieldTrinhDoHocVan" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="textfieldTrinhDoNgoaiNgu" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="textfieldTonGiao" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <TextField fx:id="textfieldQuocTich" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="textfieldTrinhDoChuyenMon" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <TextField fx:id="textfieldGhiChu" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <TextField fx:id="textfieldBiDanh" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="GHẾ" GridPane.rowIndex="2">
+                           <graphic>
+                              <Label />
+                           </graphic></Label>
+                        <TextField fx:id="textfieldNguyenQuan" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                     <BorderPane.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <Label fx:id="labelThongBao" styleClass="notice" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </center>
+</BorderPane>

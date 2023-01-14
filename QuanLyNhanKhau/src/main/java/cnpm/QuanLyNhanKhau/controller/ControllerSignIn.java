@@ -2,7 +2,6 @@ package cnpm.QuanLyNhanKhau.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
@@ -68,11 +67,14 @@ public class ControllerSignIn implements Initializable {
 		if(user == null) {
 			labelThongBao.setText("Tài khoản hoặc mật khẩu không chính xác");
 		}
-		else if(user.getRole().equals("TO TRUONG")) {
+		else if(user.getRole().equals("Tổ Trưởng")) {
 			App.setRoot("view/ViewMainAdmin");
 		}
-		else if(user.getRole().equals("NHAN VIEN")){
-			App.setRoot("view/ViewMain");
+		else if(user.getRole().equals("Nhân Viên") && user.getCapQuyen().equals("Đã cấp quyền")){
+			App.setRoot("view/ViewMainNhanVien");
+		}
+		else if(user.getRole().equals("Cán Bộ Quản Lý") && user.getCapQuyen().equals("Đã cấp quyền")) {
+			App.setRoot("view/ViewMainQuanLy");
 		}
 		else {
 			labelThongBao.setText("Tài khoản của bạn đang chờ được cấp phép");
