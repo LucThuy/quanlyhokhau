@@ -9,6 +9,8 @@ public class ModelLichSu {
 	private Timestamp thoiGian;
 	private int idNhanKhau;
 	
+	private ModelUser modelUser;
+	
 	public ModelLichSu(int idLichSu, String thaoTac, int idUser, Timestamp thoiGian) {
 		super();
 		this.idLichSu = idLichSu;
@@ -47,4 +49,5 @@ public class ModelLichSu {
 	public void setIdNhanKhau(int idNhanKhau) {
 		this.idNhanKhau = idNhanKhau;
 	}
+	
 }

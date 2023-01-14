@@ -1,11 +1,16 @@
 package cnpm.QuanLyNhanKhau.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
+import cnpm.QuanLyNhanKhau.Holder;
+import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelUser;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 
 
 public class ControllerQuanLy implements Initializable{
@@ -60,10 +66,14 @@ public class ControllerQuanLy implements Initializable{
 		tableviewUserNV.setRowFactory( val -> {
 			TableRow<ModelUser> row = new TableRow<>();
 			row.setOnMouseClicked(e -> {
-					userNV = row.getItem();
+				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
+					showDetailUser();
+				}
 			});
 			return row;
 		});
+		
+		
 		
 		refreshTableViewUser();
 		refreshTableViewUserNV();
@@ -78,7 +88,7 @@ public class ControllerQuanLy implements Initializable{
 		});
 	}
 	
-	private void refreshTableViewUserNV() {
+	public void refreshTableViewUserNV() {
 		tableviewUserNV.getItems().clear();
 		
 		List<ModelUser> listUser = Connector.getAllUserByRole("NHAN VIEN");
@@ -93,6 +103,7 @@ public class ControllerQuanLy implements Initializable{
 		Connector.editUser(user);
 		
 		refreshTableViewUser();
+		refreshTableViewUserNV();
 	}
 
 	@FXML
@@ -104,7 +115,16 @@ public class ControllerQuanLy implements Initializable{
 	
 	@FXML
 	public void showDetailUser() {
-		
+		user = tableviewUserNV.getSelectionModel().getSelectedItem();
+		List<Integer> listId = new ArrayList<>();
+		listId.add(user.getIdUser());
+		Holder.getInstance().setId(listId);	
+		try {
+			App.addStageForm("view/ViewFormDetailUSer");
+			ControllerFormDetailUser.setControllerQuanLy(this);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 	
 }
