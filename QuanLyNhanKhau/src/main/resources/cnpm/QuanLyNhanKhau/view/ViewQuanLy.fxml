@@ -31,6 +31,7 @@
                               <TableColumn fx:id="tablecolumnTenNguoiDungNV" editable="false" prefWidth="75.0" text="TÊN NGƯỜI DÙNG" />
                               <TableColumn fx:id="tablecolumnTaiKhoanNV" editable="false" prefWidth="75.0" text="TÀI KHOẢN" />
                               <TableColumn fx:id="tablecolumnMatKhauNV" editable="false" prefWidth="75.0" text="MẬT KHẨU" />
+                              <TableColumn fx:id="tablecolumnChucVuNV" prefWidth="75.0" text="CHỨC VỤ" />
                            </columns>
                         </TableView>
                      </center>
@@ -46,6 +47,7 @@
                             <TableColumn fx:id="tablecolumnTenNguoiDung" editable="false" prefWidth="75.0" text="TÊN NGƯỜI DÙNG" />
                             <TableColumn fx:id="tablecolumnTaiKhoan" editable="false" prefWidth="75.0" text="TÀI KHOẢN" />
                               <TableColumn fx:id="tablecolumnMatKhau" editable="false" prefWidth="75.0" text="MẬT KHẨU" />
+                              <TableColumn fx:id="tablecolumnChucVu" prefWidth="75.0" text="CHỨC VỤ" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

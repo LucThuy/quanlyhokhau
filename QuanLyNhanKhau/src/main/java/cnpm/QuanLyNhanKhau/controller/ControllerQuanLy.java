@@ -29,6 +29,8 @@ public class ControllerQuanLy implements Initializable{
 	private TableColumn<ModelUser, String> tablecolumnTaiKhoan;
 	@FXML
 	private TableColumn<ModelUser, String> tablecolumnMatKhau;
+	@FXML
+	private TableColumn<ModelUser, String> tablecolumnChucVu;
 	
 	@FXML
 	private TableView<ModelUser> tableviewUserNV;
@@ -38,6 +40,8 @@ public class ControllerQuanLy implements Initializable{
 	private TableColumn<ModelUser, String> tablecolumnTaiKhoanNV;
 	@FXML
 	private TableColumn<ModelUser, String> tablecolumnMatKhauNV;
+	@FXML
+	private TableColumn<ModelUser, String> tablecolumnChucVuNV;
 	
 	private ModelUser user;
 	private ModelUser userNV;
@@ -47,6 +51,7 @@ public class ControllerQuanLy implements Initializable{
 		tablecolumnTenNguoiDung.setCellValueFactory(new PropertyValueFactory<>("tenNguoiDung"));
 		tablecolumnTaiKhoan.setCellValueFactory(new PropertyValueFactory<>("taiKhoan"));
 		tablecolumnMatKhau.setCellValueFactory(new PropertyValueFactory<>("matKhau"));
+		tablecolumnChucVu.setCellValueFactory(new PropertyValueFactory<>("role"));
 		
 		tableviewUser.setRowFactory( val -> {
 			TableRow<ModelUser> row = new TableRow<>();
@@ -59,6 +64,8 @@ public class ControllerQuanLy implements Initializable{
 		tablecolumnTenNguoiDungNV.setCellValueFactory(new PropertyValueFactory<>("tenNguoiDung"));
 		tablecolumnTaiKhoanNV.setCellValueFactory(new PropertyValueFactory<>("taiKhoan"));
 		tablecolumnMatKhauNV.setCellValueFactory(new PropertyValueFactory<>("matKhau"));
+		tablecolumnChucVuNV.setCellValueFactory(new PropertyValueFactory<>("role"));
+
 		
 		tableviewUserNV.setRowFactory( val -> {
 			TableRow<ModelUser> row = new TableRow<>();

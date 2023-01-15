@@ -10,7 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.util.Duration;
 
-public class ControllerMain implements Initializable {
+public class ControllerMainNhanVien implements Initializable {
 
 	@FXML
 	private Button buttonNhanKhau;

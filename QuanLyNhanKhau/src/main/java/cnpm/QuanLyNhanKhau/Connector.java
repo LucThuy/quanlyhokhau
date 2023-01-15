@@ -15,6 +15,7 @@ import java.util.List;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelLichSu;
+import cnpm.QuanLyNhanKhau.model.ModelNhaVanHoa;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelTamTru;
 import cnpm.QuanLyNhanKhau.model.ModelTamVang;
@@ -30,7 +31,7 @@ public class Connector {
 //	private static String user = "root";
 	private static String password = "namanh202";
 
-	private static ModelUser currentUser;
+	public static ModelUser currentUser;
 
 	private static Connection connection;
 
@@ -215,11 +216,12 @@ public class Connector {
 	public static List<ModelUser> getAllUserExceptToTruong() {
 		List<ModelUser> listUser = new ArrayList<>();
 		
-		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE role != ?";
+		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE role != ? AND capQuyen = ?";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, "Tổ Trưởng");
+			ps.setString(2, "Đã cấp quyền");
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -1378,6 +1380,149 @@ public class Connector {
 		return modelTamVang;
 	}
 	
+	public static boolean addQuanLyNhaVanHoa(String soLuongBan, String hienTrangBan,
+			String soLuongGhe, String hienTrangGhe, String soLuongLoa, String hienTrangLoa, String soLuongDai,
+			String hienTrangDai, String soLuongManHinh, String hienTrangManHinh, String soLuongDen,
+			String hienTrangDen) {
+		
+		boolean done = false;
+
+		String query = "INSERT INTO quanlynhankhau.nhavanhoa (`idUser`, `ngayKiemTra`, `soLuongBan`,"
+				+ " `hienTrangBan`, `soLuongGhe`, `hienTrangGhe`, `soLuongLoa`, `hienTrangLoa`,"
+				+ " `soLuongDai`, `hienTrangDai`, `soLuongManHinh`, `hienTrangManHinh`,"
+				+ " `soLuongDen`, `hienTrangDen`)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, currentUser.getIdUser());
+			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			ps.setString(3, soLuongBan);
+			ps.setString(4, hienTrangBan);
+			ps.setString(5, soLuongGhe);
+			ps.setString(6, hienTrangGhe);
+			ps.setString(7, soLuongLoa);
+			ps.setString(8, hienTrangLoa);
+			ps.setString(9, soLuongDai);
+			ps.setString(10, hienTrangDai);
+			ps.setString(11, soLuongManHinh);
+			ps.setString(12, hienTrangManHinh);
+			ps.setString(13, soLuongDen);
+			ps.setString(14, hienTrangDen);
+
+
+			ps.executeUpdate();
+//			ModelNhaVanHoa modelNhaVanHoa = getQuanLyNhaVanHoa(currentUser.getIdUser());
+//			lsAddQuanLy(modelNhaVanHoa.getIdKiemTra());
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return done;
+	}
+	
+//	public static ModelNhaVanHoa getQuanLyNhaVanHoa(int idUser, LocalDate ngayKiemTra) {
+//		ModelNhaVanHoa modelNhaVanHoa = null;
+//
+//		String query = "SELECT * FROM quanlynhankhau.nhavanhoa\n" + "WHERE idUser = ? AND ngayKiemTra = ?";
+//		PreparedStatement ps;
+//		try {
+//			ps = connection.prepareStatement(query);
+//			ps.setInt(1, idUser);
+//			ps.setDate(2, Date.valueOf(ngayKiemTra));
+//
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next()) {
+//				modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
+//						rs.getDate("ngayKiemTra"), rs.getInt("soLuongBan"), rs.getString("hienTrangBan"),
+//						rs.getInt("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getInt("soLuongLoa"),
+//						rs.getString("hienTrangLoa"), rs.getInt("soLuongDai"), rs.getString("hienTrangDai"),
+//						rs.getInt("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+//						rs.getInt("soLuongDen"), rs.getString("hienTrangDen"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return modelNhaVanHoa;
+//	}
+	
+	public static ModelNhaVanHoa getQuanLyNhaVanHoa(int idKiemTra) {
+		ModelNhaVanHoa modelNhaVanHoa = null;
+
+		String query = "SELECT * FROM quanlynhankhau.nhavanhoa\n" + "WHERE idKiemTra = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idKiemTra);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
+						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+//				lsGetNhanKhau(idNhanKhau);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelNhaVanHoa;
+	}
+	
+	public static List<ModelNhaVanHoa> getAllQuanLyNhaVanHoaByIdUser(int idUser) {
+		List<ModelNhaVanHoa> listQuanLy = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.nhavanhoa\n" + "WHERE idUser = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idUser);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelNhaVanHoa modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
+						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+//				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+//				modelTamTru.setModelNhanKhau(modelNhanKhau);
+				listQuanLy.add(modelNhaVanHoa);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listQuanLy;
+	}
+	
+	public static boolean deleteQuanLyNhaVanHoa(ModelNhaVanHoa data) {
+		boolean done = false;
+
+//		deleteLsNhanKhau(data.getIdNhanKhau());
+//		deleteLsTamTru(data.getIdNhanKhau());
+//		deleteLsTamVang(data.getIdNhanKhau());
+
+		String query = "DELETE FROM quanlynhankhau.nhavanhoa\n" + "WHERE idKiemTra = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getIdKiemTra());
+
+			ps.executeUpdate();
+//			lsDeleteNhanKhau();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
 	
 	private static void lsSignIn() {
 		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
@@ -1612,6 +1757,8 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	private static void deleteLsUser(int idUser) {
 		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idUser = ?";
@@ -1816,6 +1963,22 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}
+	
+//	private static void lsAddQuanLy(int idKiemTra) {
+//		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idKiemTra`) VALUES (?, ?, ?, ?)";
+//		PreparedStatement ps;
+//		try {
+//			ps = connection.prepareStatement(query);
+//			ps.setString(1, "ThemQuanLy");
+//			ps.setInt(2, currentUser.getIdUser());
+//			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+//			ps.setInt(4, idKiemTra);
+//
+//			ps.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public static ModelLichSu getLichSu(int idLichSu) {
 		ModelLichSu modelLichSu = null;
