@@ -20,6 +20,8 @@ public class ControllerMainAdmin implements Initializable {
 	private Button buttonHoKhau;
 	@FXML
 	private Button buttonTamTruTamVang;
+	@FXML
+	private Button buttonQuanLyNhaVanHoa;
 
 	@FXML
 	private Parent viewQuanLy;
@@ -29,6 +31,8 @@ public class ControllerMainAdmin implements Initializable {
 	private Parent viewHoKhau;
 	@FXML
 	private Parent viewTamTruTamVang;
+	@FXML
+	private Parent viewQuanLyNhaVanHoa;
 	
 	private Button currentButton;
 	private Parent currentView;
@@ -64,6 +68,11 @@ public class ControllerMainAdmin implements Initializable {
 	@FXML
 	public void setViewTamTruTamVang() {
 		setView(viewTamTruTamVang, buttonTamTruTamVang);
+	}
+	
+	@FXML
+	public void setViewQuanLyNhaVanHoa() {
+		setView(viewQuanLyNhaVanHoa, buttonQuanLyNhaVanHoa);
 	}
 
 	private void setView(Parent view, Button button) {

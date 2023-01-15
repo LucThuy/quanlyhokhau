@@ -20,6 +20,8 @@ public class ModelNhaVanHoa {
 	private String hienTrangManHinh;
 	private String hienTrangDen;
 	
+	private ModelUser modelUser;
+	
 	public ModelNhaVanHoa(int idKiemTra, int IdUser, Date ngayThucHien, String soLuongBan, String hienTrangBan,
 			String soLuongGhe, String hienTrangGhe, String soLuongLoa, String hienTrangLoa, String soLuongDai,
 			String hienTrangDai, String soLuongManHinh, String hienTrangManHinh, String soLuongDen,
@@ -131,6 +133,18 @@ public class ModelNhaVanHoa {
 	}
 	public void setHienTrangDen(String hienTrangDen) {
 		this.hienTrangDen = hienTrangDen;
+	}
+	
+	public ModelUser getModelUser() {
+		return modelUser;
+	}
+
+	public void setModelUser(ModelUser modelUser) {
+		this.modelUser = modelUser;
+	}
+	
+	public String getTenNguoiDung() {
+		return modelUser.getTenNguoiDung();
 	}
 	
 }

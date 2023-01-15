@@ -47,6 +47,7 @@ public class ControllerFormAddQuanLyNhaVanHoa implements Initializable {
 	private Button buttonThemMoi;
 
 	private static ControllerNhaVanHoaQuanLy controllerNhaVanHoaQuanLy;
+	private static ControllerNhaVanHoaAdmin controllerNhaVanHoaAdmin;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -221,12 +222,17 @@ public class ControllerFormAddQuanLyNhaVanHoa implements Initializable {
 				textfieldHienTrangLoa.getText(), textfieldSoLuongDai.getText(), textfieldHienTrangDai.getText(),
 				textfieldSoLuongManHinh.getText(), textfieldHienTrangManHinh.getText(), textfieldSoLuongDen.getText(),
 				textfieldHienTrangDen.getText())) {
-			controllerNhaVanHoaQuanLy.refreshQuanLyNhaVanHoa();
-//			controllerNhaVanHoaAdmin.refreshQuanLyNhaVanHoa();
+			if(controllerNhaVanHoaQuanLy != null) {
+				controllerNhaVanHoaQuanLy.refreshQuanLyNhaVanHoa();
+			}
+			if(controllerNhaVanHoaAdmin != null) {
+				controllerNhaVanHoaAdmin.refreshQuanLyNhaVanHoa();
+			}
 			App.closeStageForm();
 		} 
 		
 	}
+	
 	
 	@FXML
 	public void cancel() {
@@ -235,50 +241,50 @@ public class ControllerFormAddQuanLyNhaVanHoa implements Initializable {
 
 	private boolean isMissingField() {
 		boolean check = false;
-//		if (textfieldSoLuongBan.getText().isEmpty()) {
-//			textfieldSoLuongBan.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldHienTrangBan.getText().isEmpty()) {
-//			textfieldHienTrangBan.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldSoLuongGhe.getText().isEmpty()) {
-//			textfieldSoLuongGhe.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldHienTrangGhe.getText().isEmpty()) {
-//			textfieldHienTrangGhe.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldSoLuongLoa.getText().isEmpty()) {
-//			textfieldSoLuongLoa.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldHienTrangLoa.getText().isEmpty()) {
-//			textfieldHienTrangLoa.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldSoLuongDai.getText().isEmpty()) {
-//			textfieldSoLuongDai.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldHienTrangDai.getText().isEmpty()) {
-//			textfieldHienTrangDai.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldSoLuongManHinh.getText().isEmpty()) {
-//			textfieldSoLuongManHinh.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldSoLuongDen.getText().isEmpty()) {
-//			textfieldSoLuongDen.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
-//		if (textfieldHienTrangDen.getText().isEmpty()) {
-//			textfieldHienTrangDen.getStyleClass().add("inputfield-error");
-//			check = true;
-//		}
+		if (textfieldSoLuongBan.getText().isEmpty()) {
+			textfieldSoLuongBan.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldHienTrangBan.getText().isEmpty()) {
+			textfieldHienTrangBan.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongGhe.getText().isEmpty()) {
+			textfieldSoLuongGhe.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldHienTrangGhe.getText().isEmpty()) {
+			textfieldHienTrangGhe.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongLoa.getText().isEmpty()) {
+			textfieldSoLuongLoa.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldHienTrangLoa.getText().isEmpty()) {
+			textfieldHienTrangLoa.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongDai.getText().isEmpty()) {
+			textfieldSoLuongDai.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldHienTrangDai.getText().isEmpty()) {
+			textfieldHienTrangDai.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongManHinh.getText().isEmpty()) {
+			textfieldSoLuongManHinh.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongDen.getText().isEmpty()) {
+			textfieldSoLuongDen.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldHienTrangDen.getText().isEmpty()) {
+			textfieldHienTrangDen.getStyleClass().add("inputfield-error");
+			check = true;
+		}
 
 		return check;
 	}
@@ -299,5 +305,12 @@ public class ControllerFormAddQuanLyNhaVanHoa implements Initializable {
 	}
 	public static void setControllerNhaVanHoaQuanLy(ControllerNhaVanHoaQuanLy controllerNhaVanHoaQuanLy) {
 		ControllerFormAddQuanLyNhaVanHoa.controllerNhaVanHoaQuanLy = controllerNhaVanHoaQuanLy;
+	}
+	
+	public static ControllerNhaVanHoaAdmin getControllerNhaVanHoaAdmin() {
+		return controllerNhaVanHoaAdmin;
+	}
+	public static void setControllerNhaVanHoaAdmin(ControllerNhaVanHoaAdmin controllerNhaVanHoaAdmin) {
+		ControllerFormAddQuanLyNhaVanHoa.controllerNhaVanHoaAdmin = controllerNhaVanHoaAdmin;
 	}
 }

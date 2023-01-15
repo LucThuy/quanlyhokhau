@@ -99,6 +99,28 @@ public class Connector {
 		return modelUser;
 	}
 	
+	public static ModelUser queryUserByIdUser(int idUser) {
+		ModelUser modelUser = null;
+
+		String query = "SELECT * FROM quanlynhankhau.user\n" + "WHERE idUser = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idUser);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelUser = new ModelUser(rs.getInt("idUser"), rs.getString("tenNguoiDung"),						rs.getString("taiKhoan"),
+						rs.getString("matKhau"), rs.getString("role"), rs.getString("capQuyen"));
+				currentUser = modelUser;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return modelUser;
+	}
+	
 	
 	public static boolean editUser(ModelUser data) {
 		boolean done = false;
@@ -1492,6 +1514,33 @@ public class Connector {
 						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
 //				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 //				modelTamTru.setModelNhanKhau(modelNhanKhau);
+				listQuanLy.add(modelNhaVanHoa);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listQuanLy;
+	}
+	
+	public static List<ModelNhaVanHoa> getAllQuanLyNhaVanHoa() {
+		List<ModelNhaVanHoa> listQuanLy = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.nhavanhoa";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelNhaVanHoa modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
+						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+				ModelUser modelUser = queryUserByIdUser(rs.getInt("idUser"));
+				modelNhaVanHoa.setModelUser(modelUser);
 				listQuanLy.add(modelNhaVanHoa);
 			}
 		} catch (SQLException e) {

@@ -60,6 +60,7 @@ public class ControllerFormDetailQuanLyNhaVanHoa implements Initializable {
 	private ModelNhaVanHoa data;
 	
 	private static ControllerNhaVanHoaQuanLy controllerNhaVanHoaQuanLy;
+	private static ControllerNhaVanHoaAdmin controllerNhaVanHoaAdmin;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -125,5 +126,12 @@ public class ControllerFormDetailQuanLyNhaVanHoa implements Initializable {
 	}
 	public static void setControllerNhaVanHoaQuanLy(ControllerNhaVanHoaQuanLy controllerNhaVanHoaQuanLy) {
 		ControllerFormDetailQuanLyNhaVanHoa.controllerNhaVanHoaQuanLy = controllerNhaVanHoaQuanLy;
+	}
+	
+	public static ControllerNhaVanHoaAdmin getControllerNhaVanHoaAdmin() {
+		return controllerNhaVanHoaAdmin;
+	}
+	public static void setControllerNhaVanHoaAdmin(ControllerNhaVanHoaAdmin controllerNhaVanHoaAdmin) {
+		ControllerFormDetailQuanLyNhaVanHoa.controllerNhaVanHoaAdmin = controllerNhaVanHoaAdmin;
 	}
 }
