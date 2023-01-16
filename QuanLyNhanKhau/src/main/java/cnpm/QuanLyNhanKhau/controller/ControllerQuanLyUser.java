@@ -19,7 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 
 
-public class ControllerQuanLy implements Initializable{
+public class ControllerQuanLyUser implements Initializable{
 
 	@FXML
 	private TableView<ModelUser> tableviewUser;
@@ -125,7 +125,7 @@ public class ControllerQuanLy implements Initializable{
 		Holder.getInstance().setId(listId);	
 		try {
 			App.addStageForm("view/ViewFormDetailUSer");
-			ControllerFormDetailUser.setControllerQuanLy(this);
+			ControllerFormDetailUser.setControllerQuanLyUser(this);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

@@ -11,7 +11,7 @@
 		<VBox prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
 			<children>
 				<Button fx:id="buttonQuanLy" mnemonicParsing="false" onAction="#setViewNhaVanHoaQuanLy" text="QUẢN LÝ" />
-				<Button fx:id="buttonDangKy" mnemonicParsing="false" text="ĐĂNG KÝ" />
+				<Button fx:id="buttonHoatDong" mnemonicParsing="false" onAction="#setViewHoatDong" text="HOẠT ĐỘNG" />
 			</children>
 			<padding>
 				<Insets top="10.0" />
@@ -26,6 +26,7 @@
 		<StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 			<children>
 				<fx:include fx:id="viewNhaVanHoaQuanLy" source="ViewNhaVanHoaQuanLy.fxml" />
+				<fx:include fx:id="viewHoatDong" source="ViewHoatDongQuanLy.fxml" />
 			</children>
 		</StackPane>
 	</center>

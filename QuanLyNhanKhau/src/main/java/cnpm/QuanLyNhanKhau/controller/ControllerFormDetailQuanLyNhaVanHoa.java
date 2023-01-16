@@ -103,8 +103,12 @@ public class ControllerFormDetailQuanLyNhaVanHoa implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.isPresent() && result.get() == ButtonType.OK) {
 			if(Connector.deleteQuanLyNhaVanHoa(data)) {
-				controllerNhaVanHoaQuanLy.refreshQuanLyNhaVanHoa();
-//				controllerNhaVanHoaAdmin.refreshQuanLyNhaVanHoa();
+				if(controllerNhaVanHoaQuanLy != null) {
+					controllerNhaVanHoaQuanLy.refreshQuanLyNhaVanHoa();
+				}
+				if(controllerNhaVanHoaAdmin != null) {
+					controllerNhaVanHoaAdmin.refreshQuanLyNhaVanHoa();
+				}
 				App.closeStageForm();
 			}
 		}

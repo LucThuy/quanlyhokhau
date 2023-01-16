@@ -22,7 +22,7 @@ public class ModelNhaVanHoa {
 	
 	private ModelUser modelUser;
 	
-	public ModelNhaVanHoa(int idKiemTra, int IdUser, Date ngayThucHien, String soLuongBan, String hienTrangBan,
+	public ModelNhaVanHoa(int idKiemTra, int idUser, Date ngayThucHien, String soLuongBan, String hienTrangBan,
 			String soLuongGhe, String hienTrangGhe, String soLuongLoa, String hienTrangLoa, String soLuongDai,
 			String hienTrangDai, String soLuongManHinh, String hienTrangManHinh, String soLuongDen,
 			String hienTrangDen) {

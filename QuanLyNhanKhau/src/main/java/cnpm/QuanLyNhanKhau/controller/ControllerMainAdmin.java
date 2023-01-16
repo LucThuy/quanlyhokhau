@@ -22,9 +22,11 @@ public class ControllerMainAdmin implements Initializable {
 	private Button buttonTamTruTamVang;
 	@FXML
 	private Button buttonQuanLyNhaVanHoa;
+	@FXML
+	private Button buttonHoatDong;
 
 	@FXML
-	private Parent viewQuanLy;
+	private Parent viewQuanLyUser;
 	@FXML
 	private Parent viewNhanKhau;
 	@FXML
@@ -33,6 +35,8 @@ public class ControllerMainAdmin implements Initializable {
 	private Parent viewTamTruTamVang;
 	@FXML
 	private Parent viewQuanLyNhaVanHoa;
+	@FXML
+	private Parent viewHoatDong;
 	
 	private Button currentButton;
 	private Parent currentView;
@@ -40,19 +44,21 @@ public class ControllerMainAdmin implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {		
 		currentButton = buttonQuanLy;
-		currentView = viewQuanLy;
+		currentView = viewQuanLyUser;
 		
 		buttonQuanLy.setTranslateX(-10);
 		buttonNhanKhau.setTranslateX(-10);
 		buttonHoKhau.setTranslateX(-10);
 		buttonTamTruTamVang.setTranslateX(-10);
+		buttonQuanLyNhaVanHoa.setTranslateX(-10);
+		buttonHoatDong.setTranslateX(-10);
 		
-		setViewQuanLy();
+		setViewQuanLyUser();
 	}
 	
 	@FXML
-	public void setViewQuanLy() {
-		setView(viewQuanLy, buttonQuanLy);
+	public void setViewQuanLyUser() {
+		setView(viewQuanLyUser, buttonQuanLy);
 	}
 	
 	@FXML
@@ -73,6 +79,10 @@ public class ControllerMainAdmin implements Initializable {
 	@FXML
 	public void setViewQuanLyNhaVanHoa() {
 		setView(viewQuanLyNhaVanHoa, buttonQuanLyNhaVanHoa);
+	}
+	@FXML
+	public void setViewHoatDong() {
+		setView(viewHoatDong, buttonHoatDong);
 	}
 
 	private void setView(Parent view, Button button) {

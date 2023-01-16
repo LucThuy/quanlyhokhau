@@ -15,12 +15,12 @@ public class ControllerMainQuanLy implements Initializable {
 	@FXML
 	private Button buttonQuanLy;
 	@FXML
-	private Button buttonDangKy;
+	private Button buttonHoatDong;
 	
 	@FXML
 	private Parent viewNhaVanHoaQuanLy;
 	@FXML
-	private Parent viewDangKy;
+	private Parent viewHoatDong;
 
 	
 	private Button currentButton;
@@ -32,7 +32,7 @@ public class ControllerMainQuanLy implements Initializable {
 		currentView = viewNhaVanHoaQuanLy;
 		
 		buttonQuanLy.setTranslateX(-10);
-		buttonDangKy.setTranslateX(-10);
+		buttonHoatDong.setTranslateX(-10);
 		
 		setViewNhaVanHoaQuanLy();
 	}
@@ -43,8 +43,8 @@ public class ControllerMainQuanLy implements Initializable {
 	}
 	
 	@FXML
-	public void setViewDangKy() {
-		setView(viewDangKy, buttonDangKy);
+	public void setViewHoatDong() {
+		setView(viewHoatDong, buttonHoatDong);
 	}
 
 	private void setView(Parent view, Button button) {

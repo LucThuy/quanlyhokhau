@@ -14,6 +14,7 @@ import java.util.List;
 
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelHoatDong;
 import cnpm.QuanLyNhanKhau.model.ModelLichSu;
 import cnpm.QuanLyNhanKhau.model.ModelNhaVanHoa;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
@@ -1572,6 +1573,154 @@ public class Connector {
 
 		return done;
 	}
+	
+	public static boolean addHoatDong(int idNhanKhau, String hoatDong, LocalDate ngayBatDau,
+			LocalDate ngayKetThuc) {
+		boolean done = false;
+
+		String query = "INSERT INTO quanlynhankhau.hoatdong (`idNhanKhau`, `hoatDong`, `ngayBatDau`,"
+				+ " `ngayKetThuc`, `lePhi`, `xacNhan`)"
+				+ " VALUES (?, ?, ?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+			ps.setString(2, hoatDong);
+			ps.setDate(3, Date.valueOf(ngayBatDau));
+			ps.setDate(4, Date.valueOf(ngayKetThuc));
+			ps.setString(5, "1.000.000 VND");
+			ps.setString(6, "Chờ xác nhận");
+
+			ps.executeUpdate();
+//			ModelHoatDong modelHoatDong = getHoatDong(idNhanKhau, hoatDong);
+//			lsAddTamVang(modelTamVang.getIdTamVang());
+//			updateTrangThaiTamVang(idNhanKhau, true);
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return done;
+	}
+	
+	public static ModelHoatDong getHoatDong(int idHoatDong) {
+		ModelHoatDong modelHoatDong = null;
+
+		String query = "SELECT * FROM quanlynhankhau.hoatdong\n" + "WHERE idHoatDong = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idHoatDong);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelHoatDong =  new ModelHoatDong(rs.getInt("idHoatDong"),
+						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
+						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+						rs.getString("xacNhan"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelHoatDong.setModelNhanKhau(modelNhanKhau);
+//				lsGetTamTru(idTamTru);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelHoatDong;
+	}
+	
+	
+	public static boolean editHoatDong(ModelHoatDong data) {
+		boolean done = false;
+
+		String query = "UPDATE quanlynhankhau.hoatDong SET  xacNhan = ?\n"
+				+ "WHERE idHoatDong = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, data.getXacNhan());
+			
+			ps.setInt(2, data.getIdHoatDong());
+			
+			ps.executeUpdate();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static boolean deleteHoatDong(ModelHoatDong data) {
+		boolean done = false;
+
+//		deleteLsTamTru(data.getIdTamTru());
+
+		String query = "DELETE FROM quanlynhankhau.hoatDong\n" + "WHERE idHoatDong = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getIdHoatDong());
+
+			ps.executeUpdate();
+//			lsDeleteTamTru();
+//			updateTrangThaiTamTru(data.getIdNhanKhau(), false);
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static List<ModelHoatDong> getAllHoatDong() {
+		List<ModelHoatDong> listHoatDong = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.hoatdong";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+//			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelHoatDong modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
+						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
+						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+						rs.getString("xacNhan"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelHoatDong.setModelNhanKhau(modelNhanKhau);
+				listHoatDong.add(modelHoatDong);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listHoatDong;
+	}
+	
+//	private static ModelHoatDong getHoatDong(int idNhanKhau, String hoatDong) {
+//		ModelHoatDong modelHoatDong = null;
+//
+//		String query = "SELECT * FROM quanlynhankhau.hoatdong\n" + "WHERE idNhanKhau = ? AND hoatDong = ?";
+//		PreparedStatement ps;
+//		try {
+//			ps = connection.prepareStatement(query);
+//			ps.setInt(1, idNhanKhau);
+//			ps.setString(2, hoatDong);
+//
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next()) {
+//				modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
+//						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
+//						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+//						rs.getString("xacNhan"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return modelHoatDong;
+//	}
 	
 	private static void lsSignIn() {
 		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";

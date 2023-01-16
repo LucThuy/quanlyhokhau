@@ -72,7 +72,7 @@ public class ControllerFormAddNhanKhau implements Initializable {
 				textfieldBiDanh.requestFocus();
 			}
 		});
-		
+				
 		textfieldBiDanh.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				datepickerNgaySinh.requestFocus();
