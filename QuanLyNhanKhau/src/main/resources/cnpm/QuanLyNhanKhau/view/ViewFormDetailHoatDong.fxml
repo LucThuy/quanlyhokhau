@@ -19,7 +19,7 @@
 	<top>
 		<HBox alignment="CENTER" styleClass="top">
 			<children>
-				<Label styleClass="title" text="CHI TIẾT TẠM TRÚ" BorderPane.alignment="CENTER">
+				<Label styleClass="title" text="CHI TIẾT HOẠT ĐỘNG" BorderPane.alignment="CENTER">
 					<HBox.margin>
 						<Insets bottom="20.0" top="20.0" />
 					</HBox.margin>
@@ -36,8 +36,8 @@
             <GridPane fx:id="gridpane" maxWidth="-Infinity" prefWidth="960.0" styleClass="center" BorderPane.alignment="CENTER">
                <children>
                   <Label text="HỌ TÊN" />
-                  <Label text="NƠI TẠM TRÚ" GridPane.rowIndex="2" />
-                  <TextField fx:id="textfieldNoiTamTru" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+                  <Label text="HOẠT ĐỘNG" GridPane.rowIndex="2" />
+                  <TextField fx:id="textfieldHoatDong" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
                   <TableView fx:id="tableviewNhanKhau" prefHeight="200.0" prefWidth="200.0" styleClass="sub-table-view" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -49,7 +49,7 @@
                         <TableColumn fx:id="tablecolumnCCCD" prefWidth="75.0" text="CCCD" />
                      </columns>
                   </TableView>
-                  <Label text="HIỆU LỰC" GridPane.rowIndex="3" />
+                  <Label text="THỜI GIAN" GridPane.rowIndex="3" />
                   <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
                         <Label text="TỪ NGÀY" />
@@ -58,8 +58,8 @@
                               <Insets left="20.0" />
                            </GridPane.margin>
                         </Label>
-                        <DatePicker fx:id="datepickerNgayHieuLuc" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
-                        <DatePicker fx:id="datepickerNgayHetHieuLuc" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" />
+                        <DatePicker fx:id="datepickerNgayBatDau" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+                        <DatePicker fx:id="datepickerNgayKetThuc" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="69.0" />
@@ -71,8 +71,6 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
-                  <Label text="LÝ DO" GridPane.rowIndex="4" />
-                  <TextField fx:id="textfieldLyDo" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
                   <TextField fx:id="textfieldHoTenNguoiDangKy" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
                   <Button fx:id="buttonTimKiem" mnemonicParsing="false" onAction="#searchNhanKhau" styleClass="search-icon" text="OK" GridPane.columnIndex="2" />
                </children>
@@ -84,7 +82,6 @@
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>

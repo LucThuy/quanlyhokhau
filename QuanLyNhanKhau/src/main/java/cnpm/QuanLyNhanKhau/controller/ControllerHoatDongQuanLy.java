@@ -104,7 +104,7 @@ public class ControllerHoatDongQuanLy implements Initializable{
 		listId.add(hoatDong.getIdHoatDong());
 		Holder.getInstance().setId(listId);	
 		try {
-			App.addStageForm("view/ViewFormDetailHoatDongAdmin");
+			App.addStageForm("view/ViewFormDetailHoatDong");
 			ControllerFormDetailHoatDong.setControllerHoatDongQuanLy(this);
 			
 			

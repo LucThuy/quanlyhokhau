@@ -440,8 +440,9 @@ public class Connector {
 		boolean done = false;
 
 		deleteLsNhanKhau(data.getIdNhanKhau());
-		deleteLsTamTru(data.getIdNhanKhau());
-		deleteLsTamVang(data.getIdNhanKhau());
+//		deleteLsTamTru(data.getIdNhanKhau());
+//		deleteLsTamVang(data.getIdNhanKhau());
+//		deleteLsHoatDong(data.getIdNhanKhau());
 
 		String query = "DELETE FROM quanlynhankhau.nhankhau\n" + "WHERE idNhanKhau = ?";
 		PreparedStatement ps;
@@ -687,22 +688,23 @@ public class Connector {
 	public static boolean deleteHoKhau(ModelHoKhau data) {
 		boolean done = false;
 
-		deleteLsHoKhau(data.getIdHoKhau());
+		if(data != null) {
+			deleteLsHoKhau(data.getIdHoKhau());
 
-		String query = "DELETE FROM quanlynhankhau.hokhau\n" + "WHERE idHoKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, data.getIdHoKhau());
+			String query = "DELETE FROM quanlynhankhau.hokhau\n" + "WHERE idHoKhau = ?";
+			PreparedStatement ps;
+			try {
+				ps = connection.prepareStatement(query);
+				ps.setInt(1, data.getIdHoKhau());
 
-			ps.executeUpdate();
-			lsDeleteHoKhau();
-			updateTrangThai(data.getIdNhanKhau(), false);
-			done = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
+				ps.executeUpdate();
+				lsDeleteHoKhau();
+				updateTrangThai(data.getIdNhanKhau(), false);
+				done = true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-
 		return done;
 	}
 	
@@ -867,21 +869,22 @@ public class Connector {
 	
 	public static boolean deleteHoKhauNhanKhau(ModelHoKhauNhanKhau data) {
 		boolean done = false;
+		
+		if(data != null) {
+			deleteLsHoKhauNhanKhau(data.getIdHoKhauNhanKhau());
+			String query = "DELETE FROM quanlynhankhau.hokhaunhankhau\n" + "WHERE idHoKhauNhanKhau = ?";
+			PreparedStatement ps;
+			try {
+				ps = connection.prepareStatement(query);
+				ps.setInt(1, data.getIdHoKhauNhanKhau());
 
-		deleteLsHoKhauNhanKhau(data.getIdHoKhauNhanKhau());
-
-		String query = "DELETE FROM quanlynhankhau.hokhaunhankhau\n" + "WHERE idHoKhauNhanKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, data.getIdHoKhauNhanKhau());
-
-			ps.executeUpdate();
-			lsDeleteHoKhauNhanKhau();
-			updateTrangThai(data.getIdNhanKhau(), false);
-			done = true;
-		} catch (SQLException e) {
-			e.printStackTrace();
+				ps.executeUpdate();
+				lsDeleteHoKhauNhanKhau();
+				updateTrangThai(data.getIdNhanKhau(), false);
+				done = true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return done;
@@ -1416,10 +1419,11 @@ public class Connector {
 				+ " `soLuongDen`, `hienTrangDen`)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps;
+		Timestamp time = new Timestamp(System.currentTimeMillis());
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, currentUser.getIdUser());
-			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			ps.setTimestamp(2, time);
 			ps.setString(3, soLuongBan);
 			ps.setString(4, hienTrangBan);
 			ps.setString(5, soLuongGhe);
@@ -1435,40 +1439,14 @@ public class Connector {
 
 
 			ps.executeUpdate();
-//			ModelNhaVanHoa modelNhaVanHoa = getQuanLyNhaVanHoa(currentUser.getIdUser());
-//			lsAddQuanLy(modelNhaVanHoa.getIdKiemTra());
+			ModelNhaVanHoa modelNhaVanHoa = getQuanLyNhaVanHoa(currentUser.getIdUser(), time);
+			lsAddQuanLyNhaVanHoa(modelNhaVanHoa.getIdKiemTra());
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return done;
 	}
-	
-//	public static ModelNhaVanHoa getQuanLyNhaVanHoa(int idUser, LocalDate ngayKiemTra) {
-//		ModelNhaVanHoa modelNhaVanHoa = null;
-//
-//		String query = "SELECT * FROM quanlynhankhau.nhavanhoa\n" + "WHERE idUser = ? AND ngayKiemTra = ?";
-//		PreparedStatement ps;
-//		try {
-//			ps = connection.prepareStatement(query);
-//			ps.setInt(1, idUser);
-//			ps.setDate(2, Date.valueOf(ngayKiemTra));
-//
-//			ResultSet rs = ps.executeQuery();
-//			if (rs.next()) {
-//				modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
-//						rs.getDate("ngayKiemTra"), rs.getInt("soLuongBan"), rs.getString("hienTrangBan"),
-//						rs.getInt("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getInt("soLuongLoa"),
-//						rs.getString("hienTrangLoa"), rs.getInt("soLuongDai"), rs.getString("hienTrangDai"),
-//						rs.getInt("soLuongManHinh"), rs.getString("hienTrangManHinh"),
-//						rs.getInt("soLuongDen"), rs.getString("hienTrangDen"));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return modelNhaVanHoa;
-//	}
 	
 	public static ModelNhaVanHoa getQuanLyNhaVanHoa(int idKiemTra) {
 		ModelNhaVanHoa modelNhaVanHoa = null;
@@ -1487,7 +1465,7 @@ public class Connector {
 						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
 						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
 						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
-//				lsGetNhanKhau(idNhanKhau);
+				lsGetQuanLyNhaVanHoa(idKiemTra);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1554,9 +1532,8 @@ public class Connector {
 	public static boolean deleteQuanLyNhaVanHoa(ModelNhaVanHoa data) {
 		boolean done = false;
 
-//		deleteLsNhanKhau(data.getIdNhanKhau());
-//		deleteLsTamTru(data.getIdNhanKhau());
-//		deleteLsTamVang(data.getIdNhanKhau());
+		deleteLsQuanLyNhaVanHoa(data.getIdKiemTra());
+
 
 		String query = "DELETE FROM quanlynhankhau.nhavanhoa\n" + "WHERE idKiemTra = ?";
 		PreparedStatement ps;
@@ -1565,7 +1542,7 @@ public class Connector {
 			ps.setInt(1, data.getIdKiemTra());
 
 			ps.executeUpdate();
-//			lsDeleteNhanKhau();
+			lsDeleteQuanLyNhaVanHoa();
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1592,9 +1569,8 @@ public class Connector {
 			ps.setString(6, "Chờ xác nhận");
 
 			ps.executeUpdate();
-//			ModelHoatDong modelHoatDong = getHoatDong(idNhanKhau, hoatDong);
-//			lsAddTamVang(modelTamVang.getIdTamVang());
-//			updateTrangThaiTamVang(idNhanKhau, true);
+			ModelHoatDong modelHoatDong = getHoatDong(idNhanKhau, hoatDong);
+			lsAddHoatDong(modelHoatDong.getIdHoatDong());
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1619,7 +1595,7 @@ public class Connector {
 						rs.getString("xacNhan"));
 				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				modelHoatDong.setModelNhanKhau(modelNhanKhau);
-//				lsGetTamTru(idTamTru);
+				lsGetHoatDong(idHoatDong);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1653,7 +1629,7 @@ public class Connector {
 	public static boolean deleteHoatDong(ModelHoatDong data) {
 		boolean done = false;
 
-//		deleteLsTamTru(data.getIdTamTru());
+		deleteLsHoatDong(data.getIdHoatDong());
 
 		String query = "DELETE FROM quanlynhankhau.hoatDong\n" + "WHERE idHoatDong = ?";
 		PreparedStatement ps;
@@ -1662,8 +1638,7 @@ public class Connector {
 			ps.setInt(1, data.getIdHoatDong());
 
 			ps.executeUpdate();
-//			lsDeleteTamTru();
-//			updateTrangThaiTamTru(data.getIdNhanKhau(), false);
+			lsDeleteHoatDong();
 			done = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -1698,36 +1673,88 @@ public class Connector {
 		return listHoatDong;
 	}
 	
-//	private static ModelHoatDong getHoatDong(int idNhanKhau, String hoatDong) {
-//		ModelHoatDong modelHoatDong = null;
-//
-//		String query = "SELECT * FROM quanlynhankhau.hoatdong\n" + "WHERE idNhanKhau = ? AND hoatDong = ?";
-//		PreparedStatement ps;
-//		try {
-//			ps = connection.prepareStatement(query);
-//			ps.setInt(1, idNhanKhau);
-//			ps.setString(2, hoatDong);
-//
-//			ResultSet rs = ps.executeQuery();
-//			if (rs.next()) {
-//				modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
-//						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
-//						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
-//						rs.getString("xacNhan"));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return modelHoatDong;
-//	}
+	public static List<ModelHoatDong> searchHoatDongByIdNhanKhau(int idNhanKhau) {
+		List<ModelHoatDong> listHoatDong = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.hoatdong\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelHoatDong modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
+						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
+						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+						rs.getString("xacNhan"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelHoatDong.setModelNhanKhau(modelNhanKhau);
+				listHoatDong.add(modelHoatDong);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listHoatDong;
+	}
+	
+	private static ModelNhaVanHoa getQuanLyNhaVanHoa(int idUser, Timestamp ngayKiemTra) {
+		ModelNhaVanHoa modelNhaVanHoa = null;
+
+		String query = "SELECT * FROM quanlynhankhau.nhavanhoa\n" + "WHERE idKiemTra = ? AND ngayKiemTra = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idUser);
+			ps.setTimestamp(2, ngayKiemTra);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
+						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelNhaVanHoa;
+	}
+	
+	private static ModelHoatDong getHoatDong(int idNhanKhau, String hoatDong) {
+		ModelHoatDong modelHoatDong = null;
+
+		String query = "SELECT * FROM quanlynhankhau.hoatdong\n" + "WHERE idNhanKhau = ? AND hoatDong = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+			ps.setString(2, hoatDong);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
+						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
+						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+						rs.getString("xacNhan"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelHoatDong;
+	}
 	
 	private static void lsSignIn() {
 		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "dangNhap");
+			ps.setString(1, "Đăng nhập");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 
@@ -1742,7 +1769,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "dangKy");
+			ps.setString(1, "Đăng Ký");
 			ps.setInt(2, idUser);
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 
@@ -1757,7 +1784,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "themNhanKhau");
+			ps.setString(1, "Thêm nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idNhanKhau);
@@ -1773,7 +1800,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xemNhanKhau");
+			ps.setString(1, "Xem nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idNhanKhau);
@@ -1804,7 +1831,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "suaNhanKhau");
+			ps.setString(1, "Sửa nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idNhanKhau);
@@ -1820,7 +1847,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xoaNhanKhau");
+			ps.setString(1, "Xoá nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 
@@ -1835,7 +1862,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "themHoKhau");
+			ps.setString(1, "Thêm hộ khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idHoKhau);
@@ -1851,7 +1878,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xemHoKhau");
+			ps.setString(1, "Xem hộ khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idHoKhau);
@@ -1867,7 +1894,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "suaHoKhau");
+			ps.setString(1, "Sửa hộ khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idHoKhau);
@@ -1883,7 +1910,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xoaHoKhau");
+			ps.setString(1, "Xoá hộ khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 
@@ -1898,7 +1925,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "themHoKhauNhanKhau");
+			ps.setString(1, "Thêm hộ khẩu nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idHoKhauNhanKhau);
@@ -1914,7 +1941,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xemHoKhauNhanKhau");
+			ps.setString(1, "Xem hộ khẩu nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idHoKhauNhanKhau);
@@ -1930,7 +1957,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "suaHoKhauNhanKhau");
+			ps.setString(1, "Sửa hộ khẩu nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idHoKhauNhanKhau);
@@ -1946,7 +1973,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xoaHoKhauNhanKhau");
+			ps.setString(1, "Xoá hộ khẩu nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 
@@ -1958,64 +1985,12 @@ public class Connector {
 	
 	
 
-	private static void deleteLsUser(int idUser) {
-		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idUser = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idUser);
-
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void deleteLsNhanKhau(int idNhanKhau) {
-		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idNhanKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idNhanKhau);
-
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void deleteLsHoKhau(int idHoKhau) {
-		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idHoKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idHoKhau);
-
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void deleteLsHoKhauNhanKhau(int idHoKhauNhanKhau) {
-		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idHoKhauNhanKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idHoKhauNhanKhau);
-
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	private static void lsAddTamTru(int idTamTru) {
 		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idTamTru`) VALUES (?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "themTamTru");
+			ps.setString(1, "Thêm tạm trú");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idTamTru);
@@ -2031,7 +2006,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xemTamTru");
+			ps.setString(1, "Xem tạm trú");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idTamTru);
@@ -2047,7 +2022,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "suaTamTru");
+			ps.setString(1, "Sửa tạm trú");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idTamTru);
@@ -2063,22 +2038,9 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xoaTamTru");
+			ps.setString(1, "Xoá tạm trú");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void deleteLsTamTru(int idTamTru) {
-		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idTamTru = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idTamTru);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -2091,7 +2053,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "themTamVang");
+			ps.setString(1, "Thêm tạm vắng");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idTamVang);
@@ -2107,7 +2069,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xemTamVang");
+			ps.setString(1, "Xem tạm vắng");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idTamVang);
@@ -2123,7 +2085,7 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "suaTamVang");
+			ps.setString(1, "Sửa tạm vắng");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			ps.setInt(4, idTamVang);
@@ -2139,7 +2101,54 @@ public class Connector {
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setString(1, "xoaTamVang");
+			ps.setString(1, "Xoá tạm vắng");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+	
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsAddQuanLyNhaVanHoa(int idKiemTra) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idKiemTra`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "Kiểm tra hiện trạng nhà văn hoá");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idKiemTra);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsGetQuanLyNhaVanHoa(int idKiemTra) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idKiemTra`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "Xem chi tiết hiện trạng nhà văn hoá");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idKiemTra);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsDeleteQuanLyNhaVanHoa() {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "Xoá hiện trạng nhà văn hoá");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 
@@ -2149,12 +2158,150 @@ public class Connector {
 		}
 	}
 	
+	private static void lsAddHoatDong(int idHoatDong) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idHoatDong`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "Đăng ký sử dụng nhà văn hoá");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idHoatDong);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsGetHoatDong(int idHoatDong) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idHoatDong`) VALUES (?, ?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "Xem chi tiết hoạt động sử dụng nhà văn hoá");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idHoatDong);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void lsDeleteHoatDong() {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "Xoá hoạt động sử dụng nhà văn hoá");
+			ps.setInt(2, currentUser.getIdUser());
+			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void deleteLsUser(int idUser) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idUser = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idUser);
+	
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void deleteLsNhanKhau(int idNhanKhau) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+	
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void deleteLsHoKhau(int idHoKhau) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idHoKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idHoKhau);
+	
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void deleteLsHoKhauNhanKhau(int idHoKhauNhanKhau) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idHoKhauNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idHoKhauNhanKhau);
+	
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void deleteLsTamTru(int idTamTru) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idTamTru = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idTamTru);
+	
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static void deleteLsTamVang(int idTamVang) {
 		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idTamVang = ?";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, idTamVang);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void deleteLsQuanLyNhaVanHoa(int idKiemTra) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idKiemTra = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idKiemTra);
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void deleteLsHoatDong(int idHoatDong) {
+		String query = "DELETE FROM quanlynhankhau.lichsu\n" + "WHERE idHoatDong = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idHoatDong);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {

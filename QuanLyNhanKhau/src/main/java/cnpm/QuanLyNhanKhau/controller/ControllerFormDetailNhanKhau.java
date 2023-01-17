@@ -12,8 +12,10 @@ import cnpm.QuanLyNhanKhau.Connector;
 import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelHoatDong;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelTamTru;
+import cnpm.QuanLyNhanKhau.model.ModelTamVang;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -382,6 +384,8 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 		ModelHoKhau modelHoKhau = Connector.searchHoKhauByIdNhanKhau(data.getIdNhanKhau());
 		ModelHoKhauNhanKhau modelHoKhauNhanKhau = Connector.searchHoKhauNhanKhauByIdNhanKhau(data.getIdNhanKhau());
 		List<ModelTamTru> listTamTru = Connector.searchTamTruByIdNhanKhau(data.getIdNhanKhau());
+		List<ModelTamVang> listTamVang = Connector.searchTamVangByIdNhanKhau(data.getIdNhanKhau());
+		List<ModelHoatDong> listHoatDong = Connector.searchHoatDongByIdNhanKhau(data.getIdNhanKhau());
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.getDialogPane().getStylesheets().add(App.class.getResource("css/main.css").toExternalForm());
@@ -393,6 +397,12 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			for(ModelTamTru tamTru: listTamTru) {
 				contentText += tamTru.getHoTenNhanKhau() + "\n";
 			}
+			for(ModelTamVang tamVang: listTamVang) {
+				contentText += tamVang.getHoTenNhanKhau() + "\n";
+			}
+			for(ModelHoatDong hoatDong: listHoatDong) {
+				contentText += hoatDong.getHoTenNguoiDangKy() + "\n";
+			}
 			alert.setContentText(contentText);
 		}
 		Optional<ButtonType> result = alert.showAndWait();
@@ -401,6 +411,12 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			Connector.deleteHoKhau(modelHoKhau);
 			for(ModelTamTru tamTru: listTamTru) {
 				Connector.deleteTamTru(tamTru);
+			}
+			for(ModelTamVang tamVang: listTamVang) {
+				Connector.deleteTamVang(tamVang);
+			}
+			for(ModelHoatDong hoatDong: listHoatDong) {
+				Connector.deleteHoatDong(hoatDong);
 			}
 			if(Connector.deleteNhanKhau(data)) {
 				controllerNhanKhau.refreshNhanKhau();

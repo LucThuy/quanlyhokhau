@@ -127,7 +127,7 @@ public class ControllerHoatDongAdmin implements Initializable{
 	@FXML
 	public void showDetailHoatDong() {
 		try {
-			App.addStageForm("view/ViewFormDetailHoatDongAdmin");
+			App.addStageForm("view/ViewFormDetailHoatDong");
 			ControllerFormDetailHoatDong.setControllerHoatDongAdmin(this);
 		} catch (IOException e1) {
 			e1.printStackTrace();
