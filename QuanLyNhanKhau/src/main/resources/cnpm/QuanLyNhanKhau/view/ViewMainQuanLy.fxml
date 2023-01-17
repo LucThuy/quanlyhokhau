@@ -12,6 +12,7 @@
 			<children>
 				<Button fx:id="buttonQuanLy" mnemonicParsing="false" onAction="#setViewNhaVanHoaQuanLy" text="QUẢN LÝ" />
 				<Button fx:id="buttonHoatDong" mnemonicParsing="false" onAction="#setViewHoatDong" text="HOẠT ĐỘNG" />
+            <Button fx:id="buttonDangXuat" mnemonicParsing="false" onAction="#logOut" text="ĐĂNG XUẤT" />
 			</children>
 			<padding>
 				<Insets top="10.0" />

@@ -1,13 +1,19 @@
 package cnpm.QuanLyNhanKhau.controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import cnpm.QuanLyNhanKhau.App;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
 
 public class ControllerMainNhanVien implements Initializable {
@@ -18,6 +24,8 @@ public class ControllerMainNhanVien implements Initializable {
 	private Button buttonHoKhau;
 	@FXML
 	private Button buttonTamTruTamVang;
+	@FXML
+	private Button buttonDangXuat;
 	
 	@FXML
 	private Parent viewNhanKhau;
@@ -37,6 +45,8 @@ public class ControllerMainNhanVien implements Initializable {
 		buttonNhanKhau.setTranslateX(-10);
 		buttonHoKhau.setTranslateX(-10);
 		buttonTamTruTamVang.setTranslateX(-10);
+		buttonDangXuat.setTranslateX(-10);
+
 		
 		setViewNhanKhau();
 	}
@@ -77,5 +87,21 @@ public class ControllerMainNhanVien implements Initializable {
 		
 		currentView = view;
 		currentButton = button;
+	}
+	
+	@FXML
+	public void logOut() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.getDialogPane().getStylesheets().add(App.class.getResource("css/main.css").toExternalForm());
+		alert.setHeaderText("Bạn có muốn đăng xuất?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent() && result.get() == ButtonType.OK) {
+			try {
+				App.setRoot("view/ViewSignIn");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

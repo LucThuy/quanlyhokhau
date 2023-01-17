@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -305,7 +306,7 @@ public class Connector {
 			ps.setString(20, "Vô gia cư");
 
 			ps.executeUpdate();
-			ModelNhanKhau modelNhanKhau = queryNhanKhauByCCCD(cccd);
+			ModelNhanKhau modelNhanKhau = queryNhanKhauByHoTenAndNgaySinhAndCccd(hoTen, ngaySinh, cccd);
 			lsAddNhanKhau(modelNhanKhau.getIdNhanKhau());
 			done = true;
 		} catch (SQLException e) {
@@ -375,6 +376,34 @@ public class Connector {
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, cccd);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelNhanKhau = new ModelNhanKhau(rs.getInt("idNhanKhau"), rs.getString("hoTen"),
+						rs.getString("biDanh"), rs.getDate("ngaySinh"), rs.getString("gioiTinh"), rs.getString("cccd"),
+						rs.getDate("ngayCap"), rs.getString("noiCap"), rs.getString("nguyenQuan"),rs.getString("danToc"),
+						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
+						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
+						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
+						rs.getString("ghiChu"), rs.getString("trangThai"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelNhanKhau;
+	}
+	
+	public static ModelNhanKhau queryNhanKhauByHoTenAndNgaySinhAndCccd(String hoTen, LocalDate ngaySinh, String cccd) {
+		ModelNhanKhau modelNhanKhau = null;
+
+		String query = "SELECT * FROM quanlynhankhau.nhankhau\n" + "WHERE hoTen = ? AND ngaySinh = ? AND cccd = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, hoTen);
+			ps.setDate(2, Date.valueOf(ngaySinh));
+			ps.setString(3, cccd);
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -1419,11 +1448,13 @@ public class Connector {
 				+ " `soLuongDen`, `hienTrangDen`)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps;
+		SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
+		String now = sdf3.format(time);
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, currentUser.getIdUser());
-			ps.setTimestamp(2, time);
+			ps.setString(2, now);
 			ps.setString(3, soLuongBan);
 			ps.setString(4, hienTrangBan);
 			ps.setString(5, soLuongGhe);
@@ -1439,7 +1470,7 @@ public class Connector {
 
 
 			ps.executeUpdate();
-			ModelNhaVanHoa modelNhaVanHoa = getQuanLyNhaVanHoa(currentUser.getIdUser(), time);
+			ModelNhaVanHoa modelNhaVanHoa = getQuanLyNhaVanHoa(currentUser.getIdUser(), now);
 			lsAddQuanLyNhaVanHoa(modelNhaVanHoa.getIdKiemTra());
 			done = true;
 		} catch (SQLException e) {
@@ -1699,15 +1730,16 @@ public class Connector {
 		return listHoatDong;
 	}
 	
-	private static ModelNhaVanHoa getQuanLyNhaVanHoa(int idUser, Timestamp ngayKiemTra) {
+	private static ModelNhaVanHoa getQuanLyNhaVanHoa(int idUser, String ngayKiemTra) {
 		ModelNhaVanHoa modelNhaVanHoa = null;
-
-		String query = "SELECT * FROM quanlynhankhau.nhavanhoa\n" + "WHERE idKiemTra = ? AND ngayKiemTra = ?";
+		String query = "SELECT * FROM quanlynhankhau.nhavanhoa\r\n"
+				+ "Where idUser = ? AND ngayKiemTra = ? ";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, idUser);
-			ps.setTimestamp(2, ngayKiemTra);
+			ps.setString(2, ngayKiemTra);
+			
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
