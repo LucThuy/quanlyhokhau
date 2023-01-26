@@ -1560,6 +1560,30 @@ public class Connector {
 		return listQuanLy;
 	}
 	
+	public static ModelNhaVanHoa getTheLatestNhaVanHoa() {
+		ModelNhaVanHoa modelNhaVanHoa = null;
+		String query = "SELECT * FROM quanlynhankhau.nhavanhoa";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
+						rs.getDate("ngayKiemTra"), rs.getInt("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getInt("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getInt("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getInt("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getInt("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getInt("soLuongDen"), rs.getString("hienTrangDen"));
+				ModelUser modelUser = queryUserByIdUser(rs.getInt("idUser"));
+				modelNhaVanHoa.setModelUser(modelUser);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return modelNhaVanHoa;
+	}
+	
 	public static boolean deleteQuanLyNhaVanHoa(ModelNhaVanHoa data) {
 		boolean done = false;
 
@@ -1583,12 +1607,14 @@ public class Connector {
 	}
 	
 	public static boolean addHoatDong(int idNhanKhau, String hoatDong, LocalDate ngayBatDau,
-			LocalDate ngayKetThuc) {
+			LocalDate ngayKetThuc, int soLuongBan, int soLuongGhe, int soLuongLoa, int soLuongDai,
+			int soLuongManHinh, int soLuongDen) {
 		boolean done = false;
 
 		String query = "INSERT INTO quanlynhankhau.hoatdong (`idNhanKhau`, `hoatDong`, `ngayBatDau`,"
-				+ " `ngayKetThuc`, `lePhi`, `xacNhan`)"
-				+ " VALUES (?, ?, ?, ?, ?, ?)";
+				+ " `ngayKetThuc`, `soLuongBan`, `soLuongGhe`, `soLuongLoa`, `soLuongDai`,"
+				+ " `soLuongManHinh`, `soLuongDen`, `lePhi`, `xacNhan`)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
@@ -1596,8 +1622,15 @@ public class Connector {
 			ps.setString(2, hoatDong);
 			ps.setDate(3, Date.valueOf(ngayBatDau));
 			ps.setDate(4, Date.valueOf(ngayKetThuc));
-			ps.setString(5, calLePhi(ngayBatDau, ngayKetThuc));
-			ps.setString(6, "Chờ xác nhận");
+			ps.setInt(5, soLuongBan);
+			ps.setInt(6, soLuongGhe);
+			ps.setInt(7, soLuongLoa);
+			ps.setInt(8, soLuongDai);
+			ps.setInt(9, soLuongManHinh);
+			ps.setInt(10, soLuongDen);
+			ps.setString(11, calLePhi(ngayBatDau, ngayKetThuc, soLuongBan, soLuongGhe, soLuongLoa,
+					soLuongDai, soLuongManHinh, soLuongDen));
+			ps.setString(12, "Chờ xác nhận");
 
 			ps.executeUpdate();
 			ModelHoatDong modelHoatDong = getHoatDong(idNhanKhau, hoatDong);
@@ -1609,43 +1642,7 @@ public class Connector {
 		return done;
 	}
 	
-	public static String calLePhi(LocalDate ngayBatDau, LocalDate ngayKetThuc) {
-		String lePhiUocTinh = null;
-		long Time = ngayKetThuc.getDayOfYear() - ngayBatDau.getDayOfYear();
-
-        if(Time > 10) {
-        	lePhiUocTinh = "20.000.000 VND";
-        }
-        else if(Time > 9) {
-        	lePhiUocTinh = "18.000.000 VND";
-        }
-        else if(Time > 8) {
-        	lePhiUocTinh = "16.000.000 VND";
-        }
-        else if(Time > 7) {
-        	lePhiUocTinh = "14.000.000 VND";
-        }
-        else if(Time > 6) {
-        	lePhiUocTinh = "12.000.000 VND";
-        }
-        else if(Time > 5) {
-        	lePhiUocTinh = "10.000.000 VND";
-        }
-        else if(Time > 4) {
-        	lePhiUocTinh = "8.000.000 VND";
-        }
-        else if(Time > 3) {
-        	lePhiUocTinh = "6.000.000 VND";
-        }
-        else if(Time > 2) {
-        	lePhiUocTinh = "4.000.000 VND";
-        }
-        else if(Time <= 2) {
-        	lePhiUocTinh = "2.000.000 VND";
-        }
-		return lePhiUocTinh;
-//		return lePhi;
-	}
+	
 	
 	public static ModelHoatDong getHoatDong(int idHoatDong) {
 		ModelHoatDong modelHoatDong = null;
@@ -1658,10 +1655,11 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				modelHoatDong =  new ModelHoatDong(rs.getInt("idHoatDong"),
-						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
-						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
-						rs.getString("xacNhan"));
+				modelHoatDong =  new ModelHoatDong(rs.getInt("idHoatDong"),rs.getInt("idNhanKhau"),
+						rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"), rs.getString("hoatDong"),
+						rs.getInt("soLuongBan"), rs.getInt("soLuongGhe"), rs.getInt("soLuongLoa"),
+						rs.getInt("soLuongDai"), rs.getInt("soLuongManHinh"), rs.getInt("soLuongDen"),
+						rs.getString("lePhi"), rs.getString("ghiChu"), rs.getString("xacNhan"));
 				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				modelHoatDong.setModelNhanKhau(modelNhanKhau);
 				lsGetHoatDong(idHoatDong);
@@ -1727,9 +1725,11 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ModelHoatDong modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
+				ModelHoatDong modelHoatDong =  new ModelHoatDong(rs.getInt("idHoatDong"),
 						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
-						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+						rs.getString("hoatDong"), rs.getInt("soLuongBan"), rs.getInt("soLuongGhe"), 
+						rs.getInt("soLuongLoa"), rs.getInt("soLuongDai"), rs.getInt("soLuongManHinh"), 
+						rs.getInt("soLuongDen"), rs.getString("lePhi"), rs.getString("ghiChu"),
 						rs.getString("xacNhan"));
 				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				modelHoatDong.setModelNhanKhau(modelNhanKhau);
@@ -1753,9 +1753,11 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ModelHoatDong modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
+				ModelHoatDong modelHoatDong =  new ModelHoatDong(rs.getInt("idHoatDong"),
 						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
-						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+						rs.getString("hoatDong"), rs.getInt("soLuongBan"), rs.getInt("soLuongGhe"), 
+						rs.getInt("soLuongLoa"), rs.getInt("soLuongDai"), rs.getInt("soLuongManHinh"), 
+						rs.getInt("soLuongDen"), rs.getString("lePhi"), rs.getString("ghiChu"),
 						rs.getString("xacNhan"));
 				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				modelHoatDong.setModelNhanKhau(modelNhanKhau);
@@ -1807,9 +1809,11 @@ public class Connector {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				modelHoatDong = new ModelHoatDong(rs.getInt("idHoatDong"),
+				modelHoatDong =  new ModelHoatDong(rs.getInt("idHoatDong"),
 						rs.getInt("idNhanKhau"), rs.getDate("ngayBatDau"), rs.getDate("ngayKetThuc"),
-						rs.getString("hoatDong"), rs.getString("lePhi"), rs.getString("ghiChu"),
+						rs.getString("hoatDong"), rs.getInt("soLuongBan"), rs.getInt("soLuongGhe"), 
+						rs.getInt("soLuongLoa"), rs.getInt("soLuongDai"), rs.getInt("soLuongManHinh"), 
+						rs.getInt("soLuongDen"), rs.getString("lePhi"), rs.getString("ghiChu"),
 						rs.getString("xacNhan"));
 			}
 		} catch (SQLException e) {
@@ -2458,5 +2462,160 @@ public class Connector {
 		}
 	}
 	
-	
+	public static String calLePhi(LocalDate ngayBatDau, LocalDate ngayKetThuc, int soLuongBan,
+			int soLuongGhe, int soLuongLoa, int soLuongDai, int soLuongManHinh, int soLuongDen) {
+		
+		long Time = ngayKetThuc.getDayOfYear() - ngayBatDau.getDayOfYear();
+		long lePhiUocTinh = Time * 3000 + soLuongBan * 100 + soLuongGhe * 30 + soLuongLoa * 1000
+				+ soLuongDai * 1000 + soLuongManHinh * 1000 + soLuongDen * 500;
+		if(lePhiUocTinh > 50000) {
+        	return "50.000.000 VND";
+        }
+		else if(lePhiUocTinh > 49000) {
+        	return "49.000.000 VND";
+        }
+		else if(lePhiUocTinh > 48000) {
+        	return "48.000.000 VND";
+        }
+		else if(lePhiUocTinh > 47000) {
+        	return "47.000.000 VND";
+        }
+		else if(lePhiUocTinh > 46000) {
+        	return "46.000.000 VND";
+        }
+		else if(lePhiUocTinh > 45000) {
+        	return "45.000.000 VND";
+        }
+		else if(lePhiUocTinh > 44000) {
+        	return "44.000.000 VND";
+        }
+		else if(lePhiUocTinh > 43000) {
+        	return "43.000.000 VND";
+        }
+		else if(lePhiUocTinh > 42000) {
+        	return "42.000.000 VND";
+        }
+		else if(lePhiUocTinh > 41000) {
+        	return "41.000.000 VND";
+        }
+		else if(lePhiUocTinh > 40000) {
+        	return "40.000.000 VND";
+        }
+		else if(lePhiUocTinh > 39000) {
+        	return "39.000.000 VND";
+        }
+		else if(lePhiUocTinh > 38000) {
+        	return "38.000.000 VND";
+        }
+		else if(lePhiUocTinh > 37000) {
+        	return "37.000.000 VND";
+        }
+		else if(lePhiUocTinh > 36000) {
+        	return "36.000.000 VND";
+        }
+		else if(lePhiUocTinh > 35000) {
+        	return "35.000.000 VND";
+        }
+		else if(lePhiUocTinh > 34000) {
+        	return "34.000.000 VND";
+        }
+		else if(lePhiUocTinh > 33000) {
+        	return "33.000.000 VND";
+        }
+		else if(lePhiUocTinh > 32000) {
+        	return "32.000.000 VND";
+        }
+		else if(lePhiUocTinh > 31000) {
+        	return "31.000.000 VND";
+        }
+		else if(lePhiUocTinh > 30000) {
+        	return "30.000.000 VND";
+        }
+		else if(lePhiUocTinh > 29000) {
+        	return "29.000.000 VND";
+        }
+		else if(lePhiUocTinh > 28000) {
+        	return "28.000.000 VND";
+        }
+		else if(lePhiUocTinh > 27000) {
+        	return "27.000.000 VND";
+        }
+		else if(lePhiUocTinh > 26000) {
+        	return "26.000.000 VND";
+        }
+		else if(lePhiUocTinh > 25000) {
+        	return "28.000.000 VND";
+        }
+		else if(lePhiUocTinh > 24000) {
+        	return "24.000.000 VND";
+        }
+		else if(lePhiUocTinh > 23000) {
+        	return "23.000.000 VND";
+        }
+		else if(lePhiUocTinh > 22000) {
+        	return "22.000.000 VND";
+        }
+		else if(lePhiUocTinh > 21000) {
+        	return "21.000.000 VND";
+        }
+		else if(lePhiUocTinh > 20000) {
+        	return "20.000.000 VND";
+        }
+		else if(lePhiUocTinh > 19000) {
+        	return "19.000.000 VND";
+        }
+        else if(lePhiUocTinh > 18000) {
+        	return "18.000.000 VND";
+        }
+        else if(lePhiUocTinh > 17000) {
+        	return "17.000.000 VND";
+        }
+        else if(lePhiUocTinh > 16000) {
+        	return "16.000.000 VND";
+        }
+        else if(lePhiUocTinh > 15000) {
+        	return "15.000.000 VND";
+        }
+        else if(lePhiUocTinh > 14000) {
+        	return "14.000.000 VND";
+        }
+        else if(lePhiUocTinh > 13000) {
+        	return "13.000.000 VND";
+        }
+        else if(lePhiUocTinh > 12000) {
+        	return "12.000.000 VND";
+        }
+        else if(lePhiUocTinh > 11000) {
+        	return "11.000.000 VND";
+        }
+        else if(lePhiUocTinh > 10000) {
+        	return "10.000.000 VND";
+        }
+        else if(lePhiUocTinh > 9000) {
+        	return "9.000.000 VND";
+        }
+        else if(lePhiUocTinh > 8000) {
+        	return "8.000.000 VND";
+        }
+        else if(lePhiUocTinh > 7000) {
+        	return "7.000.000 VND";
+        }
+        else if(lePhiUocTinh > 6000) {
+        	return "6.000.000 VND";
+        }
+        else if(lePhiUocTinh > 5000) {
+        	return "6.000.000 VND";
+        }
+        else if(lePhiUocTinh > 4000) {
+        	return "4.000.000 VND";
+        }
+        else if(lePhiUocTinh > 3000) {
+        	return "6.000.000 VND";
+        }
+        else if(lePhiUocTinh > 2000) {
+        	return "2.000.000 VND";
+        }
+
+		return "1.000.000 VND";
+	}
 }

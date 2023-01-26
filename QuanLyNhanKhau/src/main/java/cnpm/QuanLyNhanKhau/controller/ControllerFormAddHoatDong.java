@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
+import cnpm.QuanLyNhanKhau.model.ModelNhaVanHoa;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,6 +37,31 @@ public class ControllerFormAddHoatDong implements Initializable {
 	private DatePicker datepickerNgayBatDau;
 	@FXML
 	private DatePicker datepickerNgayKetThuc;
+	@FXML
+	private TextField textfieldSoLuongBan;
+	@FXML
+	private TextField textfieldSoLuongGhe;
+	@FXML
+	private TextField textfieldSoLuongLoa;
+	@FXML
+	private TextField textfieldSoLuongDai;
+	@FXML
+	private TextField textfieldSoLuongManHinh;
+	@FXML
+	private TextField textfieldSoLuongDen;
+	@FXML
+	private Label labelSoLuongBan;
+	@FXML
+	private Label labelSoLuongGhe;
+	@FXML
+	private Label labelSoLuongLoa;
+	@FXML
+	private Label labelSoLuongDai;
+	@FXML
+	private Label labelSoLuongManHinh;
+	@FXML
+	private Label labelSoLuongDen;
+	
 	
 	@FXML
 	private TableView<ModelNhanKhau> tableviewNhanKhau;
@@ -58,12 +84,15 @@ public class ControllerFormAddHoatDong implements Initializable {
 	private Button buttonDangKy;
 	
 	private ModelNhanKhau nguoiDangKy;
+	private ModelNhaVanHoa data;
 
 	private static ControllerHoatDongQuanLy controllerHoatDongQuanLy;
 	private static ControllerHoatDongAdmin controllerHoatDongAdmin;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) {		
+		loadData();
+		
 		textfieldHoTenNguoiDangKy.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				buttonTimKiem.fire();
@@ -83,6 +112,42 @@ public class ControllerFormAddHoatDong implements Initializable {
 		});
 		
 		datepickerNgayKetThuc.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				textfieldSoLuongBan.requestFocus();
+			}
+		});
+		
+		textfieldSoLuongBan.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				textfieldSoLuongGhe.requestFocus();
+			}
+		});
+		
+		textfieldSoLuongGhe.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				textfieldSoLuongLoa.requestFocus();
+			}
+		});
+		
+		textfieldSoLuongLoa.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				textfieldSoLuongDai.requestFocus();
+			}
+		});
+		
+		textfieldSoLuongDai.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				textfieldSoLuongManHinh.requestFocus();
+			}
+		});
+		
+		textfieldSoLuongManHinh.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
+			if (e.getCode() == KeyCode.ENTER) {
+				textfieldSoLuongDen.requestFocus();
+			}
+		});
+		
+		textfieldSoLuongDen.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				buttonDangKy.fire();
 			}
@@ -118,6 +183,48 @@ public class ControllerFormAddHoatDong implements Initializable {
 			}
 		});
 		
+		textfieldSoLuongBan.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				hideNotice();
+				textfieldSoLuongBan.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
+		textfieldSoLuongGhe.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				hideNotice();
+				textfieldSoLuongGhe.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
+		textfieldSoLuongLoa.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				hideNotice();
+				textfieldSoLuongLoa.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
+		textfieldSoLuongDai.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				hideNotice();
+				textfieldSoLuongDai.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
+		textfieldSoLuongManHinh.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				hideNotice();
+				textfieldSoLuongManHinh.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
+		textfieldSoLuongDen.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				hideNotice();
+				textfieldSoLuongDen.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
 		tablecolumnHoTen.setCellValueFactory(new PropertyValueFactory<>("hoTen"));
 		tablecolumnNgaySinh.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
 		tablecolumnGioiTinh.setCellValueFactory(new PropertyValueFactory<>("gioiTinh"));
@@ -143,6 +250,18 @@ public class ControllerFormAddHoatDong implements Initializable {
 		hideNotice();
 	}
 	
+	private void loadData() {
+		data = Connector.getTheLatestNhaVanHoa();
+
+		labelSoLuongBan.setText(String.valueOf(data.getSoLuongBan()));
+		labelSoLuongGhe.setText(String.valueOf(data.getSoLuongGhe()));
+		labelSoLuongLoa.setText(String.valueOf(data.getSoLuongLoa()));
+		labelSoLuongDai.setText(String.valueOf(data.getSoLuongDai()));
+		labelSoLuongManHinh.setText(String.valueOf(data.getSoLuongManHinh()));
+		labelSoLuongDen.setText(String.valueOf(data.getSoLuongDen()));
+
+	}
+	
 	@FXML
 	public void searchNhanKhau() {
 		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(textfieldHoTenNguoiDangKy.getText());
@@ -163,7 +282,10 @@ public class ControllerFormAddHoatDong implements Initializable {
 			return;
 		}
 		if (Connector.addHoatDong(nguoiDangKy.getIdNhanKhau(), textfieldHoatDong.getText(),
-				datepickerNgayBatDau.getValue(), datepickerNgayKetThuc.getValue())) {
+				datepickerNgayBatDau.getValue(), datepickerNgayKetThuc.getValue(),
+				Integer.valueOf(textfieldSoLuongBan.getText()), Integer.valueOf(textfieldSoLuongGhe.getText()),
+				Integer.valueOf(textfieldSoLuongLoa.getText()), Integer.valueOf(textfieldSoLuongDai.getText()),
+				Integer.valueOf(textfieldSoLuongManHinh.getText()), Integer.valueOf(textfieldSoLuongDen.getText()))) {
 			if(controllerHoatDongQuanLy != null) {
 				controllerHoatDongQuanLy.refreshHoatDong();
 			}
