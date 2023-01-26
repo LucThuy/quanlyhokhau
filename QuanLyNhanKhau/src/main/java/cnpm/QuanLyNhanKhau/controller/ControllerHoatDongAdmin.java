@@ -96,16 +96,20 @@ public class ControllerHoatDongAdmin implements Initializable{
 	
 	@FXML
 	public void confirmHoatDong() {
-		hoatDong.setXacNhan("Được chấp nhận");
-		Connector.editHoatDong(hoatDong);
+		if(hoatDong != null) {
+			hoatDong.setXacNhan("Được chấp nhận");
+			Connector.editHoatDong(hoatDong);
+		}
 		
 		refreshHoatDong();
 	}
 	
 	@FXML
 	public void declineHoatDong() {
-		hoatDong.setXacNhan("Bị từ chối");
-		Connector.editHoatDong(hoatDong);
+		if(hoatDong != null) {
+			hoatDong.setXacNhan("Bị từ chối");
+			Connector.editHoatDong(hoatDong);
+		}
 		
 		refreshHoatDong();
 	}

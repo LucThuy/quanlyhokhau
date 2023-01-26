@@ -14,6 +14,7 @@ public class ModelHoatDong {
 	private String xacNhan;
 	
 	private ModelNhanKhau modelNhanKhau;
+	private ModelNhaVanHoa modelNhaVanHoa;
 
 	
 	public ModelHoatDong(int idHoatDong, int idNhanKhau, Date ngayBatDau, Date ngayKetThuc, String hoatDong,
@@ -88,5 +89,8 @@ public class ModelHoatDong {
 	public String getHoTenNguoiDangKy() {
 		return modelNhanKhau.getHoTen();
 	}
+	
+	
+	
 	
 }

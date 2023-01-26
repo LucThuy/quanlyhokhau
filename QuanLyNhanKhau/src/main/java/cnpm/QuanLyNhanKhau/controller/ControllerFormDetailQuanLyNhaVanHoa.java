@@ -80,17 +80,17 @@ public class ControllerFormDetailQuanLyNhaVanHoa implements Initializable {
 	private void loadData(List<Integer> listId) {
 		data = Connector.getQuanLyNhaVanHoa(listId.get(0));
 
-		labelSoLuongBan.setText(data.getSoLuongBan());
+		labelSoLuongBan.setText(String.valueOf(data.getSoLuongBan()));
 		labelHienTrangBan.setText(data.getHienTrangBan());
-		labelSoLuongGhe.setText(data.getSoLuongGhe());
+		labelSoLuongGhe.setText(String.valueOf(data.getSoLuongGhe()));
 		labelHienTrangGhe.setText(data.getHienTrangGhe());
-		labelSoLuongLoa.setText(data.getSoLuongLoa());
+		labelSoLuongLoa.setText(String.valueOf(data.getSoLuongLoa()));
 		labelHienTrangLoa.setText(data.getHienTrangLoa());
-		labelSoLuongDai.setText(data.getSoLuongDai());
+		labelSoLuongDai.setText(String.valueOf(data.getSoLuongDai()));
 		labelHienTrangDai.setText(data.getHienTrangDai());
-		labelSoLuongManHinh.setText(data.getSoLuongManHinh());
+		labelSoLuongManHinh.setText(String.valueOf(data.getSoLuongManHinh()));
 		labelHienTrangManHinh.setText(data.getHienTrangManHinh());
-		labelSoLuongDen.setText(data.getSoLuongDen());
+		labelSoLuongDen.setText(String.valueOf(data.getSoLuongDen()));
 		labelHienTrangDen.setText(data.getHienTrangDen());
 
 	}

@@ -7,12 +7,12 @@ public class ModelNhaVanHoa {
 	private int idKiemTra;
 	private int idUser;
 	private Date ngayThucHien;
-	private String soLuongBan;
-	private String soLuongGhe;
-	private String soLuongLoa;
-	private String soLuongDai;
-	private String soLuongManHinh;
-	private String soLuongDen;
+	private int soLuongBan;
+	private int soLuongGhe;
+	private int soLuongLoa;
+	private int soLuongDai;
+	private int soLuongManHinh;
+	private int soLuongDen;
 	private String hienTrangBan;
 	private String hienTrangGhe;
 	private String hienTrangLoa;
@@ -22,9 +22,9 @@ public class ModelNhaVanHoa {
 	
 	private ModelUser modelUser;
 	
-	public ModelNhaVanHoa(int idKiemTra, int idUser, Date ngayThucHien, String soLuongBan, String hienTrangBan,
-			String soLuongGhe, String hienTrangGhe, String soLuongLoa, String hienTrangLoa, String soLuongDai,
-			String hienTrangDai, String soLuongManHinh, String hienTrangManHinh, String soLuongDen,
+	public ModelNhaVanHoa(int idKiemTra, int idUser, Date ngayThucHien, int soLuongBan, String hienTrangBan,
+			int soLuongGhe, String hienTrangGhe, int soLuongLoa, String hienTrangLoa, int soLuongDai,
+			String hienTrangDai, int soLuongManHinh, String hienTrangManHinh, int soLuongDen,
 			String hienTrangDen) {
 		super();
 		this.idKiemTra        = idKiemTra;
@@ -62,40 +62,40 @@ public class ModelNhaVanHoa {
 	public void setNgayThucHien(Date ngayThucHien) {
 		this.ngayThucHien = ngayThucHien;
 	}
-	public String getSoLuongBan() {
+	public int getSoLuongBan() {
 		return soLuongBan;
 	}
-	public void setSoLuongBan(String soLuongBan) {
+	public void setSoLuongBan(int soLuongBan) {
 		this.soLuongBan = soLuongBan;
 	}
-	public String getSoLuongGhe() {
+	public int getSoLuongGhe() {
 		return soLuongGhe;
 	}
-	public void setSoLuongGhe(String soLuongGhe) {
+	public void setSoLuongGhe(int soLuongGhe) {
 		this.soLuongGhe = soLuongGhe;
 	}
-	public String getSoLuongLoa() {
+	public int getSoLuongLoa() {
 		return soLuongLoa;
 	}
-	public void setSoLuongLoa(String soLuongLoa) {
+	public void setSoLuongLoa(int soLuongLoa) {
 		this.soLuongLoa = soLuongLoa;
 	}
-	public String getSoLuongDai() {
+	public int getSoLuongDai() {
 		return soLuongDai;
 	}
-	public void setSoLuongDai(String soLuongDai) {
+	public void setSoLuongDai(int soLuongDai) {
 		this.soLuongDai = soLuongDai;
 	}
-	public String getSoLuongManHinh() {
+	public int getSoLuongManHinh() {
 		return soLuongManHinh;
 	}
-	public void setSoLuongManHinh(String soLuongManHinh) {
+	public void setSoLuongManHinh(int soLuongManHinh) {
 		this.soLuongManHinh = soLuongManHinh;
 	}
-	public String getSoLuongDen() {
+	public int getSoLuongDen() {
 		return soLuongDen;
 	}
-	public void setSoLuongDen(String soLuongDen) {
+	public void setSoLuongDen(int soLuongDen) {
 		this.soLuongDen = soLuongDen;
 	}
 	public String getHienTrangBan() {

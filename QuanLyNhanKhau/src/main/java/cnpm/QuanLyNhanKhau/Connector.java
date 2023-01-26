@@ -1435,9 +1435,9 @@ public class Connector {
 		return modelTamVang;
 	}
 	
-	public static boolean addQuanLyNhaVanHoa(String soLuongBan, String hienTrangBan,
-			String soLuongGhe, String hienTrangGhe, String soLuongLoa, String hienTrangLoa, String soLuongDai,
-			String hienTrangDai, String soLuongManHinh, String hienTrangManHinh, String soLuongDen,
+	public static boolean addQuanLyNhaVanHoa(int soLuongBan, String hienTrangBan,
+			int soLuongGhe, String hienTrangGhe, int soLuongLoa, String hienTrangLoa, int soLuongDai,
+			String hienTrangDai, int soLuongManHinh, String hienTrangManHinh, int soLuongDen,
 			String hienTrangDen) {
 		
 		boolean done = false;
@@ -1455,17 +1455,17 @@ public class Connector {
 			ps = connection.prepareStatement(query);
 			ps.setInt(1, currentUser.getIdUser());
 			ps.setString(2, now);
-			ps.setString(3, soLuongBan);
+			ps.setInt(3, soLuongBan);
 			ps.setString(4, hienTrangBan);
-			ps.setString(5, soLuongGhe);
+			ps.setInt(5, soLuongGhe);
 			ps.setString(6, hienTrangGhe);
-			ps.setString(7, soLuongLoa);
+			ps.setInt(7, soLuongLoa);
 			ps.setString(8, hienTrangLoa);
-			ps.setString(9, soLuongDai);
+			ps.setInt(9, soLuongDai);
 			ps.setString(10, hienTrangDai);
-			ps.setString(11, soLuongManHinh);
+			ps.setInt(11, soLuongManHinh);
 			ps.setString(12, hienTrangManHinh);
-			ps.setString(13, soLuongDen);
+			ps.setInt(13, soLuongDen);
 			ps.setString(14, hienTrangDen);
 
 
@@ -1491,11 +1491,11 @@ public class Connector {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
-						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
-						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
-						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
-						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
-						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+						rs.getDate("ngayKiemTra"), rs.getInt("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getInt("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getInt("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getInt("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getInt("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getInt("soLuongDen"), rs.getString("hienTrangDen"));
 				lsGetQuanLyNhaVanHoa(idKiemTra);
 			}
 		} catch (SQLException e) {
@@ -1517,11 +1517,11 @@ public class Connector {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ModelNhaVanHoa modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
-						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
-						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
-						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
-						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
-						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+						rs.getDate("ngayKiemTra"), rs.getInt("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getInt("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getInt("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getInt("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getInt("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getInt("soLuongDen"), rs.getString("hienTrangDen"));
 //				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 //				modelTamTru.setModelNhanKhau(modelNhanKhau);
 				listQuanLy.add(modelNhaVanHoa);
@@ -1544,11 +1544,11 @@ public class Connector {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ModelNhaVanHoa modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
-						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
-						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
-						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
-						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
-						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+						rs.getDate("ngayKiemTra"), rs.getInt("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getInt("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getInt("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getInt("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getInt("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getInt("soLuongDen"), rs.getString("hienTrangDen"));
 				ModelUser modelUser = queryUserByIdUser(rs.getInt("idUser"));
 				modelNhaVanHoa.setModelUser(modelUser);
 				listQuanLy.add(modelNhaVanHoa);
@@ -1596,7 +1596,7 @@ public class Connector {
 			ps.setString(2, hoatDong);
 			ps.setDate(3, Date.valueOf(ngayBatDau));
 			ps.setDate(4, Date.valueOf(ngayKetThuc));
-			ps.setString(5, "1.000.000 VND");
+			ps.setString(5, calLePhi(ngayBatDau, ngayKetThuc));
 			ps.setString(6, "Chờ xác nhận");
 
 			ps.executeUpdate();
@@ -1607,6 +1607,44 @@ public class Connector {
 			e.printStackTrace();
 		}
 		return done;
+	}
+	
+	public static String calLePhi(LocalDate ngayBatDau, LocalDate ngayKetThuc) {
+		String lePhiUocTinh = null;
+		long Time = ngayKetThuc.getDayOfYear() - ngayBatDau.getDayOfYear();
+
+        if(Time > 10) {
+        	lePhiUocTinh = "20.000.000 VND";
+        }
+        else if(Time > 9) {
+        	lePhiUocTinh = "18.000.000 VND";
+        }
+        else if(Time > 8) {
+        	lePhiUocTinh = "16.000.000 VND";
+        }
+        else if(Time > 7) {
+        	lePhiUocTinh = "14.000.000 VND";
+        }
+        else if(Time > 6) {
+        	lePhiUocTinh = "12.000.000 VND";
+        }
+        else if(Time > 5) {
+        	lePhiUocTinh = "10.000.000 VND";
+        }
+        else if(Time > 4) {
+        	lePhiUocTinh = "8.000.000 VND";
+        }
+        else if(Time > 3) {
+        	lePhiUocTinh = "6.000.000 VND";
+        }
+        else if(Time > 2) {
+        	lePhiUocTinh = "4.000.000 VND";
+        }
+        else if(Time <= 2) {
+        	lePhiUocTinh = "2.000.000 VND";
+        }
+		return lePhiUocTinh;
+//		return lePhi;
 	}
 	
 	public static ModelHoatDong getHoatDong(int idHoatDong) {
@@ -1744,11 +1782,11 @@ public class Connector {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				modelNhaVanHoa = new ModelNhaVanHoa(rs.getInt("idKiemTra"), rs.getInt("idUser"),
-						rs.getDate("ngayKiemTra"), rs.getString("soLuongBan"), rs.getString("hienTrangBan"),
-						rs.getString("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getString("soLuongLoa"),
-						rs.getString("hienTrangLoa"), rs.getString("soLuongDai"), rs.getString("hienTrangDai"),
-						rs.getString("soLuongManHinh"), rs.getString("hienTrangManHinh"),
-						rs.getString("soLuongDen"), rs.getString("hienTrangDen"));
+						rs.getDate("ngayKiemTra"), rs.getInt("soLuongBan"), rs.getString("hienTrangBan"),
+						rs.getInt("soLuongGhe"), rs.getString("hienTrangGhe"), rs.getInt("soLuongLoa"),
+						rs.getString("hienTrangLoa"), rs.getInt("soLuongDai"), rs.getString("hienTrangDai"),
+						rs.getInt("soLuongManHinh"), rs.getString("hienTrangManHinh"),
+						rs.getInt("soLuongDen"), rs.getString("hienTrangDen"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

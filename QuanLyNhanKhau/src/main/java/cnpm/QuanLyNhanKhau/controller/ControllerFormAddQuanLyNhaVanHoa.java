@@ -217,10 +217,12 @@ public class ControllerFormAddQuanLyNhaVanHoa implements Initializable {
 			setNotice("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
-		if (Connector.addQuanLyNhaVanHoa(textfieldSoLuongBan.getText(), textfieldHienTrangBan.getText(),
-				textfieldSoLuongGhe.getText(), textfieldHienTrangGhe.getText(), textfieldSoLuongLoa.getText(),
-				textfieldHienTrangLoa.getText(), textfieldSoLuongDai.getText(), textfieldHienTrangDai.getText(),
-				textfieldSoLuongManHinh.getText(), textfieldHienTrangManHinh.getText(), textfieldSoLuongDen.getText(),
+		if (Connector.addQuanLyNhaVanHoa(Integer.valueOf(textfieldSoLuongBan.getText()),
+				textfieldHienTrangBan.getText(), Integer.valueOf(textfieldSoLuongGhe.getText()),
+				textfieldHienTrangGhe.getText(), Integer.valueOf(textfieldSoLuongLoa.getText()),
+				textfieldHienTrangLoa.getText(), Integer.valueOf(textfieldSoLuongDai.getText()),
+				textfieldHienTrangDai.getText(), Integer.valueOf(textfieldSoLuongManHinh.getText()),
+				textfieldHienTrangManHinh.getText(), Integer.valueOf(textfieldSoLuongDen.getText()),
 				textfieldHienTrangDen.getText())) {
 			if(controllerNhaVanHoaQuanLy != null) {
 				controllerNhaVanHoaQuanLy.refreshQuanLyNhaVanHoa();
