@@ -127,6 +127,7 @@ public class ControllerMainAdmin implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.OK) {
 			try {
+				Connector.lsLogOut();
 				App.setRoot("view/ViewSignIn");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

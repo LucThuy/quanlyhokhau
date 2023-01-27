@@ -135,7 +135,7 @@ public class ControllerFormDetailUser implements Initializable {
 
 	private void refreshTableViewLichSu() {
 		tableviewLichSu.getItems().clear();
-		System.out.println(data.getIdUser());
+//		System.out.println(data.getIdUser());
 		List<ModelLichSu> listLichSu = Connector.searchLichSuByIdUser(data.getIdUser());
 		listLichSu.forEach(lichSu -> {
 			tableviewLichSu.getItems().add(lichSu);

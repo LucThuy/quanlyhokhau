@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
+import cnpm.QuanLyNhanKhau.Connector;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -89,6 +90,7 @@ public class ControllerMainQuanLy implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.isPresent() && result.get() == ButtonType.OK) {
 			try {
+				Connector.lsLogOut();
 				App.setRoot("view/ViewSignIn");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

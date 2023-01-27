@@ -64,11 +64,12 @@ public class ControllerSignIn implements Initializable {
 			return;
 		}
 		ModelUser user = Connector.queryUserByTaiKhoanAndMatKhau(textfieldTaiKhoan.getText(), passwordfieldMatKhau.getText());
-		if(user == null) {
+		if(!Connector.signIn(textfieldTaiKhoan.getText(), passwordfieldMatKhau.getText())) {
 			labelThongBao.setText("Tài khoản hoặc mật khẩu không chính xác");
 		}
 		else if(user.getRole().equals("Tổ Trưởng")) {
 			App.setRoot("view/ViewMainAdmin");
+//			System.out.println(user.getIdUser());
 		}
 		else if(user.getRole().equals("Nhân Viên") && user.getCapQuyen().equals("Đã cấp quyền")){
 			App.setRoot("view/ViewMainNhanVien");

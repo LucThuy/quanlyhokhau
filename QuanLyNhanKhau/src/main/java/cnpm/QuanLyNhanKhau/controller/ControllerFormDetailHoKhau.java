@@ -83,6 +83,8 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	@FXML
 	private TableView<ModelLichSu> tableviewLichSuThayDoi;
 	@FXML
+	private TableColumn<ModelLichSu, String> tablecolumnNguoiThucHien;
+	@FXML
 	private TableColumn<ModelLichSu, String> tablecolumnThaoTac;
 	@FXML
 	private TableColumn<ModelLichSu, String> tablecolumnHoTenThayDoi;
@@ -210,7 +212,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 		
 		refreshHoKhauNhanKhau();
 
-		
+		tablecolumnNguoiThucHien.setCellValueFactory(new PropertyValueFactory<>("hoTenNguoiThucHien"));
 		tablecolumnThaoTac.setCellValueFactory(new PropertyValueFactory<>("thaoTac"));
 		tablecolumnHoTenThayDoi.setCellValueFactory(new PropertyValueFactory<>("hoTenThayDoi"));
 		tablecolumnThoiGian.setCellValueFactory(new PropertyValueFactory<>("thoiGian"));

@@ -144,7 +144,12 @@ public class ModelNhaVanHoa {
 	}
 	
 	public String getTenNguoiDung() {
-		return modelUser.getTenNguoiDung();
+		if(modelUser != null) {
+			return modelUser.getTenNguoiDung();
+		}
+		else {
+			return "";
+		}
 	}
 	
 }

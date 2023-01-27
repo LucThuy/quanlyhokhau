@@ -94,6 +94,17 @@ public class ModelLichSu {
 		this.idHoatDong = idHoatDong;
 	}
 	
+	public ModelUser getModelUser() {
+		return modelUser;
+	}
+	public void setModelUser(ModelUser modelUser) {
+		this.modelUser = modelUser;
+	}
+	
+	public String getHoTenNguoiThucHien() {
+		return modelUser.getTenNguoiDung();
+	}
+	
 	public ModelNhanKhau getModelNhanKhau() {
 		return modelNhanKhau;
 	}
@@ -102,6 +113,11 @@ public class ModelLichSu {
 	}
 	
 	public String getHoTenThayDoi() {
-		return modelNhanKhau.getHoTen();
+		if (modelNhanKhau != null) {
+			return modelNhanKhau.getHoTen();
+		}
+		else {
+			return "";
+		}
 	}
 }

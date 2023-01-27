@@ -56,7 +56,7 @@ public class ControllerQuanLyUser implements Initializable{
 		tableviewUser.setRowFactory( val -> {
 			TableRow<ModelUser> row = new TableRow<>();
 			row.setOnMouseClicked(e -> {
-					user = row.getItem();
+				user = row.getItem();
 			});
 			return row;
 		});
