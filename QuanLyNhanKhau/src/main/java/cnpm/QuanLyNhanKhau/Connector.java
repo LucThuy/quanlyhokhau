@@ -820,7 +820,7 @@ public class Connector {
 
 			ps.executeUpdate();
 			ModelHoKhauNhanKhau modelHoKhauNhanKhau = getHoKhauNhanKhau(idHoKhau, idNhanKhau);
-			lsAddHoKhauNhanKhau(modelHoKhauNhanKhau.getIdHoKhauNhanKhau());
+			lsAddHoKhauNhanKhau(idHoKhau, idNhanKhau);
 			ModelHoKhau modelHoKhau = getHoKhau(idHoKhau);
 			IsChangeNoiThuongTruNhanKhau(idNhanKhau, modelHoKhau.getDiaChi());
 			updateTrangThai(idNhanKhau, true);
@@ -908,7 +908,7 @@ public class Connector {
 				ps.setInt(1, data.getIdHoKhauNhanKhau());
 
 				ps.executeUpdate();
-				lsDeleteHoKhauNhanKhau();
+				lsDeleteHoKhauNhanKhau(data.getIdHoKhau(), data.getIdNhanKhau());
 				updateTrangThai(data.getIdNhanKhau(), false);
 				done = true;
 			} catch (SQLException e) {
@@ -1994,15 +1994,17 @@ public class Connector {
 		}
 	}
 	
-	private static void lsAddHoKhauNhanKhau(int idHoKhauNhanKhau) {
-		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idHoKhauNhanKhau`) VALUES (?, ?, ?, ?)";
+	private static void lsAddHoKhauNhanKhau(int idHoKhau, int idNhanKhau) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idHoKhau`, `idNhanKhau`)"
+				+ " VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, "Thêm hộ khẩu nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-			ps.setInt(4, idHoKhauNhanKhau);
+			ps.setInt(4, idHoKhau);
+			ps.setInt(5, idNhanKhau);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -2042,14 +2044,17 @@ public class Connector {
 		}
 	}
 	
-	private static void lsDeleteHoKhauNhanKhau() {
-		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`) VALUES (?, ?, ?)";
+	private static void lsDeleteHoKhauNhanKhau(int idHoKhau, int idNhanKhau) {
+		String query = "INSERT INTO quanlynhankhau.lichsu (`thaoTac`, `idUser`, `thoiGian`, `idNhanKhau`, `idHoKhau`)"
+				+ " VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, "Xoá hộ khẩu nhân khẩu");
 			ps.setInt(2, currentUser.getIdUser());
 			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(4, idNhanKhau);
+			ps.setInt(5, idHoKhau);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -2437,6 +2442,36 @@ public class Connector {
 			while (rs.next()) {
 				ModelLichSu modelLichSu = new ModelLichSu(rs.getInt("idLichSu"), rs.getString("thaoTac"),
 						rs.getInt("idUser"), rs.getTimestamp("thoiGian"));
+				listLichSu.add(modelLichSu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listLichSu;
+	}
+	
+	public static List<ModelLichSu> searchLichSuThayDoiHoKhauByIdHoKhau(int idHoKhau) {
+		List<ModelLichSu> listLichSu = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.lichSu\n"
+				+ "WHERE idHoKhau = ? AND thaoTac != ? AND thaoTac != ? AND thaoTac != ?";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idHoKhau);
+			ps.setString(2, "Xem hộ khẩu");
+			ps.setString(3, "Thêm hộ khẩu");
+			ps.setString(4, "Sửa hộ khẩu");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelLichSu modelLichSu = new ModelLichSu(rs.getInt("idLichSu"), rs.getString("thaoTac"),
+						rs.getInt("idUser"), rs.getTimestamp("thoiGian"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelLichSu.setModelNhanKhau(modelNhanKhau);
+				modelLichSu.setIdHoKhau(idHoKhau);
 				listLichSu.add(modelLichSu);
 			}
 		} catch (SQLException e) {

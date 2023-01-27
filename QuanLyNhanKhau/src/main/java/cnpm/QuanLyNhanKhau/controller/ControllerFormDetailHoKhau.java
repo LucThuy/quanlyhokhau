@@ -13,6 +13,7 @@ import cnpm.QuanLyNhanKhau.Connector;
 import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelLichSu;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,6 +80,14 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	@FXML
 	private TableColumn<ModelNhanKhau, String> tablecolumnQuanHe;
 	
+	@FXML
+	private TableView<ModelLichSu> tableviewLichSuThayDoi;
+	@FXML
+	private TableColumn<ModelLichSu, String> tablecolumnThaoTac;
+	@FXML
+	private TableColumn<ModelLichSu, String> tablecolumnHoTenThayDoi;
+	@FXML
+	private TableColumn<ModelLichSu, Date> tablecolumnThoiGian;
 
 	private ModelHoKhau data;
 	private ModelNhanKhau chuHo;
@@ -198,8 +207,15 @@ public class ControllerFormDetailHoKhau implements Initializable {
 			});
 			return row;
 		});
-
+		
 		refreshHoKhauNhanKhau();
+
+		
+		tablecolumnThaoTac.setCellValueFactory(new PropertyValueFactory<>("thaoTac"));
+		tablecolumnHoTenThayDoi.setCellValueFactory(new PropertyValueFactory<>("hoTenThayDoi"));
+		tablecolumnThoiGian.setCellValueFactory(new PropertyValueFactory<>("thoiGian"));
+
+		refreshLichSu();
 	}
 
 	@FXML
@@ -300,6 +316,19 @@ public class ControllerFormDetailHoKhau implements Initializable {
 		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByIdHoKhau(data.getIdHoKhau());
 		listNhanKhau.forEach(nhanKhau -> {
 			tableviewHoKhauNhanKhau.getItems().add(nhanKhau);
+		});
+	}
+	
+	public void refreshLichSu() {
+		refreshTableViewLichSuThayDoi();
+	}
+	
+	private void refreshTableViewLichSuThayDoi() {
+		tableviewLichSuThayDoi.getItems().clear();
+		
+		List<ModelLichSu> listLichSu = Connector.searchLichSuThayDoiHoKhauByIdHoKhau(data.getIdHoKhau());
+		listLichSu.forEach(lichSu -> {
+			tableviewLichSuThayDoi.getItems().add(lichSu);
 		});
 	}
 
