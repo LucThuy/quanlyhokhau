@@ -2521,8 +2521,10 @@ public class Connector {
 			int soLuongGhe, int soLuongLoa, int soLuongDai, int soLuongManHinh, int soLuongDen) {
 		
 		long Time = ngayKetThuc.getDayOfYear() - ngayBatDau.getDayOfYear();
+//		System.out.println(Time);
 		long lePhiUocTinh = Time * 3000 + soLuongBan * 100 + soLuongGhe * 30 + soLuongLoa * 1000
 				+ soLuongDai * 1000 + soLuongManHinh * 1000 + soLuongDen * 500;
+//		System.out.println(lePhiUocTinh);
 		if(lePhiUocTinh > 50000) {
         	return "50.000.000 VND";
         }
@@ -2599,7 +2601,7 @@ public class Connector {
         	return "26.000.000 VND";
         }
 		else if(lePhiUocTinh > 25000) {
-        	return "28.000.000 VND";
+        	return "25.000.000 VND";
         }
 		else if(lePhiUocTinh > 24000) {
         	return "24.000.000 VND";
@@ -2659,18 +2661,18 @@ public class Connector {
         	return "6.000.000 VND";
         }
         else if(lePhiUocTinh > 5000) {
-        	return "6.000.000 VND";
+        	return "5.000.000 VND";
         }
         else if(lePhiUocTinh > 4000) {
         	return "4.000.000 VND";
         }
         else if(lePhiUocTinh > 3000) {
-        	return "6.000.000 VND";
+        	return "3.000.000 VND";
         }
         else if(lePhiUocTinh > 2000) {
         	return "2.000.000 VND";
         }
 
-		return "1.000.000 VND";
+		return "500.000 VND";
 	}
 }

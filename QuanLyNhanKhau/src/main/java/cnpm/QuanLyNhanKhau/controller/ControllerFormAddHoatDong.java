@@ -281,6 +281,10 @@ public class ControllerFormAddHoatDong implements Initializable {
 			setNotice("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
+		if(isSuitableField()) {
+			setNotice("Số lượng không hợp lệ");
+			return;
+		}
 		if (Connector.addHoatDong(nguoiDangKy.getIdNhanKhau(), textfieldHoatDong.getText(),
 				datepickerNgayBatDau.getValue(), datepickerNgayKetThuc.getValue(),
 				Integer.valueOf(textfieldSoLuongBan.getText()), Integer.valueOf(textfieldSoLuongGhe.getText()),
@@ -321,7 +325,61 @@ public class ControllerFormAddHoatDong implements Initializable {
 			datepickerNgayKetThuc.getStyleClass().add("inputfield-error");
 			check = true;
 		}
+		if (textfieldSoLuongBan.getText().isEmpty()) {
+			textfieldSoLuongBan.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongGhe.getText().isEmpty()) {
+			textfieldSoLuongGhe.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongLoa.getText().isEmpty()) {
+			textfieldSoLuongLoa.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongDai.getText().isEmpty()) {
+			textfieldSoLuongDai.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongManHinh.getText().isEmpty()) {
+			textfieldSoLuongManHinh.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (textfieldSoLuongDen.getText().isEmpty()) {
+			textfieldSoLuongDen.getStyleClass().add("inputfield-error");
+			check = true;
+		}
 		
+		return check;
+	}
+	
+	private boolean isSuitableField() {
+		boolean check = false;
+		
+		if (Integer.valueOf(textfieldSoLuongBan.getText()) > data.getSoLuongBan()) {
+			textfieldSoLuongBan.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (Integer.valueOf(textfieldSoLuongGhe.getText()) > data.getSoLuongGhe()) {
+			textfieldSoLuongGhe.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (Integer.valueOf(textfieldSoLuongLoa.getText()) > data.getSoLuongLoa()) {
+			textfieldSoLuongLoa.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (Integer.valueOf(textfieldSoLuongDai.getText()) > data.getSoLuongDai()) {
+			textfieldSoLuongDai.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (Integer.valueOf(textfieldSoLuongManHinh.getText()) > data.getSoLuongManHinh()) {
+			textfieldSoLuongManHinh.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if (Integer.valueOf(textfieldSoLuongDen.getText()) > data.getSoLuongDen()) {
+			textfieldSoLuongDen.getStyleClass().add("inputfield-error");
+			check = true;
+		}
 		return check;
 	}
 	
