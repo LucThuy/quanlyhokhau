@@ -95,6 +95,10 @@ public class ControllerSignUp implements Initializable {
 				e.printStackTrace();
 			}
 		}
+		else {
+			labelThongBao.setText("Tài khoản đã tồn tại");
+			return ;
+		}
 	}
 
 	@FXML
