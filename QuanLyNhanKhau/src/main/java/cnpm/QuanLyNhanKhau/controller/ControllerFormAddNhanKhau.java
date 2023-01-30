@@ -185,7 +185,7 @@ public class ControllerFormAddNhanKhau implements Initializable {
 
 		textfieldHoTen.focusedProperty().addListener((obs, oldVal, newVal) -> {
 			if (newVal) {
-				hideNotice();
+				labelThongBao.setText("");
 				textfieldHoTen.getStyleClass().removeAll("inputfield-error");
 			}
 		});
@@ -321,14 +321,12 @@ public class ControllerFormAddNhanKhau implements Initializable {
 				textfieldGhiChu.getStyleClass().removeAll("inputfield-error");
 			}
 		});
-		
-		hideNotice();
 	}
 
 	@FXML
 	public void addNhanKhau() {
 		if(isMissingField()) {
-			setNotice("Điền đầy đủ các mục bắt buộc");
+			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
 		RadioButton selectedRadioButton = (RadioButton) togglegroupGioiTinh.getSelectedToggle();
@@ -375,17 +373,6 @@ public class ControllerFormAddNhanKhau implements Initializable {
 			check = true;
 		}
 		return check;
-	}
-	
-	private void setNotice(String notice) {
-		labelThongBao.setText(notice);
-		labelThongBao.setMinHeight(20);
-		labelThongBao.setMaxHeight(20);
-	}
-	
-	private void hideNotice() {
-		labelThongBao.setMinHeight(0);
-		labelThongBao.setMaxHeight(0);
 	}
 	
 	public static ControllerNhanKhau getControllerNhanKhau() {

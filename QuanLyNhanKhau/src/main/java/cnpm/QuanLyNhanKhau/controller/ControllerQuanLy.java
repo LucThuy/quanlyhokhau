@@ -121,7 +121,7 @@ public class ControllerQuanLy implements Initializable{
 		Holder.getInstance().setId(listId);	
 		try {
 			App.addStageForm("view/ViewFormDetailUSer");
-			ControllerFormDetailUser.setControllerQuanLy(this);
+//			ControllerFormDetailUser.setControllerQuanLy(this);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

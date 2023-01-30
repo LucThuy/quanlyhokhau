@@ -17,12 +17,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 
 
 public class ControllerNhanKhau implements Initializable{
-
+	
 	@FXML
 	private TableView<ModelNhanKhau> tableviewNhanKhau;
 	@FXML
@@ -35,6 +36,9 @@ public class ControllerNhanKhau implements Initializable{
 	private TableColumn<ModelNhanKhau, String> tablecolumnCCCD;
 	
 	@FXML
+	private TextField textfieldTimKiem;
+	
+	@FXML
 	private Button buttonThemMoi;
 	@FXML
 	private Button buttonLamMoi;
@@ -44,7 +48,7 @@ public class ControllerNhanKhau implements Initializable{
 	private ModelNhanKhau nhanKhau;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {		
+	public void initialize(URL location, ResourceBundle resources) {	
 		tablecolumnHoTen.setCellValueFactory(new PropertyValueFactory<>("hoTen"));
 		tablecolumnNgaySinh.setCellValueFactory(new PropertyValueFactory<>("ngaySinh"));
 		tablecolumnGioiTinh.setCellValueFactory(new PropertyValueFactory<>("gioiTinh"));
@@ -61,6 +65,26 @@ public class ControllerNhanKhau implements Initializable{
 		});
 		
 		refreshTableViewNhanKhau();
+	}
+	
+	@FXML
+	public void searchNhanKhauByHoTen() {
+		tableviewNhanKhau.getItems().clear();
+		
+		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByHoTen(textfieldTimKiem.getText());
+		listNhanKhau.forEach(nhanKhau -> {
+			tableviewNhanKhau.getItems().add(nhanKhau);
+		});
+	}
+	
+	@FXML
+	public void searchNhanKhauByCCCD() {
+		tableviewNhanKhau.getItems().clear();
+		
+		List<ModelNhanKhau> listNhanKhau = Connector.searchNhanKhauByCCCD(textfieldTimKiem.getText());
+		listNhanKhau.forEach(nhanKhau -> {
+			tableviewNhanKhau.getItems().add(nhanKhau);
+		});
 	}
 	
 	@FXML

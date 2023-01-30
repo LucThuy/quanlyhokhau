@@ -1,6 +1,5 @@
 package cnpm.QuanLyNhanKhau;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -470,6 +469,34 @@ public class Connector {
 		return listNhanKhau;
 	}
 	
+	public static List<ModelNhanKhau> searchNhanKhauByCCCD(String cccd) {
+		List<ModelNhanKhau> listNhanKhau = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.nhankhau\n" + "WHERE cccd like ?\n" + "ORDER BY cccd ASC";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "%" + cccd + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelNhanKhau modelNhanKhau = new ModelNhanKhau(rs.getInt("idNhanKhau"), rs.getString("hoTen"),
+						rs.getString("biDanh"), rs.getDate("ngaySinh"), rs.getString("gioiTinh"), rs.getString("cccd"),
+						rs.getDate("ngayCap"), rs.getString("noiCap"), rs.getString("nguyenQuan"),rs.getString("danToc"),
+						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
+						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
+						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
+						rs.getString("ghiChu"), rs.getString("trangThai"));
+				listNhanKhau.add(modelNhanKhau);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listNhanKhau;
+	}
+	
 	public static ModelNhanKhau searchNhanKhauByIdNhanKhau(int idNhanKhau) {
 		ModelNhanKhau modelNhanKhau = null;
 
@@ -706,6 +733,29 @@ public class Connector {
 		}
 
 		return listHoKhau;
+	}
+	
+	public static ModelHoKhau searchHoKhauByHoTen(String hoTen) {
+		ModelHoKhau modelHoKhau = null;
+		String query = "SELECT * FROM quanlynhankhau.hokhau\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"),
+						rs.getString("diaChi"), rs.getString("soNha"), rs.getString("duongPho"),
+						rs.getString("phuong"), rs.getString("quan"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelHoKhau.setModelNhanKhau(modelNhanKhau);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelHoKhau;
 	}
 	
 	public static ModelHoKhau searchHoKhauByIdNhanKhau(int idNhanKhau) {

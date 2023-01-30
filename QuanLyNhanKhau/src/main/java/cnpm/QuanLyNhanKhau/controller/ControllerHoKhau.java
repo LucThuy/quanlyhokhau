@@ -85,6 +85,26 @@ public class ControllerHoKhau implements Initializable {
 
 		refreshTableViewHoKhau();
 	}
+	
+	@FXML
+	public void searchHoKhauByHoTen() {
+		tableviewHoKhau.getItems().clear();
+
+		List<ModelHoKhau> listHoKhau = Connector.getAllHoKhau();
+		listHoKhau.forEach(hoKhau -> {
+			tableviewHoKhau.getItems().add(hoKhau);
+		});
+	}
+	
+	@FXML
+	public void searchHoKhauByDiaChi() {
+		tableviewHoKhau.getItems().clear();
+
+		List<ModelHoKhau> listHoKhau = Connector.getAllHoKhau();
+		listHoKhau.forEach(hoKhau -> {
+			tableviewHoKhau.getItems().add(hoKhau);
+		});
+	}
 
 	@FXML
 	public void addHoKhau() {

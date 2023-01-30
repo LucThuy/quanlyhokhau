@@ -212,6 +212,20 @@
 	-fx-border-radius: 0;
 }
 
+.scroll-pane {
+	-fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 10 0 0 0;
+}
+
+.scroll-pane:focused {
+    -fx-background-insets: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-insets: 0;
+}
+
 .choice-box, .date-picker{
 	-fx-padding: 0;
 	-fx-background-insets: none;
@@ -222,24 +236,19 @@
 	-fx-border-radius: 1;
 }
 
-.choice-box .label{
-	-fx-padding: 0;
-	-fx-text-fill: -black-1;
-	-fx-font-size: 20;
-	-fx-font-weight: 500;
-}
-
-.choice-box .context-menu{
-	-fx-background-color: -black-5;
-}
-
-.choice-box .menu-item:focus{
+.choice-box {
 	-fx-background-color: -black-4;
 }
 
-.choice-box .menu-item .label{
-	-fx-font-size: 20;
-	-fx-font-weight: 700;
+.choice-box .context-menu{
+	-fx-background-color: -black-4;
+}
+
+.choice-box .menu-item:focused{
+	-fx-background-color: -black-2;
+}
+
+.choice-box .arrow-button .arrow {
 	-fx-text-fill: -white-1;
 }
 
@@ -260,6 +269,38 @@
 .date-picker-popup .month-year-pane .button{
 	-fx-pref-width: 50;
 	-fx-pref-height: 30;
+}
+
+.menu-button {
+	-fx-background-color: -black-4;
+	-fx-border-width: 1;
+	-fx-border-color: -white-2;
+}
+
+.menu-button .arrow {
+	-fx-background-color: -white-1;
+}
+
+.menu-button .label {
+	-fx-font-size: 12;
+}
+
+.context-menu {
+	-fx-padding: 0;
+}
+
+.menu-item {
+	-fx-background-color: -black-4;
+	-fx-border-width: 1;
+	-fx-border-color: -white-2;
+}
+
+.menu-item:focused {
+	-fx-background-color: -black-2;
+}
+
+.menu-item .label {
+	-fx-font-size: 12;
 }
 
 .bottom{
@@ -301,6 +342,25 @@
 
 .inputfield-error{ 
 	-fx-border-color: -red-1;
+}
+
+.search {
+	-fx-background-color: -black-3;
+	-fx-border-width: 1 0;
+	-fx-border-color: -white-2;
+}
+
+.search .search-input {
+	-fx-pref-height: 25;
+	-fx-pref-width: 300;
+}
+
+.search .button {
+	-fx-border-color: -white-2;
+}
+
+.search .button:hover {
+	-fx-background-color: -black-1;
 }
 
 .search-icon, .search-icon:hover{
