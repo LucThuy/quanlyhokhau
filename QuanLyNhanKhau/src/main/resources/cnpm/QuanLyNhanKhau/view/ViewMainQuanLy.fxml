@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerMainQuanLy">
+	<left>
+		<VBox prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
+			<children>
+				<Button fx:id="buttonQuanLy" mnemonicParsing="false" onAction="#setViewNhaVanHoaQuanLy" text="QUẢN LÝ" />
+				<Button fx:id="buttonHoatDong" mnemonicParsing="false" onAction="#setViewHoatDong" text="HOẠT ĐỘNG" />
+            <Button fx:id="buttonDangXuat" mnemonicParsing="false" onAction="#logOut" text="ĐĂNG XUẤT" />
+			</children>
+			<padding>
+				<Insets top="10.0" />
+			</padding>
+			<styleClass>
+				<String fx:value="left" />
+				<String fx:value="side-bar" />
+			</styleClass>
+		</VBox>
+	</left>
+	<center>
+		<StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<children>
+				<fx:include fx:id="viewNhaVanHoaQuanLy" source="ViewNhaVanHoaQuanLy.fxml" />
+				<fx:include fx:id="viewHoatDong" source="ViewHoatDongQuanLy.fxml" />
+			</children>
+		</StackPane>
+	</center>
+</BorderPane>

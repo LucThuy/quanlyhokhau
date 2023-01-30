@@ -6,13 +6,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerMain">
+<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerMainNhanVien">
 	<left>
 		<VBox prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
 			<children>
 				<Button fx:id="buttonNhanKhau" mnemonicParsing="false" onAction="#setViewNhanKhau" text="NHÂN KHẨU" />
 				<Button fx:id="buttonHoKhau" mnemonicParsing="false" onAction="#setViewHoKhau" text="HỘ KHẨU" />
             <Button fx:id="buttonTamTruTamVang" mnemonicParsing="false" onAction="#setViewTamTruTamVang" text="TẠM TRÚ TẠM VẮNG" />
+            <Button fx:id="buttonDangXuat" mnemonicParsing="false" onAction="#logOut" text="ĐĂNG XUẤT" />
 			</children>
 			<padding>
 				<Insets top="10.0" />

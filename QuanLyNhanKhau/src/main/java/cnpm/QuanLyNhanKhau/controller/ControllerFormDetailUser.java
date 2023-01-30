@@ -58,7 +58,7 @@ public class ControllerFormDetailUser implements Initializable {
 	
 	private ModelUser data;
 	
-	private static ControllerQuanLy controllerQuanLy;
+	private static ControllerQuanLyUser controllerQuanLyUser;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -102,7 +102,7 @@ public class ControllerFormDetailUser implements Initializable {
 			labelThongBao.getStyleClass().add("notice-green");
 			labelThongBao.setText("Đã lưu thay đổi");
 
-			controllerQuanLy.refreshTableViewUserNV();
+			controllerQuanLyUser.refreshTableViewUserNV();
 		}
 	}
 
@@ -114,7 +114,7 @@ public class ControllerFormDetailUser implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.isPresent() && result.get() == ButtonType.OK) {
 			if(Connector.deleteUser(data)) {
-				controllerQuanLy.refreshTableViewUserNV();
+				controllerQuanLyUser.refreshTableViewUserNV();
 				App.closeStageForm();
 			}
 		}
@@ -135,7 +135,7 @@ public class ControllerFormDetailUser implements Initializable {
 
 	private void refreshTableViewLichSu() {
 		tableviewLichSu.getItems().clear();
-		System.out.println(data.getIdUser());
+//		System.out.println(data.getIdUser());
 		List<ModelLichSu> listLichSu = Connector.searchLichSuByIdUser(data.getIdUser());
 		listLichSu.forEach(lichSu -> {
 			tableviewLichSu.getItems().add(lichSu);
@@ -158,11 +158,11 @@ public class ControllerFormDetailUser implements Initializable {
 		return check;
 	}
 
-	public static ControllerQuanLy getControllerQuanLy() {
-		return controllerQuanLy;
+	public static ControllerQuanLyUser getControllerQuanLyUser() {
+		return controllerQuanLyUser;
 	}
 
-	public static void setControllerQuanLy(ControllerQuanLy controllerQuanLy) {
-		ControllerFormDetailUser.controllerQuanLy = controllerQuanLy;
+	public static void setControllerQuanLyUser(ControllerQuanLyUser controllerQuanLyUser) {
+		ControllerFormDetailUser.controllerQuanLyUser = controllerQuanLyUser;
 	}
 }

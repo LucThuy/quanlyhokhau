@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerNhaVanHoaAdmin">
+   <center>
+      <TableView fx:id="tableviewQuanLy" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="tablecolumnNguoiThucHien" prefWidth="550.0" text="NGƯỜI THỰC HIỆN" />
+          <TableColumn fx:id="tablecolumnNgayThucHien" minWidth="150.0" prefWidth="528.0" text="NGÀY THỰC HIỆN" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="80.0" spacing="40.0" styleClass="bottom" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonThemMoi" mnemonicParsing="false" onAction="#addQuanLy" text="THÊM MỚI" />
+            <Button mnemonicParsing="false" onAction="#refreshQuanLyNhaVanHoa" text="LÀM MỚI" />
+            <Button fx:id="buttonChiTiet" mnemonicParsing="false" text="CHI TIẾT" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" styleClass="top">
+         <children>
+            <Label styleClass="title" text="QUẢN LÝ NHÀ VĂN HOÁ" BorderPane.alignment="CENTER">
+               <HBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerNhaVanHoa">
+<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerQuanLyUser">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -18,7 +18,7 @@
                      <bottom>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0" styleClass="bottom" BorderPane.alignment="CENTER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addQuanLy" text="QUẢN LÝ" />
+                              <Button mnemonicParsing="false" onAction="#showDetailUser" text="CHI TIẾT" />
                            </children>
                         </HBox>
                      </bottom>
@@ -31,6 +31,7 @@
                               <TableColumn fx:id="tablecolumnTenNguoiDungNV" editable="false" prefWidth="75.0" text="TÊN NGƯỜI DÙNG" />
                               <TableColumn fx:id="tablecolumnTaiKhoanNV" editable="false" prefWidth="75.0" text="TÀI KHOẢN" />
                               <TableColumn fx:id="tablecolumnMatKhauNV" editable="false" prefWidth="75.0" text="MẬT KHẨU" />
+                              <TableColumn fx:id="tablecolumnChucVuNV" prefWidth="75.0" text="CHỨC VỤ" />
                            </columns>
                         </TableView>
                      </center>
@@ -46,6 +47,7 @@
                             <TableColumn fx:id="tablecolumnTenNguoiDung" editable="false" prefWidth="75.0" text="TÊN NGƯỜI DÙNG" />
                             <TableColumn fx:id="tablecolumnTaiKhoan" editable="false" prefWidth="75.0" text="TÀI KHOẢN" />
                               <TableColumn fx:id="tablecolumnMatKhau" editable="false" prefWidth="75.0" text="MẬT KHẨU" />
+                              <TableColumn fx:id="tablecolumnChucVu" prefWidth="75.0" text="CHỨC VỤ" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -69,7 +71,7 @@
    <top>
       <HBox alignment="CENTER" styleClass="top">
          <children>
-            <Label styleClass="title" text="NHÀ VĂN HÓA" BorderPane.alignment="CENTER">
+            <Label styleClass="title" text="QUẢN LÝ" BorderPane.alignment="CENTER">
                <HBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </HBox.margin>

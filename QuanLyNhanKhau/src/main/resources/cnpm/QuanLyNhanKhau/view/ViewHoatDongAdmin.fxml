@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerHoatDongAdmin">
+   <center>
+      <TableView fx:id="tableviewHoatDong" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="tablecolumnHoTenNguoiDangKy" prefWidth="75.0" text="HỌ TÊN NGƯỜI ĐĂNG KÝ" />
+          <TableColumn fx:id="tablecolumnHoatDong" minWidth="-1.0" text="HOẠT ĐỘNG" />
+          <TableColumn fx:id="tablecolumnNgayBatDau" minWidth="0.0" text="NGÀY BẮT ĐẦU" />
+            <TableColumn fx:id="tablecolumnNgayKetThuc" minWidth="0.0" text="NGÀY KẾT THÚC" />
+            <TableColumn fx:id="tablecolumnLePhi" minWidth="-1.0" text="LỆ PHÍ" />
+            <TableColumn fx:id="tablecolumnXacNhan" prefWidth="75.0" text="XÁC NHẬN" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="80.0" spacing="40.0" styleClass="bottom" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="buttonPheDuyet" mnemonicParsing="false" onAction="#confirmHoatDong" text="PHÊ DUYỆT" />
+            <Button fx:id="buttonTuChoi" mnemonicParsing="false" onAction="#declineHoatDong" text="TỪ CHỐI" />
+            <Button fx:id="buttonDangKy" mnemonicParsing="false" onAction="#addHoatDong" text="ĐĂNG KÝ" />
+            <Button fx:id="buttonLamMoi" mnemonicParsing="false" onAction="#refreshHoatDong" text="LÀM MỚI" />
+            <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetailHoatDong" text="CHI TIẾT" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" styleClass="top">
+         <children>
+            <Label styleClass="title" text="HOẠT ĐỘNG NHÀ VĂN HOÁ" BorderPane.alignment="CENTER">
+               <HBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

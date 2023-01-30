@@ -1,8 +1,8 @@
 package cnpm.QuanLyNhanKhau.controller;
 
+import java.awt.Checkbox;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
@@ -10,8 +10,8 @@ import cnpm.QuanLyNhanKhau.Connector;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
@@ -24,6 +24,8 @@ public class ControllerSignUp implements Initializable {
 	private TextField textfieldTaiKhoan;
 	@FXML
 	private TextField textfieldMatKhau;
+	@FXML
+	private ChoiceBox choiceboxChucVu;
 	@FXML
 	private Button buttonDangKy;
 	@FXML
@@ -45,8 +47,6 @@ public class ControllerSignUp implements Initializable {
 
 		textfieldMatKhau.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
-				buttonDangKy.requestFocus();
-				buttonDangKy.fire();
 			}
 		});
 
@@ -70,6 +70,15 @@ public class ControllerSignUp implements Initializable {
 				textfieldMatKhau.getStyleClass().removeAll("inputfield-error");
 			}
 		});
+		
+		choiceboxChucVu.focusedProperty().addListener((obs, oldVal, newVal) -> {
+			if (newVal) {
+				labelThongBao.setText("");
+				choiceboxChucVu.getStyleClass().removeAll("inputfield-error");
+			}
+		});
+		
+		choiceboxChucVu.getItems().addAll("Nhân Viên", "Cán Bộ Quản Lý");
 	}
 
 	@FXML
@@ -79,7 +88,7 @@ public class ControllerSignUp implements Initializable {
 			return;
 		}
 		if (Connector.signUp(textfieldTaiKhoan.getText(), textfieldMatKhau.getText(),
-				textfieldTenNguoiDung.getText())) {
+				textfieldTenNguoiDung.getText(), choiceboxChucVu.getValue().toString())) {
 			try {
 				App.setRoot("view/ViewSignIn");
 			} catch (IOException e) {
@@ -109,6 +118,10 @@ public class ControllerSignUp implements Initializable {
 		}
 		if(textfieldMatKhau.getText().isEmpty()) {
 			textfieldMatKhau.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if(choiceboxChucVu.getValue() == null) {
+			choiceboxChucVu.getStyleClass().add("inputfield-error");
 			check = true;
 		}
 		return check;

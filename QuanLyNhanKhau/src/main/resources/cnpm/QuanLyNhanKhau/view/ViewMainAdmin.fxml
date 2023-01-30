@@ -10,10 +10,13 @@
 	<left>
 		<VBox prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
 			<children>
-            <Button fx:id="buttonQuanLy" layoutX="10.0" layoutY="20.0" mnemonicParsing="false" onAction="#setViewQuanLy" text="QUẢN LÝ" />
+            <Button fx:id="buttonQuanLy" layoutX="10.0" layoutY="20.0" mnemonicParsing="false" onAction="#setViewQuanLyUser" text="QUẢN LÝ" />
 				<Button fx:id="buttonNhanKhau" mnemonicParsing="false" onAction="#setViewNhanKhau" text="NHÂN KHẨU" />
 				<Button fx:id="buttonHoKhau" mnemonicParsing="false" onAction="#setViewHoKhau" text="HỘ KHẨU" />
             <Button fx:id="buttonTamTruTamVang" mnemonicParsing="false" onAction="#setViewTamTruTamVang" text="TẠM TRÚ TẠM VẮNG" />
+            <Button fx:id="buttonQuanLyNhaVanHoa" mnemonicParsing="false" onAction="#setViewQuanLyNhaVanHoa" text="NHÀ VĂN HOÁ" />
+            <Button fx:id="buttonHoatDong" mnemonicParsing="false" onAction="#setViewHoatDong" text="HOẠT ĐỘNG" />
+            <Button fx:id="buttonDangXuat" mnemonicParsing="false" onAction="#logOut" text="ĐĂNG XUẤT" />
 			</children>
 			<padding>
 				<Insets top="10.0" />
@@ -27,10 +30,12 @@
 	<center>
 		<StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 			<children>
-				<fx:include fx:id="viewQuanLy" source="ViewQuanLy.fxml" />
+				<fx:include fx:id="viewQuanLyUser" source="ViewQuanLyUser.fxml" />
 				<fx:include fx:id="viewNhanKhau" source="ViewNhanKhau.fxml" />
 				<fx:include fx:id="viewHoKhau" source="ViewHoKhau.fxml" />
 				<fx:include fx:id="viewTamTruTamVang" source="ViewTamTruTamVang.fxml" />
+				<fx:include fx:id="viewQuanLyNhaVanHoa" source="ViewNhaVanHoaAdmin.fxml" />
+				<fx:include fx:id="viewHoatDong" source="ViewHoatDongAdmin.fxml" />
 			</children>
 		</StackPane>
 	</center>

@@ -1,7 +1,6 @@
 package cnpm.QuanLyNhanKhau.controller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
@@ -73,7 +72,7 @@ public class ControllerFormAddNhanKhau implements Initializable {
 				textfieldBiDanh.requestFocus();
 			}
 		});
-		
+				
 		textfieldBiDanh.addEventHandler(KeyEvent.KEY_PRESSED, (e) -> {
 			if (e.getCode() == KeyCode.ENTER) {
 				datepickerNgaySinh.requestFocus();

@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
-import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,35 +17,20 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
 
-public class ControllerMainAdmin implements Initializable {
+public class ControllerMainQuanLy implements Initializable {
 
 	@FXML
 	private Button buttonQuanLy;
 	@FXML
-	private Button buttonNhanKhau;
-	@FXML
-	private Button buttonHoKhau;
-	@FXML
-	private Button buttonTamTruTamVang;
-	@FXML
-	private Button buttonQuanLyNhaVanHoa;
-	@FXML
 	private Button buttonHoatDong;
 	@FXML
 	private Button buttonDangXuat;
-
+	
 	@FXML
-	private Parent viewQuanLyUser;
-	@FXML
-	private Parent viewNhanKhau;
-	@FXML
-	private Parent viewHoKhau;
-	@FXML
-	private Parent viewTamTruTamVang;
-	@FXML
-	private Parent viewQuanLyNhaVanHoa;
+	private Parent viewNhaVanHoaQuanLy;
 	@FXML
 	private Parent viewHoatDong;
+
 	
 	private Button currentButton;
 	private Parent currentView;
@@ -54,43 +38,21 @@ public class ControllerMainAdmin implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {		
 		currentButton = buttonQuanLy;
-		currentView = viewQuanLyUser;
+		currentView = viewNhaVanHoaQuanLy;
 		
 		buttonQuanLy.setTranslateX(-10);
-		buttonNhanKhau.setTranslateX(-10);
-		buttonHoKhau.setTranslateX(-10);
-		buttonTamTruTamVang.setTranslateX(-10);
-		buttonQuanLyNhaVanHoa.setTranslateX(-10);
 		buttonHoatDong.setTranslateX(-10);
 		buttonDangXuat.setTranslateX(-10);
+
 		
-		setViewQuanLyUser();
+		setViewNhaVanHoaQuanLy();
 	}
 	
 	@FXML
-	public void setViewQuanLyUser() {
-		setView(viewQuanLyUser, buttonQuanLy);
+	public void setViewNhaVanHoaQuanLy() {
+		setView(viewNhaVanHoaQuanLy, buttonQuanLy);	
 	}
 	
-	@FXML
-	public void setViewNhanKhau() {
-		setView(viewNhanKhau, buttonNhanKhau);	
-	}
-	
-	@FXML
-	public void setViewHoKhau() {
-		setView(viewHoKhau, buttonHoKhau);
-	}
-	
-	@FXML
-	public void setViewTamTruTamVang() {
-		setView(viewTamTruTamVang, buttonTamTruTamVang);
-	}
-	
-	@FXML
-	public void setViewQuanLyNhaVanHoa() {
-		setView(viewQuanLyNhaVanHoa, buttonQuanLyNhaVanHoa);
-	}
 	@FXML
 	public void setViewHoatDong() {
 		setView(viewHoatDong, buttonHoatDong);
@@ -117,6 +79,7 @@ public class ControllerMainAdmin implements Initializable {
 		
 		currentView = view;
 		currentButton = button;
+		
 	}
 	
 	@FXML

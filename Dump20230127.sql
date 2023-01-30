@@ -16,6 +16,45 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `hoatdong`
+--
+
+DROP TABLE IF EXISTS `hoatdong`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hoatdong` (
+  `idHoatDong` int NOT NULL AUTO_INCREMENT,
+  `idNhanKhau` int NOT NULL,
+  `ngayBatDau` datetime NOT NULL,
+  `ngayKetThuc` datetime NOT NULL,
+  `hoatDong` varchar(45) NOT NULL,
+  `soLuongBan` int NOT NULL,
+  `soLuongGhe` int NOT NULL,
+  `soLuongLoa` int NOT NULL,
+  `soLuongDai` int NOT NULL,
+  `soLuongManHinh` int NOT NULL,
+  `soLuongDen` int NOT NULL,
+  `lePhi` varchar(45) NOT NULL,
+  `ghiChu` varchar(45) DEFAULT NULL,
+  `xacNhan` varchar(45) NOT NULL,
+  PRIMARY KEY (`idHoatDong`),
+  UNIQUE KEY `idHoatDong_UNIQUE` (`idHoatDong`),
+  KEY `idNhanKhau_idx` (`idNhanKhau`),
+  CONSTRAINT `idNhanKhau` FOREIGN KEY (`idNhanKhau`) REFERENCES `nhankhau` (`idNhanKhau`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hoatdong`
+--
+
+LOCK TABLES `hoatdong` WRITE;
+/*!40000 ALTER TABLE `hoatdong` DISABLE KEYS */;
+INSERT INTO `hoatdong` VALUES (1,1,'2023-01-16 00:00:00','2023-01-19 00:00:00','chill',23,23,23,23,23,23,'4.000.000 VND',NULL,'Được chấp nhận'),(2,1,'2023-01-15 00:00:00','2023-01-18 00:00:00','chill',50,200,4,2,1,10,'20.000.000 VND',NULL,'Chờ xác nhận'),(3,2,'2023-01-17 00:00:00','2023-01-18 00:00:00','chill',12,12,12,12,12,12,'46.000.000 VND',NULL,'Bị từ chối');
+/*!40000 ALTER TABLE `hoatdong` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `hokhau`
 --
 
@@ -35,7 +74,7 @@ CREATE TABLE `hokhau` (
   UNIQUE KEY `idNhanKhau_UNIQUE` (`idNhanKhau`),
   KEY `fk-nhankhau_idx` (`idNhanKhau`),
   CONSTRAINT `fk-hokhau-nhankhau` FOREIGN KEY (`idNhanKhau`) REFERENCES `nhankhau` (`idNhanKhau`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +83,7 @@ CREATE TABLE `hokhau` (
 
 LOCK TABLES `hokhau` WRITE;
 /*!40000 ALTER TABLE `hokhau` DISABLE KEYS */;
-INSERT INTO `hokhau` VALUES (1,2,'acwasd - awdsa - cawswd - acsawdwa','acwasd','awdsa','cawswd','acsawdwa');
+INSERT INTO `hokhau` VALUES (1,1,'123 - 123 - 123 - 123','123','123','123','123');
 /*!40000 ALTER TABLE `hokhau` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +106,7 @@ CREATE TABLE `hokhaunhankhau` (
   KEY `fk-hokhaunhankhau-nhankhau_idx` (`idNhanKhau`),
   CONSTRAINT `fk-hokhaunhankhau-hokhau` FOREIGN KEY (`idHoKhau`) REFERENCES `hokhau` (`idHoKhau`),
   CONSTRAINT `fk-hokhaunhankhau-nhankhau` FOREIGN KEY (`idNhanKhau`) REFERENCES `nhankhau` (`idNhanKhau`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +115,7 @@ CREATE TABLE `hokhaunhankhau` (
 
 LOCK TABLES `hokhaunhankhau` WRITE;
 /*!40000 ALTER TABLE `hokhaunhankhau` DISABLE KEYS */;
-INSERT INTO `hokhaunhankhau` VALUES (1,1,2,'Chủ Hộ');
+INSERT INTO `hokhaunhankhau` VALUES (1,1,1,'Chủ Hộ'),(2,1,2,'b');
 /*!40000 ALTER TABLE `hokhaunhankhau` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,17 +136,25 @@ CREATE TABLE `lichsu` (
   `idHoKhauNhanKhau` int DEFAULT NULL,
   `idTamTru` int DEFAULT NULL,
   `idTamVang` int DEFAULT NULL,
+  `idKiemTra` int DEFAULT NULL,
+  `idHoatDong` int DEFAULT NULL,
   PRIMARY KEY (`idLichSu`),
   UNIQUE KEY `idLichSu_UNIQUE` (`idLichSu`),
-  KEY `fk-user_idx` (`idUser`),
   KEY `fk-nhankhau_idx` (`idNhanKhau`),
   KEY `fk-lichsu-hokhau_idx` (`idHoKhau`),
   KEY `fk-lichsu-hokhaunhankhau_idx` (`idHoKhauNhanKhau`),
+  KEY `idTamTru_idx` (`idTamTru`),
+  KEY `idTamVang_idx` (`idTamVang`),
+  KEY `fk-lichsu-kiemtra_idx` (`idKiemTra`),
+  KEY `fk-lichsu-hoatdong_idx` (`idHoatDong`),
+  CONSTRAINT `fk-lichsu-hoatdong` FOREIGN KEY (`idHoatDong`) REFERENCES `hoatdong` (`idHoatDong`),
   CONSTRAINT `fk-lichsu-hokhau` FOREIGN KEY (`idHoKhau`) REFERENCES `hokhau` (`idHoKhau`),
   CONSTRAINT `fk-lichsu-hokhaunhankhau` FOREIGN KEY (`idHoKhauNhanKhau`) REFERENCES `hokhaunhankhau` (`idHoKhauNhanKhau`),
+  CONSTRAINT `fk-lichsu-kiemtra` FOREIGN KEY (`idKiemTra`) REFERENCES `nhavanhoa` (`idKiemTra`),
   CONSTRAINT `fk-lichsu-nhankhau` FOREIGN KEY (`idNhanKhau`) REFERENCES `nhankhau` (`idNhanKhau`),
-  CONSTRAINT `fk-lichsu-user` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `fk-lichsu-tamtru` FOREIGN KEY (`idTamTru`) REFERENCES `tamtru` (`idTamTru`),
+  CONSTRAINT `fk-lichsu-tamvang` FOREIGN KEY (`idTamVang`) REFERENCES `tamvang` (`idTamVang`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,7 +163,7 @@ CREATE TABLE `lichsu` (
 
 LOCK TABLES `lichsu` WRITE;
 /*!40000 ALTER TABLE `lichsu` DISABLE KEYS */;
-INSERT INTO `lichsu` VALUES (8,'themNhanKhau','2023-01-10 05:33:58',1,2,NULL,NULL,NULL,NULL),(11,'xemNhanKhau','2023-01-10 05:34:22',1,2,NULL,NULL,NULL,NULL),(12,'xoaTamTru','2023-01-10 05:34:24',1,NULL,NULL,NULL,NULL,NULL),(13,'themHoKhau','2023-01-10 05:34:44',1,NULL,1,NULL,NULL,NULL),(16,'xemNhanKhau','2023-01-10 05:35:11',1,2,NULL,NULL,NULL,NULL),(17,'xoaTamTru','2023-01-10 05:35:19',1,NULL,NULL,NULL,NULL,NULL),(18,'themNhanKhau','2023-01-10 06:12:48',1,2,NULL,NULL,NULL,NULL),(22,'xemNhanKhau','2023-01-10 06:15:42',1,3,NULL,NULL,NULL,NULL),(23,'xoaHoKhau','2023-01-10 06:15:43',1,NULL,NULL,NULL,NULL,NULL),(25,'xemNhanKhau','2023-01-10 06:16:00',1,3,NULL,NULL,NULL,NULL),(26,'xoaTamTru','2023-01-10 06:16:02',1,NULL,NULL,NULL,NULL,NULL),(30,'xemNhanKhau','2023-01-10 06:17:52',1,3,NULL,NULL,NULL,NULL),(31,'xoaHoKhauNhanKhau','2023-01-10 06:17:54',1,NULL,NULL,NULL,NULL,NULL),(32,'xoaHoKhau','2023-01-10 06:17:54',1,NULL,NULL,NULL,NULL,NULL),(34,'xemNhanKhau','2023-01-10 06:17:56',1,3,NULL,NULL,NULL,NULL),(35,'xoaTamTru','2023-01-10 06:17:59',1,NULL,NULL,NULL,NULL,NULL),(39,'xemNhanKhau','2023-01-10 06:19:46',1,3,NULL,NULL,NULL,NULL),(41,'xemNhanKhau','2023-01-10 06:19:59',1,3,NULL,NULL,NULL,NULL),(42,'xoaHoKhauNhanKhau','2023-01-10 06:20:02',1,NULL,NULL,NULL,NULL,NULL),(43,'xoaHoKhau','2023-01-10 06:20:02',1,NULL,NULL,NULL,NULL,NULL),(45,'xemNhanKhau','2023-01-10 06:20:22',1,3,NULL,NULL,NULL,NULL),(46,'xoaTamTru','2023-01-10 06:20:24',1,NULL,NULL,NULL,NULL,NULL),(49,'xemNhanKhau','2023-01-10 06:22:52',1,3,NULL,NULL,NULL,NULL),(50,'xoaHoKhauNhanKhau','2023-01-10 06:22:54',1,NULL,NULL,NULL,NULL,NULL),(51,'xoaHoKhau','2023-01-10 06:22:54',1,NULL,NULL,NULL,NULL,NULL),(52,'xemHoKhau','2023-01-10 06:22:58',1,NULL,1,NULL,NULL,NULL),(53,'xemNhanKhau','2023-01-10 06:22:58',1,2,NULL,NULL,NULL,NULL),(54,'xemHoKhau','2023-01-10 06:22:59',1,NULL,1,NULL,NULL,NULL),(56,'xemHoKhau','2023-01-10 06:23:03',1,NULL,1,NULL,NULL,NULL),(57,'xemHoKhau','2023-01-10 06:23:03',1,NULL,1,NULL,NULL,NULL),(58,'xemNhanKhau','2023-01-10 06:23:03',1,2,NULL,NULL,NULL,NULL),(59,'xemHoKhau','2023-01-10 06:23:11',1,NULL,1,NULL,NULL,NULL),(60,'xemNhanKhau','2023-01-10 06:23:11',1,2,NULL,NULL,NULL,NULL),(62,'xoaHoKhauNhanKhau','2023-01-10 06:23:15',1,NULL,NULL,NULL,NULL,NULL),(63,'xemHoKhau','2023-01-10 06:23:15',1,NULL,1,NULL,NULL,NULL),(64,'xemNhanKhau','2023-01-10 06:23:15',1,2,NULL,NULL,NULL,NULL),(65,'themTamTru','2023-01-10 06:23:28',1,NULL,NULL,NULL,7,NULL),(66,'xemHoKhau','2023-01-10 06:23:33',1,NULL,1,NULL,NULL,NULL),(67,'xemNhanKhau','2023-01-10 06:23:33',1,2,NULL,NULL,NULL,NULL),(68,'xemHoKhau','2023-01-10 06:23:35',1,NULL,1,NULL,NULL,NULL),(70,'xemHoKhau','2023-01-10 06:23:38',1,NULL,1,NULL,NULL,NULL),(71,'xemHoKhau','2023-01-10 06:23:38',1,NULL,1,NULL,NULL,NULL),(72,'xemNhanKhau','2023-01-10 06:23:38',1,2,NULL,NULL,NULL,NULL),(74,'xoaHoKhauNhanKhau','2023-01-10 06:23:45',1,NULL,NULL,NULL,NULL,NULL),(75,'xemHoKhau','2023-01-10 06:23:45',1,NULL,1,NULL,NULL,NULL),(76,'xemNhanKhau','2023-01-10 06:23:45',1,2,NULL,NULL,NULL,NULL),(77,'xemHoKhauNhanKhau','2023-01-10 06:23:46',1,NULL,NULL,1,NULL,NULL),(78,'xemHoKhau','2023-01-10 06:23:47',1,NULL,1,NULL,NULL,NULL),(79,'xemNhanKhau','2023-01-10 06:23:47',1,2,NULL,NULL,NULL,NULL);
+INSERT INTO `lichsu` VALUES (1,'Thêm nhân khẩu','2023-01-26 12:31:08',1,1,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Kiểm tra hiện trạng nhà văn hoá','2023-01-26 12:31:34',1,NULL,NULL,NULL,NULL,NULL,1,NULL),(3,'Đăng ký sử dụng nhà văn hoá','2023-01-26 12:31:57',1,NULL,NULL,NULL,NULL,NULL,NULL,1),(4,'Xem chi tiết hoạt động sử dụng nhà văn hoá','2023-01-26 12:32:00',1,NULL,NULL,NULL,NULL,NULL,NULL,1),(5,'Xem nhân khẩu','2023-01-26 12:32:00',1,1,NULL,NULL,NULL,NULL,NULL,NULL),(6,'Xem chi tiết hoạt động sử dụng nhà văn hoá','2023-01-26 12:41:14',1,NULL,NULL,NULL,NULL,NULL,NULL,1),(7,'Xem nhân khẩu','2023-01-26 12:41:14',1,1,NULL,NULL,NULL,NULL,NULL,NULL),(8,'Đăng ký sử dụng nhà văn hoá','2023-01-26 12:52:05',1,NULL,NULL,NULL,NULL,NULL,NULL,1),(9,'Thêm hộ khẩu','2023-01-27 11:54:40',1,NULL,1,NULL,NULL,NULL,NULL,NULL),(10,'Xem hộ khẩu','2023-01-27 11:54:41',1,NULL,1,NULL,NULL,NULL,NULL,NULL),(11,'Xem nhân khẩu','2023-01-27 11:54:41',1,1,NULL,NULL,NULL,NULL,NULL,NULL),(12,'Đăng Ký','2023-01-27 11:55:30',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,'Thêm nhân khẩu','2023-01-27 11:56:12',2,2,NULL,NULL,NULL,NULL,NULL,NULL),(14,'Xem hộ khẩu','2023-01-27 11:56:21',2,NULL,1,NULL,NULL,NULL,NULL,NULL),(15,'Xem nhân khẩu','2023-01-27 11:56:21',2,1,NULL,NULL,NULL,NULL,NULL,NULL),(16,'Xem hộ khẩu','2023-01-27 11:56:23',2,NULL,1,NULL,NULL,NULL,NULL,NULL),(17,'Thêm hộ khẩu nhân khẩu','2023-01-27 11:56:32',2,NULL,NULL,2,NULL,NULL,NULL,NULL),(18,'Xem hộ khẩu','2023-01-27 11:56:32',2,NULL,1,NULL,NULL,NULL,NULL,NULL),(19,'Xem hộ khẩu','2023-01-27 11:56:32',2,NULL,1,NULL,NULL,NULL,NULL,NULL),(20,'Xem nhân khẩu','2023-01-27 11:56:32',2,1,NULL,NULL,NULL,NULL,NULL,NULL),(21,'Sửa hộ khẩu','2023-01-27 11:56:34',2,NULL,1,NULL,NULL,NULL,NULL,NULL),(22,'Đăng Ký','2023-01-27 11:57:47',3,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,'Kiểm tra hiện trạng nhà văn hoá','2023-01-27 11:58:07',3,NULL,NULL,NULL,NULL,NULL,2,NULL),(24,'Đăng ký sử dụng nhà văn hoá','2023-01-27 11:58:46',3,NULL,NULL,NULL,NULL,NULL,NULL,3),(25,'Xem chi tiết hoạt động sử dụng nhà văn hoá','2023-01-27 11:58:56',3,NULL,NULL,NULL,NULL,NULL,NULL,3),(26,'Xem nhân khẩu','2023-01-27 11:58:56',3,2,NULL,NULL,NULL,NULL,NULL,NULL),(27,'Xem hộ khẩu','2023-01-27 12:02:35',3,NULL,1,NULL,NULL,NULL,NULL,NULL),(28,'Xem nhân khẩu','2023-01-27 12:02:35',3,1,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `lichsu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +198,7 @@ CREATE TABLE `nhankhau` (
   `trangThai` varchar(45) NOT NULL,
   PRIMARY KEY (`idNhanKhau`),
   UNIQUE KEY `idNhanKhau_UNIQUE` (`idNhanKhau`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,8 +207,45 @@ CREATE TABLE `nhankhau` (
 
 LOCK TABLES `nhankhau` WRITE;
 /*!40000 ALTER TABLE `nhankhau` DISABLE KEYS */;
-INSERT INTO `nhankhau` VALUES (2,'ascasc','','2023-01-16','NAM','',NULL,'','','','acwasd - awdsa - cawswd - acsawdwa','2023-01-10 12:34:44','','','','','','','','','Có Hộ Khẩu'),(3,'ccaca','','2023-02-02','NAM','',NULL,'','','','acwasd - awdsa - cawswd - acsawdwa','2023-01-10 13:23:38','','','','','','','','','Tạm Trú');
+INSERT INTO `nhankhau` VALUES (1,'a','','2023-01-23','NAM','',NULL,'','','','123 - 123 - 123 - 123','2023-01-27 18:56:34','','','','','','','','','Có Hộ Khẩu'),(2,'b','','2023-01-10','NỮ','',NULL,'','','','123 - 123 - 123 - 123','2023-01-27 18:56:34','','','','','','','','','Có Hộ Khẩu');
 /*!40000 ALTER TABLE `nhankhau` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nhavanhoa`
+--
+
+DROP TABLE IF EXISTS `nhavanhoa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `nhavanhoa` (
+  `idKiemTra` int NOT NULL AUTO_INCREMENT,
+  `idUser` int NOT NULL,
+  `ngayKiemTra` datetime NOT NULL,
+  `soLuongBan` int DEFAULT NULL,
+  `hienTrangBan` varchar(45) DEFAULT NULL,
+  `soLuongGhe` int DEFAULT NULL,
+  `hienTrangGhe` varchar(45) DEFAULT NULL,
+  `soLuongLoa` int DEFAULT NULL,
+  `hienTrangLoa` varchar(45) DEFAULT NULL,
+  `soLuongDai` int DEFAULT NULL,
+  `hienTrangDai` varchar(45) DEFAULT NULL,
+  `soLuongManHinh` int DEFAULT NULL,
+  `hienTrangManHinh` varchar(45) DEFAULT NULL,
+  `soLuongDen` int DEFAULT NULL,
+  `hienTrangDen` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idKiemTra`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nhavanhoa`
+--
+
+LOCK TABLES `nhavanhoa` WRITE;
+/*!40000 ALTER TABLE `nhavanhoa` DISABLE KEYS */;
+INSERT INTO `nhavanhoa` VALUES (1,1,'2023-01-26 19:31:33',123,'123',123,'123',123,'123',123,'123',123,'123',123,'123'),(2,3,'2023-01-27 18:58:07',123,'123',123,'123',123,'123',123,'123',123,'123',123,'123');
+/*!40000 ALTER TABLE `nhavanhoa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -183,7 +267,7 @@ CREATE TABLE `tamtru` (
   UNIQUE KEY `idTamTru_UNIQUE` (`idTamTru`),
   KEY `idNhanKhau_TamVang_idx` (`idNhanKhau`),
   CONSTRAINT `idNhanKhau_TamTru` FOREIGN KEY (`idNhanKhau`) REFERENCES `nhankhau` (`idNhanKhau`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +276,6 @@ CREATE TABLE `tamtru` (
 
 LOCK TABLES `tamtru` WRITE;
 /*!40000 ALTER TABLE `tamtru` DISABLE KEYS */;
-INSERT INTO `tamtru` VALUES (7,3,'awds','cawd','2023-01-10 00:00:00','2023-01-10 00:00:00');
 /*!40000 ALTER TABLE `tamtru` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,9 +322,10 @@ CREATE TABLE `user` (
   `matKhau` varchar(45) NOT NULL,
   `tenNguoiDung` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci NOT NULL,
   `role` varchar(45) NOT NULL,
+  `capQuyen` varchar(45) NOT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `idUser_UNIQUE` (`idUser`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,7 +334,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'a','a','a','TO TRUONG');
+INSERT INTO `user` VALUES (1,'a','a','a','Tổ Trưởng','Đã cấp quyền'),(2,'b','b','b','Nhân Viên','Đã cấp quyền'),(3,'c','c','c','Cán Bộ Quản Lý','Đã cấp quyền');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -263,4 +347,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-13 15:19:38
+-- Dump completed on 2023-01-27 19:13:56
