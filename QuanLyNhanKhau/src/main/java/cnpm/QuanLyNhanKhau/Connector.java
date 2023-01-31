@@ -26,11 +26,11 @@ public class Connector {
 
 	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 	private static String user = "root";
-	private static String password = "Minh_0112";
+//	private static String password = "Minh_0112";
 	
 //	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 //	private static String user = "root";
-//	private static String password = "namanh202";
+	private static String password = "namanh202";
 
 	public static ModelUser currentUser;
 
@@ -2605,7 +2605,7 @@ public class Connector {
 		List<ModelLichSu> listLichSu = new ArrayList<>();
 
 		String query = "SELECT * FROM quanlynhankhau.lichSu\n"
-				+ "WHERE idHoKhau = ? AND thaoTac != ? AND thaoTac != ?";
+				+ "WHERE idHoKhau = ? AND thaoTac != ? AND thaoTac != ? AND thaoTac != ?";
 		PreparedStatement ps;
 
 		try {
@@ -2613,6 +2613,7 @@ public class Connector {
 			ps.setInt(1, idHoKhau);
 			ps.setString(2, "Xem hộ khẩu");
 			ps.setString(3, "Thêm hộ khẩu");
+			ps.setString(4, "Sửa hộ khẩu");
 
 
 			ResultSet rs = ps.executeQuery();
