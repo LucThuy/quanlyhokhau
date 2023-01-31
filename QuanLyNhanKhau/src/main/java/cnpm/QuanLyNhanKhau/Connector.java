@@ -30,7 +30,7 @@ public class Connector {
 	
 //	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 //	private static String user = "root";
-	private static String password = "namanh202";
+	private static String password = "kobukovu1710";
 
 	public static ModelUser currentUser;
 
