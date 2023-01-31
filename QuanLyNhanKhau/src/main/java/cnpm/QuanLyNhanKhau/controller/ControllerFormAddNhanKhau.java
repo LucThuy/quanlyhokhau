@@ -1,6 +1,7 @@
 package cnpm.QuanLyNhanKhau.controller;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
@@ -328,6 +329,10 @@ public class ControllerFormAddNhanKhau implements Initializable {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
+		if(isInvalidData()) {
+			labelThongBao.setText("Thông tin không hợp lệ");
+			return;
+		}
 		RadioButton selectedRadioButton = (RadioButton) togglegroupGioiTinh.getSelectedToggle();
 		if (Connector.addNhanKhau(textfieldHoTen.getText(), textfieldBiDanh.getText(), datepickerNgaySinh.getValue(),
 				selectedRadioButton.getText(), textfieldCCCD.getText(), datepickerNgayCap.getValue(),
@@ -368,6 +373,23 @@ public class ControllerFormAddNhanKhau implements Initializable {
 			check = true;
 		}
 		if (datepickerNgayDangKyThuongTru.getValue() == null) {
+			datepickerNgayDangKyThuongTru.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		return check;
+	}
+	
+	private boolean isInvalidData() {
+		boolean check = false;
+		if(datepickerNgaySinh.getValue().isAfter(LocalDate.now())) {
+			datepickerNgaySinh.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if(datepickerNgayCap.getValue().isAfter(LocalDate.now())) {
+			datepickerNgayCap.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if(datepickerNgayDangKyThuongTru.getValue().isAfter(LocalDate.now())) {
 			datepickerNgayDangKyThuongTru.getStyleClass().add("inputfield-error");
 			check = true;
 		}

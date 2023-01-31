@@ -37,9 +37,9 @@
             <Label fx:id="labelThongBao" styleClass="notice" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
-            <ScrollPane fitToWidth="true" prefViewportHeight="320.0" prefViewportWidth="600.0" BorderPane.alignment="CENTER">
+            <ScrollPane fitToWidth="true" BorderPane.alignment="CENTER">
                <content>
-                  <GridPane maxWidth="-Infinity" prefWidth="960.0" styleClass="center" vgap="30.0" BorderPane.alignment="CENTER">
+                  <GridPane maxWidth="-Infinity" prefWidth="10000.0" styleClass="center" vgap="30.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label text="HỌ TÊN" />
                         <Label text="NGÀY SINH" GridPane.rowIndex="2" />

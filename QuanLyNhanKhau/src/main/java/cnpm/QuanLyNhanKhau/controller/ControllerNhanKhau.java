@@ -99,6 +99,7 @@ public class ControllerNhanKhau implements Initializable{
 	
 	@FXML
 	public void refreshNhanKhau() {
+		textfieldTimKiem.setText("");
 		refreshTableViewNhanKhau();
 	}
 	
@@ -114,6 +115,7 @@ public class ControllerNhanKhau implements Initializable{
 	@FXML
 	public void showDetailNhanKhau() {
 		nhanKhau = tableviewNhanKhau.getSelectionModel().getSelectedItem();
+		if(nhanKhau == null) return;
 		List<Integer> listId = new ArrayList<>();
 		listId.add(nhanKhau.getIdNhanKhau());
 		Holder.getInstance().setId(listId);	

@@ -3,6 +3,7 @@ package cnpm.QuanLyNhanKhau.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -350,6 +351,11 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			labelThongBao.setText("Điền đầy đủ các mục bắt buộc");
 			return;
 		}
+		if(isInvalidData()) {
+			labelThongBao.setText("Thông tin không hợp lệ");
+			return;
+		}
+		
 		RadioButton selectedRadioButton = (RadioButton) togglegroupGioiTinh.getSelectedToggle();
 
 		data.setHoTen(textfieldHoTen.getText());
@@ -381,8 +387,8 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 
 	@FXML
 	public void deleteNhanKhau() {
-		ModelHoKhau modelHoKhau = Connector.searchHoKhauByIdNhanKhau(data.getIdNhanKhau());
-		ModelHoKhauNhanKhau modelHoKhauNhanKhau = Connector.searchHoKhauNhanKhauByIdNhanKhau(data.getIdNhanKhau());
+		ModelHoKhau modelHoKhau = Connector.queryHoKhauByIdNhanKhau(data.getIdNhanKhau());
+		ModelHoKhauNhanKhau modelHoKhauNhanKhau = Connector.queryHoKhauNhanKhauByIdNhanKhau(data.getIdNhanKhau());
 		List<ModelTamTru> listTamTru = Connector.searchTamTruByIdNhanKhau(data.getIdNhanKhau());
 		List<ModelTamVang> listTamVang = Connector.searchTamVangByIdNhanKhau(data.getIdNhanKhau());
 		List<ModelHoatDong> listHoatDong = Connector.searchHoatDongByIdNhanKhau(data.getIdNhanKhau());
@@ -390,10 +396,14 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.getDialogPane().getStylesheets().add(App.class.getResource("css/main.css").toExternalForm());
 		alert.setHeaderText("Xóa mục được chọn?");
-		if(modelHoKhau != null || modelHoKhauNhanKhau != null) {
-			String contentText = "Các mục liên quan sau cũng sẽ bị xóa:\n";
+		String contentText = "";
+		if(modelHoKhau != null) {
 			contentText += modelHoKhau.getHoTenNhanKhau() + " - " + modelHoKhau.getDiaChi() + "\n";
+		}
+		if(modelHoKhauNhanKhau != null) {
 			contentText += modelHoKhauNhanKhau.getHoTenNhanKhauHoKhau() + " - " + modelHoKhauNhanKhau.getDiaChiHoKhau() + " - " + modelHoKhauNhanKhau.getQuanHe() + "\n";
+		}
+		if(listTamTru != null || listTamVang != null || listHoatDong != null) {
 			for(ModelTamTru tamTru: listTamTru) {
 				contentText += tamTru.getHoTenNhanKhau() + "\n";
 			}
@@ -403,7 +413,9 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 			for(ModelHoatDong hoatDong: listHoatDong) {
 				contentText += hoatDong.getHoTenNguoiDangKy() + "\n";
 			}
-			alert.setContentText(contentText);
+		}
+		if(contentText != "") {
+			alert.setContentText("Các mục sau đây sẽ bị xóa:\n" + contentText);
 		}
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.isPresent() && result.get() == ButtonType.OK) {
@@ -483,6 +495,23 @@ public class ControllerFormDetailNhanKhau implements Initializable {
 		return check;
 	}
 
+	private boolean isInvalidData() {
+		boolean check = false;
+		if(datepickerNgaySinh.getValue() != null && datepickerNgaySinh.getValue().isAfter(LocalDate.now())) {
+			datepickerNgaySinh.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if(datepickerNgayCap.getValue() != null && datepickerNgayCap.getValue().isAfter(LocalDate.now())) {
+			datepickerNgayCap.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		if(datepickerNgayDangKyThuongTru.getValue() != null && datepickerNgayDangKyThuongTru.getValue().isAfter(LocalDate.now())) {
+			datepickerNgayDangKyThuongTru.getStyleClass().add("inputfield-error");
+			check = true;
+		}
+		return check;
+	}
+	
 	public static ControllerNhanKhau getControllerNhanKhau() {
 		return controllerNhanKhau;
 	}

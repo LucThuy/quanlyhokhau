@@ -70,10 +70,10 @@ public class ControllerHoKhau implements Initializable {
 					listId.add(hoKhau.getIdHoKhau());
 					Holder.getInstance().setId(listId);
 				}
-				if (e.getButton().equals(MouseButton.PRIMARY) && row.isEmpty()) {
-					tableviewHoKhauNhanKhau.setVisible(false);
-					gridpane.getRowConstraints().get(1).setPrefHeight(0);
-				}
+//				if (e.getButton().equals(MouseButton.PRIMARY) && row.isEmpty()) {
+//					tableviewHoKhauNhanKhau.setVisible(false);
+//					gridpane.getRowConstraints().get(1).setPrefHeight(0);
+//				}
 				if (e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					showDetailHoKhau();
 				}
