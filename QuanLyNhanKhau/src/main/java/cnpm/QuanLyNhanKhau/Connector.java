@@ -813,6 +813,7 @@ public class Connector {
 	
 	public static ModelHoKhau searchHoKhauByHoTen(String hoTen) {
 		ModelHoKhau modelHoKhau = null;
+		List<ModelNhanKhau> listNhanKhau = searchNhanKhauByHoTen(hoTen);
 		String query = "SELECT * FROM quanlynhankhau.hokhau\n" + "WHERE idNhanKhau = ?";
 		PreparedStatement ps;
 		try {
