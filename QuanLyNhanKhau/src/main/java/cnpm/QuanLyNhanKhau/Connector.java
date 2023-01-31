@@ -506,7 +506,7 @@ public class Connector {
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
 						rs.getString("ghiChu"), rs.getString("trangThai"));
-				ModelHoKhauNhanKhau modelHoKhauNhanKhau = searchHoKhauNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				ModelHoKhauNhanKhau modelHoKhauNhanKhau = queryHoKhauNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				modelNhanKhau.setModelHoKhauNhanKhau(modelHoKhauNhanKhau);
 				listNhanKhau.add(modelNhanKhau);
 			}
@@ -985,6 +985,30 @@ public class Connector {
 		return done;
 	}
 	
+	public static ModelHoKhauNhanKhau queryHoKhauNhanKhauByIdNhanKhau(int idNhanKhau) {
+		ModelHoKhauNhanKhau modelHoKhauNhanKhau = null;
+
+		String query = "SELECT * FROM quanlynhankhau.hokhaunhankhau\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelHoKhauNhanKhau = new ModelHoKhauNhanKhau(rs.getInt("idHoKhauNhanKhau"), rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("quanHe"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				ModelHoKhau modelHoKhau = queryHoKhauByIdHoKhau(rs.getInt("idHoKhau"));
+				modelHoKhauNhanKhau.setModelNhanKhau(modelNhanKhau);
+				modelHoKhauNhanKhau.setModelHoKhau(modelHoKhau);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelHoKhauNhanKhau;
+	}
+	
 	public static ModelHoKhauNhanKhau getHoKhauNhanKhau(int idHoKhauNhanKhau) {
 		ModelHoKhauNhanKhau modelHoKhauNhanKhau = null;
 
@@ -1052,30 +1076,6 @@ public class Connector {
 		}
 
 		return done;
-	}
-	
-	public static ModelHoKhauNhanKhau searchHoKhauNhanKhauByIdNhanKhau(int idNhanKhau) {
-		ModelHoKhauNhanKhau modelHoKhauNhanKhau = null;
-
-		String query = "SELECT * FROM quanlynhankhau.hokhaunhankhau\n" + "WHERE idNhanKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idNhanKhau);
-
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				modelHoKhauNhanKhau = new ModelHoKhauNhanKhau(rs.getInt("idHoKhauNhanKhau"), rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("quanHe"));
-				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
-				ModelHoKhau modelHoKhau = queryHoKhauByIdHoKhau(rs.getInt("idHoKhau"));
-				modelHoKhauNhanKhau.setModelNhanKhau(modelNhanKhau);
-				modelHoKhauNhanKhau.setModelHoKhau(modelHoKhau);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return modelHoKhauNhanKhau;
 	}
 	
 	public static List<ModelHoKhauNhanKhau> searchHoKhauNhanKhauByIdHoKhau(int idHoKhau) {
@@ -1306,7 +1306,7 @@ public class Connector {
 				ps.setString(1, "Tạm Trú");
 			}
 			else {
-				if(searchHoKhauNhanKhauByIdNhanKhau(idNhanKhau) == null) {
+				if(queryHoKhauNhanKhauByIdNhanKhau(idNhanKhau) == null) {
 					ps.setString(1, "Vô Gia Cư");
 				}
 				else{
@@ -1483,7 +1483,7 @@ public class Connector {
 				ps.setString(1, "Tạm Vắng");
 			}
 			else {
-				if(searchHoKhauNhanKhauByIdNhanKhau(idNhanKhau) == null) {
+				if(queryHoKhauNhanKhauByIdNhanKhau(idNhanKhau) == null) {
 					ps.setString(1, "Vô Gia Cư");
 				}
 				else{
