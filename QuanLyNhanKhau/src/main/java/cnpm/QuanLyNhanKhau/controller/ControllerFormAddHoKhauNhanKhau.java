@@ -58,7 +58,8 @@ public class ControllerFormAddHoKhauNhanKhau implements Initializable {
 	private ModelNhanKhau thanhVien;
 	
 	private static ControllerHoKhau controllerHoKhau;
-	private static ControllerFormDetailHoKhau controllerFormDetailHoKhau;
+	private static ControllerFormDetailHoKhauAdmin controllerFormDetailHoKhauAdmin;
+	private static ControllerFormDetailHoKhauNhanVien controllerFormDetailHoKhauNhanVien;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -134,7 +135,7 @@ public class ControllerFormAddHoKhauNhanKhau implements Initializable {
 		}	
 		if(Connector.addHoKhauNhanKhau(data.getIdHoKhau(), thanhVien.getIdNhanKhau(), textfieldQuanHe.getText())) {
 			try {
-				controllerFormDetailHoKhau.setLabelThongBao("Thêm thành viên thành công");
+				controllerFormDetailHoKhauAdmin.setLabelThongBao("Thêm thành viên thành công");
 				controllerHoKhau.refreshHoKhau();
 				controllerHoKhau.refreshHoKhauNhanKhau();
 				App.setRootSceneForm("view/ViewFormDetailHoKhau");
@@ -180,11 +181,19 @@ public class ControllerFormAddHoKhauNhanKhau implements Initializable {
 		ControllerFormAddHoKhauNhanKhau.controllerHoKhau = controllerHoKhau;
 	}
 
-	public static ControllerFormDetailHoKhau getControllerFormDetailHoKhau() {
-		return controllerFormDetailHoKhau;
+	public static ControllerFormDetailHoKhauAdmin getControllerFormDetailHoKhauAdmin() {
+		return controllerFormDetailHoKhauAdmin;
 	}
 
-	public static void setControllerFormDetailHoKhau(ControllerFormDetailHoKhau controllerFormDetailHoKhau) {
-		ControllerFormAddHoKhauNhanKhau.controllerFormDetailHoKhau = controllerFormDetailHoKhau;
+	public static void setControllerFormDetailHoKhauAdmin(ControllerFormDetailHoKhauAdmin controllerFormDetailHoKhauAdmin) {
+		ControllerFormAddHoKhauNhanKhau.controllerFormDetailHoKhauAdmin = controllerFormDetailHoKhauAdmin;
+	}
+	
+	public static ControllerFormDetailHoKhauNhanVien getControllerFormDetailHoKhauNhanVien() {
+		return controllerFormDetailHoKhauNhanVien;
+	}
+
+	public static void setControllerFormDetailHoKhauNhanVien(ControllerFormDetailHoKhauNhanVien controllerFormDetailHoKhauNhanVien) {
+		ControllerFormAddHoKhauNhanKhau.controllerFormDetailHoKhauNhanVien = controllerFormDetailHoKhauNhanVien;
 	}
 }

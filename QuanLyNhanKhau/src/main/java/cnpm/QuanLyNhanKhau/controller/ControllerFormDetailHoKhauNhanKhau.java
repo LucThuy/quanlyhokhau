@@ -64,7 +64,9 @@ public class ControllerFormDetailHoKhauNhanKhau implements Initializable {
 	private ModelNhanKhau thanhVien;
 	
 	private static ControllerHoKhau controllerHoKhau;
-	private static ControllerFormDetailHoKhau controllerFormDetailHoKhau;
+	private static ControllerFormDetailHoKhauAdmin controllerFormDetailHoKhauAdmin;
+	private static ControllerFormDetailHoKhauNhanVien controllerFormDetailHoKhauNhanVien;
+
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -147,7 +149,7 @@ public class ControllerFormDetailHoKhauNhanKhau implements Initializable {
 			labelThongBao.getStyleClass().add("notice-green");
 			labelThongBao.setText("Đã lưu thay đổi");
 			
-			controllerFormDetailHoKhau.refreshHoKhauNhanKhau();
+			controllerFormDetailHoKhauAdmin.refreshHoKhauNhanKhau();
 			controllerHoKhau.refreshHoKhauNhanKhau();
 		}
 	}
@@ -160,7 +162,7 @@ public class ControllerFormDetailHoKhauNhanKhau implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 		if(result.isPresent() && result.get() == ButtonType.OK) {
 			if(Connector.deleteHoKhauNhanKhau(data)) {
-				controllerFormDetailHoKhau.refreshHoKhauNhanKhau();
+				controllerFormDetailHoKhauAdmin.refreshHoKhauNhanKhau();
 				controllerHoKhau.refreshHoKhauNhanKhau();
 				
 				List<Integer> listId = new ArrayList<Integer>();
@@ -207,12 +209,12 @@ public class ControllerFormDetailHoKhauNhanKhau implements Initializable {
 		return check;
 	}
 
-	public static ControllerFormDetailHoKhau getControllerFormDetailHoKhau() {
-		return controllerFormDetailHoKhau;
+	public static ControllerFormDetailHoKhauAdmin getControllerFormDetailHoKhauAdmin() {
+		return controllerFormDetailHoKhauAdmin;
 	}
 
-	public static void setControllerFormDetailHoKhau(ControllerFormDetailHoKhau controllerFormDetailHoKhau) {
-		ControllerFormDetailHoKhauNhanKhau.controllerFormDetailHoKhau = controllerFormDetailHoKhau;
+	public static void setControllerFormDetailHoKhauAdmin(ControllerFormDetailHoKhauAdmin controllerFormDetailHoKhauAdmin) {
+		ControllerFormDetailHoKhauNhanKhau.controllerFormDetailHoKhauAdmin = controllerFormDetailHoKhauAdmin;
 	}
 
 	public static ControllerHoKhau getControllerHoKhau() {
@@ -221,6 +223,14 @@ public class ControllerFormDetailHoKhauNhanKhau implements Initializable {
 
 	public static void setControllerHoKhau(ControllerHoKhau controllerHoKhau) {
 		ControllerFormDetailHoKhauNhanKhau.controllerHoKhau = controllerHoKhau;
+	}
+	
+	public static ControllerFormDetailHoKhauNhanVien getControllerFormDetailHoKhauNhanVien() {
+		return controllerFormDetailHoKhauNhanVien;
+	}
+
+	public static void setControllerFormDetailHoKhauNhanVien(ControllerFormDetailHoKhauNhanVien controllerFormDetailHoKhauNhanVien) {
+		ControllerFormDetailHoKhauNhanKhau.controllerFormDetailHoKhauNhanVien = controllerFormDetailHoKhauNhanVien;
 	}
 
 }

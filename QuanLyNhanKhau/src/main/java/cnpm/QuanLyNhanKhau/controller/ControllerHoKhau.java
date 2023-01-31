@@ -12,6 +12,7 @@ import cnpm.QuanLyNhanKhau.Connector;
 import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelUser;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -51,6 +52,7 @@ public class ControllerHoKhau implements Initializable {
 	private TextField textfieldTimKiem;
 	
 	private ModelHoKhau hoKhau;
+	private ModelUser currentUser = Connector.currentUser;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -155,12 +157,23 @@ public class ControllerHoKhau implements Initializable {
 	
 	@FXML
 	private void showDetailHoKhau() {
-		try {
-			App.addStageForm("view/ViewFormDetailHoKhau");
-			ControllerFormDetailHoKhau.setControllerHoKhau(this);
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		if(currentUser.getRole().equals("Tổ Trưởng")) {
+			try {
+				App.addStageForm("view/ViewFormDetailHoKhauAdmin");
+				ControllerFormDetailHoKhauAdmin.setControllerHoKhau(this);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
+		else {
+			try {
+				App.addStageForm("view/ViewFormDetailHoKhauNhanVien");
+				ControllerFormDetailHoKhauNhanVien.setControllerHoKhau(this);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 
 }
