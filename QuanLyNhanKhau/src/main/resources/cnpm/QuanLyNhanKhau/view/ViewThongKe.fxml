@@ -12,16 +12,14 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="80.0" spacing="40.0" styleClass="bottom" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="buttonThemMoi" mnemonicParsing="false" onAction="#addNhanKhau" text="THÊM MỚI" />
-            <Button fx:id="buttonLamMoi" mnemonicParsing="false" onAction="#refreshNhanKhau" text="LÀM MỚI" />
-            <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetailNhanKhau" text="CHI TIẾT" />
+            <Button fx:id="buttonLamMoi" mnemonicParsing="false" onAction="#refreshThongKe" text="LÀM MỚI" />
          </children>
       </HBox>
    </bottom>
    <top>
       <HBox alignment="CENTER" styleClass="top">
          <children>
-            <Label styleClass="title" text="NHÂN KHẨU" BorderPane.alignment="CENTER">
+            <Label styleClass="title" text="THỐNG KÊ" BorderPane.alignment="CENTER">
                <HBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </HBox.margin>
@@ -38,6 +36,8 @@
                 <TableColumn fx:id="tablecolumnNgaySinh" minWidth="0.0" text="NGÀY SINH" />
                   <TableColumn fx:id="tablecolumnGioiTinh" minWidth="0.0" text="GIỚI TÍNH" />
                   <TableColumn fx:id="tablecolumnCCCD" minWidth="50.0" text="CCCD" />
+                  <TableColumn fx:id="tablecolumnIdHoKhau" prefWidth="75.0" text="MÃ HỘ KHẨU" />
+                  <TableColumn fx:id="tablecolumnDiaChi" prefWidth="75.0" text="ĐỊA CHỈ" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -60,6 +60,70 @@
                </padding>
             </HBox>
          </top>
+         <bottom>
+            <GridPane styleClass="search" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="SỐ LƯỢNG: ">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label fx:id="labelSoLuong">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="GIỚI TÍNH: ">
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </Label>
+                        <MenuButton mnemonicParsing="false">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#searchNhanKhauByGioiTinhNam" text="NAM" />
+                              <MenuItem mnemonicParsing="false" onAction="#searchNhanKhauByGioiTinhNu" text="NỮ" />
+                              <MenuItem mnemonicParsing="false" onAction="#searchNhanKhauByGioiTinhKhac" text="KHÁC" />
+                           </items>
+                        </MenuButton>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="ĐỘ TUỔI:    TỪ  " />
+                        <TextField fx:id="textfieldDoTuoiTu" prefHeight="22.0" prefWidth="69.0" />
+                        <Label text="ĐẾN  ">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="textfieldDoTuoiDen" prefHeight="22.0" prefWidth="68.0" />
+                        <Button mnemonicParsing="false" onAction="#searchNhanKhauByDoTuoi" text="THỐNG KÊ">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.0" minWidth="0.0" prefWidth="108.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="962.0" minWidth="10.0" prefWidth="152.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="962.0" minWidth="10.0" prefWidth="579.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+         </bottom>
       </BorderPane>
    </center>
 </BorderPane>

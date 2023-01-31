@@ -30,7 +30,7 @@ public class Connector {
 	
 //	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 //	private static String user = "root";
-	private static String password = "kobukovu1710";
+	private static String password = "namanh202";
 
 	public static ModelUser currentUser;
 
@@ -506,6 +506,8 @@ public class Connector {
 						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
 						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
 						rs.getString("ghiChu"), rs.getString("trangThai"));
+				ModelHoKhauNhanKhau modelHoKhauNhanKhau = searchHoKhauNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelNhanKhau.setModelHoKhauNhanKhau(modelHoKhauNhanKhau);
 				listNhanKhau.add(modelNhanKhau);
 			}
 //			lsGetAllNhanKhau();
@@ -553,6 +555,63 @@ public class Connector {
 		try {
 			ps = connection.prepareStatement(query);
 			ps.setString(1, "%" + cccd + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelNhanKhau modelNhanKhau = new ModelNhanKhau(rs.getInt("idNhanKhau"), rs.getString("hoTen"),
+						rs.getString("biDanh"), rs.getDate("ngaySinh"), rs.getString("gioiTinh"), rs.getString("cccd"),
+						rs.getDate("ngayCap"), rs.getString("noiCap"), rs.getString("nguyenQuan"),rs.getString("danToc"),
+						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
+						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
+						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
+						rs.getString("ghiChu"), rs.getString("trangThai"));
+				listNhanKhau.add(modelNhanKhau);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listNhanKhau;
+	}
+	
+	public static List<ModelNhanKhau> searchNhanKhauByGioiTinh(String gioiTinh) {
+		List<ModelNhanKhau> listNhanKhau = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.nhankhau\n" + "WHERE gioiTinh like ?\n" + "ORDER BY cccd ASC";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, "%" + gioiTinh + "%");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ModelNhanKhau modelNhanKhau = new ModelNhanKhau(rs.getInt("idNhanKhau"), rs.getString("hoTen"),
+						rs.getString("biDanh"), rs.getDate("ngaySinh"), rs.getString("gioiTinh"), rs.getString("cccd"),
+						rs.getDate("ngayCap"), rs.getString("noiCap"), rs.getString("nguyenQuan"),rs.getString("danToc"),
+						rs.getString("noiThuongTru"), rs.getDate("ngayDangKyThuongTru"), rs.getString("trinhDoHocVan"),
+						rs.getString("trinhDoNgoaiNgu"), rs.getString("ngheNghiep"), rs.getString("noiLamViec"),
+						rs.getString("tonGiao"), rs.getString("quocTich"), rs.getString("trinhDoChuyenMon"),
+						rs.getString("ghiChu"), rs.getString("trangThai"));
+				listNhanKhau.add(modelNhanKhau);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return listNhanKhau;
+	}
+	
+	public static List<ModelNhanKhau> searchNhanKhauByDoTuoi(int doTuoiTu, int doTuoiDen) {
+		List<ModelNhanKhau> listNhanKhau = new ArrayList<>();
+
+		String query = "SELECT * FROM quanlynhankhau.nhankhau\n" + "WHERE (YEAR(CURDATE()) - YEAR(ngaySinh)) >= ? AND (YEAR(CURDATE()) - YEAR(ngaySinh)) <= ?";
+		PreparedStatement ps;
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, doTuoiTu);
+			ps.setInt(2, doTuoiDen);
 
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
@@ -707,6 +766,29 @@ public class Connector {
 		return modelHoKhau;
 	}
 	
+	public static ModelHoKhau queryHoKhauByIdNhanKhau(int idNhanKhau) {
+		ModelHoKhau modelHoKhau = null;
+
+		String query = "SELECT * FROM quanlynhankhau.hokhau\n" + "WHERE idNhanKhau = ?";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, idNhanKhau);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("diaChi"),
+						rs.getString("soNha"), rs.getString("duongPho"), rs.getString("phuong"), rs.getString("quan"));
+				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+				modelHoKhau.setModelNhanKhau(modelNhanKhau);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelHoKhau;
+	}
+	
 	public static boolean editHoKhau(ModelHoKhau data) {
 		boolean done = false;
 
@@ -811,29 +893,29 @@ public class Connector {
 		return listHoKhau;
 	}
 	
-	public static ModelHoKhau searchHoKhauByHoTen(String hoTen) {
-		ModelHoKhau modelHoKhau = null;
-		List<ModelNhanKhau> listNhanKhau = searchNhanKhauByHoTen(hoTen);
-		String query = "SELECT * FROM quanlynhankhau.hokhau\n" + "WHERE idNhanKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idNhanKhau);
-
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"),
-						rs.getString("diaChi"), rs.getString("soNha"), rs.getString("duongPho"),
-						rs.getString("phuong"), rs.getString("quan"));
-				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
-				modelHoKhau.setModelNhanKhau(modelNhanKhau);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return modelHoKhau;
-	}
+//	public static ModelHoKhau searchHoKhauByHoTen(String hoTen) {
+//		ModelHoKhau modelHoKhau = null;
+//		List<ModelNhanKhau> listNhanKhau = searchNhanKhauByHoTen(hoTen);
+//		String query = "SELECT * FROM quanlynhankhau.hokhau\n" + "WHERE idNhanKhau = ?";
+//		PreparedStatement ps;
+//		try {
+//			ps = connection.prepareStatement(query);
+//			ps.setInt(1, idNhanKhau);
+//
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next()) {
+//				modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"),
+//						rs.getString("diaChi"), rs.getString("soNha"), rs.getString("duongPho"),
+//						rs.getString("phuong"), rs.getString("quan"));
+//				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
+//				modelHoKhau.setModelNhanKhau(modelNhanKhau);
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return modelHoKhau;
+//	}
 	
 	public static ModelHoKhau searchHoKhauByIdNhanKhau(int idNhanKhau) {
 		ModelHoKhau modelHoKhau = null;
@@ -2563,6 +2645,8 @@ public class Connector {
 			ps.setInt(3, idNhanKhau);
 			
 			ps.executeUpdate();
+			ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(idNhanKhau);
+			modelNhanKhau.setNoiThuongTru(diaChi);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

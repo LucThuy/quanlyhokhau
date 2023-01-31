@@ -38,6 +38,7 @@
 				<fx:include fx:id="viewTamTruTamVang" source="ViewTamTruTamVang.fxml" />
 				<fx:include fx:id="viewQuanLyNhaVanHoa" source="ViewNhaVanHoaAdmin.fxml" />
 				<fx:include fx:id="viewHoatDong" source="ViewHoatDongAdmin.fxml" />
+				<fx:include fx:id="viewThongKe" source="ViewThongKe.fxml" />
 			</children>
 		</StackPane>
 	</center>
