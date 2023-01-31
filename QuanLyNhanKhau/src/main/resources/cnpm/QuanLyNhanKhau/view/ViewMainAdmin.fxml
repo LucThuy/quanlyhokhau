@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerMainAdmin">
+<BorderPane prefHeight="640.0" prefWidth="1080.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cnpm.QuanLyNhanKhau.controller.ControllerMainAdmin">
 	<left>
 		<VBox prefWidth="150.0" spacing="10.0" BorderPane.alignment="CENTER">
 			<children>
             <Button fx:id="buttonQuanLy" layoutX="10.0" layoutY="20.0" mnemonicParsing="false" onAction="#setViewQuanLyUser" text="QUẢN LÝ" />
+            <Button fx:id="buttonThongKe" mnemonicParsing="false" onAction="#setViewThongKe" text="THỐNG KÊ" />
 				<Button fx:id="buttonNhanKhau" mnemonicParsing="false" onAction="#setViewNhanKhau" text="NHÂN KHẨU" />
 				<Button fx:id="buttonHoKhau" mnemonicParsing="false" onAction="#setViewHoKhau" text="HỘ KHẨU" />
             <Button fx:id="buttonTamTruTamVang" mnemonicParsing="false" onAction="#setViewTamTruTamVang" text="TẠM TRÚ TẠM VẮNG" />
