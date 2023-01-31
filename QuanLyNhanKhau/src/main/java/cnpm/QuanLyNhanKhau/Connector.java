@@ -26,11 +26,11 @@ public class Connector {
 
 	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 	private static String user = "root";
-//	private static String password = "Minh_0112";
+	private static String password = "Minh_0112";
 	
 //	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 //	private static String user = "root";
-	private static String password = "namanh202";
+//	private static String password = "namanh202";
 
 	public static ModelUser currentUser;
 
@@ -811,27 +811,30 @@ public class Connector {
 		return listHoKhau;
 	}
 	
-	public static ModelHoKhau searchHoKhauByHoTen(String hoTen) {
-		ModelHoKhau modelHoKhau = null;
-		String query = "SELECT * FROM quanlynhankhau.hokhau\n" + "WHERE idNhanKhau = ?";
+	public static List<ModelHoKhau> searchHoKhauByHoTen(String hoTen) {
+		List<ModelHoKhau> listHoKhau = new ArrayList<>();
+		String query = "SELECT * FROM quanlynhankhau.hokhau AS hk, quanlynhankhau.nhankhau AS nk\n"
+				+ "WHERE nk.idNhanKhau = hk.idNhanKhau AND nk.hoTen LIKE ?\n"
+				+ "ORDER BY nk.hoTen ASC";
 		PreparedStatement ps;
 		try {
 			ps = connection.prepareStatement(query);
-			ps.setInt(1, idNhanKhau);
+			ps.setString(1, "%" + hoTen + "%");
 
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"),
+			while (rs.next()) {
+				ModelHoKhau modelHoKhau = new ModelHoKhau(rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"),
 						rs.getString("diaChi"), rs.getString("soNha"), rs.getString("duongPho"),
 						rs.getString("phuong"), rs.getString("quan"));
 				ModelNhanKhau modelNhanKhau = queryNhanKhauByIdNhanKhau(rs.getInt("idNhanKhau"));
 				modelHoKhau.setModelNhanKhau(modelNhanKhau);
+				listHoKhau.add(modelHoKhau);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return modelHoKhau;
+		return listHoKhau;
 	}
 	
 	public static ModelHoKhau searchHoKhauByIdNhanKhau(int idNhanKhau) {

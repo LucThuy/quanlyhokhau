@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
@@ -46,6 +47,9 @@ public class ControllerHoKhau implements Initializable {
 	@FXML
 	private TableColumn<ModelNhanKhau, String> tablecolumnQuanHe;
 
+	@FXML
+	private TextField textfieldTimKiem;
+	
 	private ModelHoKhau hoKhau;
 	
 	@Override
@@ -90,7 +94,7 @@ public class ControllerHoKhau implements Initializable {
 	public void searchHoKhauByHoTen() {
 		tableviewHoKhau.getItems().clear();
 
-		List<ModelHoKhau> listHoKhau = Connector.getAllHoKhau();
+		List<ModelHoKhau> listHoKhau = Connector.searchHoKhauByHoTen(textfieldTimKiem.getText());
 		listHoKhau.forEach(hoKhau -> {
 			tableviewHoKhau.getItems().add(hoKhau);
 		});
