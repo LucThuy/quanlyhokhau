@@ -25,7 +25,7 @@
          <children>
             <Button fx:id="buttonThemMoi" mnemonicParsing="false" onAction="#addQuanLy" text="THÊM MỚI" />
             <Button mnemonicParsing="false" onAction="#refreshQuanLyNhaVanHoa" text="LÀM MỚI" />
-            <Button fx:id="buttonChiTiet" mnemonicParsing="false" text="CHI TIẾT" />
+            <Button fx:id="buttonChiTiet" mnemonicParsing="false" onAction="#showDetailQuanLy" text="CHI TIẾT" />
          </children>
       </HBox>
    </bottom>

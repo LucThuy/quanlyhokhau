@@ -26,6 +26,7 @@ public class ModelNhanKhau {
 	private String trangThai;
 	
 
+	private ModelHoKhau modelHoKhau;
 	private ModelHoKhauNhanKhau modelHoKhauNhanKhau;
 	
 	public ModelNhanKhau(int idNhanKhau, String hoTen, String biDanh, Date ngaySinh, String gioiTinh, String cccd,
@@ -194,5 +195,12 @@ public class ModelNhanKhau {
 	
 	public String getQuanHe() {
 		return modelHoKhauNhanKhau.getQuanHe();
+	}
+	
+	public String getIdHoKhau() {
+		if(modelHoKhauNhanKhau != null) {
+			return String.valueOf(modelHoKhauNhanKhau.getIdHoKhau());
+		}
+		return "Chưa có hộ khẩu";
 	}
 }
