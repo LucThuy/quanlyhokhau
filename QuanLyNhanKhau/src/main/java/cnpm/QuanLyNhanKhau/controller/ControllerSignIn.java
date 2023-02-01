@@ -69,7 +69,6 @@ public class ControllerSignIn implements Initializable {
 		}
 		else if(user.getRole().equals("Tổ Trưởng")) {
 			App.setRoot("view/ViewMainAdmin");
-//			System.out.println(user.getIdUser());
 		}
 		else if(user.getRole().equals("Nhân Viên") && user.getCapQuyen().equals("Đã cấp quyền")){
 			App.setRoot("view/ViewMainNhanVien");

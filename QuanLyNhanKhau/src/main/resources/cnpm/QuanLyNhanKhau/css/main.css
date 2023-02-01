@@ -386,6 +386,10 @@
 	-fx-font-size: 16;
 }
 
+.side-bar .button:hover{
+	-fx-opacity: 1;
+}
+
 .side-bar .button.active{
 	-fx-background-color: -white-2;
 	-fx-opacity: 1;
