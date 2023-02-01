@@ -38,8 +38,9 @@
                <content>
                   <GridPane maxWidth="-Infinity" prefWidth="960.0" styleClass="center" vgap="30.0">
                     <columnConstraints>
-                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="42.0" prefWidth="100.0" />
-                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="58.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="38.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" percentWidth="79.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -57,7 +58,7 @@
                     </rowConstraints>
                      <children>
                         <Label text="BÀN" />
-                        <TextField fx:id="textfieldSoLuongBan" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
+                        <TextField fx:id="textfieldSoLuongBan" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" />
                         <Label GridPane.rowIndex="1" />
                         <Label GridPane.rowIndex="3" />
                         <Label text="LOA" GridPane.rowIndex="4" />
@@ -67,22 +68,34 @@
                         <Label text="MÀN HÌNH" GridPane.rowIndex="8" />
                         <Label GridPane.rowIndex="9" />
                         <Label text="ĐÈN" GridPane.rowIndex="10" />
-                        <TextField fx:id="textfieldHienTrangGhe" GridPane.columnIndex="1" GridPane.rowIndex="3" />                
-                        <TextField fx:id="textfieldSoLuongLoa" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="textfieldHienTrangLoa" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="textfieldHienTrangDai" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                        <TextField fx:id="textfieldSoLuongManHinh" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <TextField fx:id="textfieldHienTrangManHinh" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                        <TextField fx:id="textfieldSoLuongDen" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                        <TextField fx:id="textfieldHienTrangBan" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="textfieldHienTrangGhe" GridPane.columnIndex="2" GridPane.rowIndex="3" />                
+                        <TextField fx:id="textfieldSoLuongLoa" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <TextField fx:id="textfieldHienTrangLoa" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <TextField fx:id="textfieldHienTrangDai" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <TextField fx:id="textfieldSoLuongManHinh" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <TextField fx:id="textfieldHienTrangManHinh" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                        <TextField fx:id="textfieldSoLuongDen" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+                        <TextField fx:id="textfieldHienTrangBan" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label text="GHẾ" GridPane.rowIndex="2">
                            <graphic>
                               <Label />
                            </graphic>
                         </Label>
-                        <TextField fx:id="textfieldSoLuongGhe" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="textfieldSoLuongDai" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <TextField fx:id="textfieldHienTrangDen" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <TextField fx:id="textfieldSoLuongGhe" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="textfieldSoLuongDai" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                        <TextField fx:id="textfieldHienTrangDen" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                        <Label text="SỐ LƯỢNG" GridPane.columnIndex="1" />
+                        <Label text="HIỆN TRẠNG SỬ DỤNG" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="SỐ LƯỢNG" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="SỐ LƯỢNG" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="SỐ LƯỢNG" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="SỐ LƯỢNG" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Label text="SỐ LƯỢNG" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label text="HIỆN TRẠNG SỬ DỤNG" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="HIỆN TRẠNG SỬ DỤNG" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="HIỆN TRẠNG SỬ DỤNG" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label text="HIỆN TRẠNG SỬ DỤNG" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <Label text="HIỆN TRẠNG SỬ DỤNG" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                      </children>
                      <padding>
                         <Insets left="20.0" right="20.0" />

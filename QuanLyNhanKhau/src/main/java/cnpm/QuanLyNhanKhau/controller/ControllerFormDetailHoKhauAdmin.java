@@ -32,7 +32,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
-public class ControllerFormDetailHoKhau implements Initializable {
+public class ControllerFormDetailHoKhauAdmin implements Initializable {
 
 	@FXML
 	private GridPane gridpane;
@@ -201,7 +201,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 					try {
 						App.setRootSceneForm("view/ViewFormDetailHoKhauNhanKhau");
 						ControllerFormDetailHoKhauNhanKhau.setControllerHoKhau(controllerHoKhau);
-						ControllerFormDetailHoKhauNhanKhau.setControllerFormDetailHoKhau(this);
+						ControllerFormDetailHoKhauNhanKhau.setControllerFormDetailHoKhauAdmin(this);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
@@ -241,7 +241,7 @@ public class ControllerFormDetailHoKhau implements Initializable {
 		try {
 			App.setRootSceneForm("view/ViewFormAddHoKhauNhanKhau");
 			ControllerFormAddHoKhauNhanKhau.setControllerHoKhau(controllerHoKhau);
-			ControllerFormAddHoKhauNhanKhau.setControllerFormDetailHoKhau(this);
+			ControllerFormAddHoKhauNhanKhau.setControllerFormDetailHoKhauAdmin(this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -371,6 +371,6 @@ public class ControllerFormDetailHoKhau implements Initializable {
 	}
 
 	public static void setControllerHoKhau(ControllerHoKhau controllerHoKhau) {
-		ControllerFormDetailHoKhau.controllerHoKhau = controllerHoKhau;
+		ControllerFormDetailHoKhauAdmin.controllerHoKhau = controllerHoKhau;
 	}
 }

@@ -68,12 +68,6 @@ public class ControllerHoatDongAdmin implements Initializable{
 		tableviewHoatDong.setRowFactory( val -> {
 			TableRow<ModelHoatDong> row = new TableRow<>();
 			row.setOnMouseClicked(e -> {
-				if(!row.isEmpty()) {
-					hoatDong = tableviewHoatDong.getSelectionModel().getSelectedItem();
-					List<Integer> listId = new ArrayList<>();
-					listId.add(hoatDong.getIdHoatDong());
-					Holder.getInstance().setId(listId);	
-				}
 				if(e.getClickCount() == 2 && e.getButton().equals(MouseButton.PRIMARY) && !row.isEmpty()) {
 					showDetailHoatDong();
 				}
@@ -130,6 +124,11 @@ public class ControllerHoatDongAdmin implements Initializable{
 	
 	@FXML
 	public void showDetailHoatDong() {
+		hoatDong = tableviewHoatDong.getSelectionModel().getSelectedItem();
+		if(hoatDong == null) return;
+		List<Integer> listId = new ArrayList<>();
+		listId.add(hoatDong.getIdHoatDong());
+		Holder.getInstance().setId(listId);	
 		try {
 			App.addStageForm("view/ViewFormDetailHoatDong");
 			ControllerFormDetailHoatDong.setControllerHoatDongAdmin(this);

@@ -98,4 +98,14 @@ public class ControllerNhaVanHoaAdmin implements Initializable{
 			e1.printStackTrace();
 		}	
 	}
+	
+	@FXML
+	public void editLePhi() {
+		try {
+			App.addStageForm("view/ViewFormDetailLePhi");
+			ControllerFormDetailLePhi.setControllerNhaVanHoaAdmin(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
