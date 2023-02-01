@@ -12,9 +12,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import cnpm.QuanLyNhanKhau.controller.ControllerFormDetailLePhi;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoatDong;
+import cnpm.QuanLyNhanKhau.model.ModelLePhi;
 import cnpm.QuanLyNhanKhau.model.ModelLichSu;
 import cnpm.QuanLyNhanKhau.model.ModelNhaVanHoa;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
@@ -2657,11 +2659,22 @@ public class Connector {
 	
 	public static String calLePhi(LocalDate ngayBatDau, LocalDate ngayKetThuc, int soLuongBan,
 			int soLuongGhe, int soLuongLoa, int soLuongDai, int soLuongManHinh, int soLuongDen) {
-		
+		ModelLePhi lePhi = getLePhi();
 		long Time = ngayKetThuc.getDayOfYear() - ngayBatDau.getDayOfYear();
 //		System.out.println(Time);
-		long lePhiUocTinh = Time * 3000 + soLuongBan * 100 + soLuongGhe * 30 + soLuongLoa * 1000
+		long lePhiUocTinh;
+		if(lePhi != null) {
+			lePhiUocTinh = Time * lePhi.getGiaThueNgay() * 1000 + soLuongBan * lePhi.getGiaThueBan()
+			+ soLuongGhe * lePhi.getGiaThueGhe() + soLuongLoa * lePhi.getGiaThueLoa()
+			+ soLuongDai * lePhi.getGiaThueDai() + soLuongManHinh * lePhi.getGiaThueManHinh()
+			+ soLuongDen * lePhi.getGiaThueDen();
+		}
+		else {
+			lePhiUocTinh = Time * 3000 + soLuongBan * 100 + soLuongGhe * 30 + soLuongLoa * 1000
 				+ soLuongDai * 1000 + soLuongManHinh * 1000 + soLuongDen * 500;
+		}
+		
+		
 //		System.out.println(lePhiUocTinh);
 		if(lePhiUocTinh > 50000) {
         	return "50.000.000 VND";
@@ -2810,7 +2823,58 @@ public class Connector {
         else if(lePhiUocTinh > 2000) {
         	return "2.000.000 VND";
         }
+        else if(lePhiUocTinh > 1000) {
+        	return "1.000.000 VND";
+        }
 
 		return "500.000 VND";
 	}
+	public static boolean editLePhi(ModelLePhi data) {
+		boolean done = false;
+
+		String query = "UPDATE quanlynhankhau.lePhi SET ngay = ?, ban = ?, ghe = ?, loa = ?,"
+				+ "dai = ?, manHinh = ?, den = ? \n"
+				+ "WHERE idLePhi = 1";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, data.getGiaThueNgay());
+			ps.setInt(2, data.getGiaThueBan());
+			ps.setInt(3, data.getGiaThueGhe());
+			ps.setInt(4, data.getGiaThueLoa());
+			ps.setInt(5, data.getGiaThueDai());
+			ps.setInt(6, data.getGiaThueManHinh());
+			ps.setInt(7, data.getGiaThueDen());
+
+			ps.executeUpdate();
+			done = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return done;
+	}
+	
+	public static ModelLePhi getLePhi() {
+		ModelLePhi modelLePhi = null;
+
+		String query = "SELECT * FROM quanlynhankhau.lePhi";
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				modelLePhi = new ModelLePhi(rs.getInt("ngay"), rs.getInt("ban"), rs.getInt("ghe"),
+						rs.getInt("loa"), rs.getInt("dai"), rs.getInt("manHinh"), rs.getInt("den"));
+//				System.out.println(modelLePhi.getGiaThueDai());
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return modelLePhi;
+	}
+	
 }

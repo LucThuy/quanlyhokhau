@@ -67,10 +67,7 @@ public class ControllerHoKhau implements Initializable {
 					tableviewHoKhauNhanKhau.setVisible(true);
 					gridpane.getRowConstraints().get(1).setPrefHeight(150);
 					refreshHoKhauNhanKhau();
-					hoKhau = row.getItem();
-					List<Integer> listId = new ArrayList<Integer>();
-					listId.add(hoKhau.getIdHoKhau());
-					Holder.getInstance().setId(listId);
+					
 				}
 //				if (e.getButton().equals(MouseButton.PRIMARY) && row.isEmpty()) {
 //					tableviewHoKhauNhanKhau.setVisible(false);
@@ -157,6 +154,11 @@ public class ControllerHoKhau implements Initializable {
 	
 	@FXML
 	private void showDetailHoKhau() {
+		hoKhau = tableviewHoKhau.getSelectionModel().getSelectedItem();
+		if(hoKhau == null) return;
+		List<Integer> listId = new ArrayList<Integer>();
+		listId.add(hoKhau.getIdHoKhau());
+		Holder.getInstance().setId(listId);
 		if(currentUser.getRole().equals("Tổ Trưởng")) {
 			try {
 				App.addStageForm("view/ViewFormDetailHoKhauAdmin");
