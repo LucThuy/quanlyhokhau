@@ -11,6 +11,7 @@ import cnpm.QuanLyNhanKhau.Connector;
 import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
+import cnpm.QuanLyNhanKhau.model.ModelUser;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -60,6 +61,8 @@ public class ControllerFormAddHoKhauNhanKhau implements Initializable {
 	private static ControllerHoKhau controllerHoKhau;
 	private static ControllerFormDetailHoKhauAdmin controllerFormDetailHoKhauAdmin;
 	private static ControllerFormDetailHoKhauNhanVien controllerFormDetailHoKhauNhanVien;
+	
+	private ModelUser currentUser = Connector.currentUser;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -135,10 +138,20 @@ public class ControllerFormAddHoKhauNhanKhau implements Initializable {
 		}	
 		if(Connector.addHoKhauNhanKhau(data.getIdHoKhau(), thanhVien.getIdNhanKhau(), textfieldQuanHe.getText())) {
 			try {
-				controllerFormDetailHoKhauAdmin.setLabelThongBao("Thêm thành viên thành công");
-				controllerHoKhau.refreshHoKhau();
-				controllerHoKhau.refreshHoKhauNhanKhau();
-				App.setRootSceneForm("view/ViewFormDetailHoKhau");
+				if(currentUser.getRole().equals("Tổ Trưởng")) {
+					controllerFormDetailHoKhauAdmin.setLabelThongBao("Thêm thành viên thành công");
+					controllerHoKhau.refreshHoKhau();
+					controllerHoKhau.refreshHoKhauNhanKhau();
+					App.setRootSceneForm("view/ViewFormDetailHoKhauAdmin");
+
+				}
+				else {
+					controllerFormDetailHoKhauNhanVien.setLabelThongBao("Thêm thành viên thành công");
+					controllerHoKhau.refreshHoKhau();
+					controllerHoKhau.refreshHoKhauNhanKhau();
+					App.setRootSceneForm("view/ViewFormDetailHoKhauNhanVien");
+
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -150,7 +163,12 @@ public class ControllerFormAddHoKhauNhanKhau implements Initializable {
 	@FXML
 	public void cancel() {
 		try {
-			App.setRootSceneForm("view/ViewFormDetailHoKhau");
+			if(currentUser.getRole().equals("Tổ Trưởng")) {
+				App.setRootSceneForm("view/ViewFormDetailHoKhauAdmin");
+			}
+			else {
+				App.setRootSceneForm("view/ViewFormDetailHoKhauNhanVien");
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

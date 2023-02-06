@@ -90,6 +90,11 @@ public class ControllerHoatDongAdmin implements Initializable{
 	
 	@FXML
 	public void confirmHoatDong() {
+		hoatDong = tableviewHoatDong.getSelectionModel().getSelectedItem();
+		if(hoatDong == null) return;
+		List<Integer> listId = new ArrayList<>();
+		listId.add(hoatDong.getIdHoatDong());
+		Holder.getInstance().setId(listId);
 		if(hoatDong != null) {
 			hoatDong.setXacNhan("Được chấp nhận");
 			Connector.editHoatDong(hoatDong);
@@ -100,6 +105,11 @@ public class ControllerHoatDongAdmin implements Initializable{
 	
 	@FXML
 	public void declineHoatDong() {
+		hoatDong = tableviewHoatDong.getSelectionModel().getSelectedItem();
+		if(hoatDong == null) return;
+		List<Integer> listId = new ArrayList<>();
+		listId.add(hoatDong.getIdHoatDong());
+		Holder.getInstance().setId(listId);
 		if(hoatDong != null) {
 			hoatDong.setXacNhan("Bị từ chối");
 			Connector.editHoatDong(hoatDong);

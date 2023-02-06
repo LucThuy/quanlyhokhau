@@ -385,7 +385,7 @@ public class ControllerFormAddNhanKhau implements Initializable {
 			datepickerNgaySinh.getStyleClass().add("inputfield-error");
 			check = true;
 		}
-		if(datepickerNgayCap.getValue().isAfter(LocalDate.now())) {
+		if(datepickerNgayCap.getValue() != null && datepickerNgayCap.getValue().isAfter(LocalDate.now())) {
 			datepickerNgayCap.getStyleClass().add("inputfield-error");
 			check = true;
 		}
