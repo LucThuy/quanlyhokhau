@@ -1,7 +1,6 @@
 package cnpm.QuanLyNhanKhau.controller;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;

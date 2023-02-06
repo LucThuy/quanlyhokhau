@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import cnpm.QuanLyNhanKhau.controller.ControllerFormDetailLePhi;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoatDong;
@@ -28,11 +27,11 @@ public class Connector {
 
 	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 	private static String user = "root";
-//	private static String password = "Minh_0112";
+	private static String password = "Minh_0112";
 	
 //	private static String url = "jdbc:mysql://localhost:3306/quanlynhankhau";
 //	private static String user = "root";
-	private static String password = "namanh202";
+//	private static String password = "namanh202";
 
 	public static ModelUser currentUser;
 
@@ -956,7 +955,7 @@ public class Connector {
 			ps.setString(3, quanHe);
 
 			ps.executeUpdate();
-			ModelHoKhauNhanKhau modelHoKhauNhanKhau = getHoKhauNhanKhau(idHoKhau, idNhanKhau);
+//			ModelHoKhauNhanKhau modelHoKhauNhanKhau = getHoKhauNhanKhau(idHoKhau, idNhanKhau);
 			lsAddHoKhauNhanKhau(idHoKhau, idNhanKhau);
 			ModelHoKhau modelHoKhau = getHoKhau(idHoKhau);
 			IsChangeNoiThuongTruNhanKhau(idNhanKhau, modelHoKhau.getDiaChi());
@@ -1151,26 +1150,26 @@ public class Connector {
 		return modelHoKhau;
 	}
 	
-	private static ModelHoKhauNhanKhau getHoKhauNhanKhau(int idHoKhau, int idNhanKhau) {
-		ModelHoKhauNhanKhau modelHoKhauNhanKhau = null;
-
-		String query = "SELECT * FROM quanlynhankhau.hokhaunhankhau\n" + "WHERE idHoKhau = ? AND idNhanKhau = ?";
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, idHoKhau);
-			ps.setInt(2, idNhanKhau);
-
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				modelHoKhauNhanKhau = new ModelHoKhauNhanKhau(rs.getInt("idHoKhauNhanKhau"), rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("quanHe"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return modelHoKhauNhanKhau;
-	}
+//	private static ModelHoKhauNhanKhau getHoKhauNhanKhau(int idHoKhau, int idNhanKhau) {
+//		ModelHoKhauNhanKhau modelHoKhauNhanKhau = null;
+//
+//		String query = "SELECT * FROM quanlynhankhau.hokhaunhankhau\n" + "WHERE idHoKhau = ? AND idNhanKhau = ?";
+//		PreparedStatement ps;
+//		try {
+//			ps = connection.prepareStatement(query);
+//			ps.setInt(1, idHoKhau);
+//			ps.setInt(2, idNhanKhau);
+//
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next()) {
+//				modelHoKhauNhanKhau = new ModelHoKhauNhanKhau(rs.getInt("idHoKhauNhanKhau"), rs.getInt("idHoKhau"), rs.getInt("idNhanKhau"), rs.getString("quanHe"));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return modelHoKhauNhanKhau;
+//	}
 	
 	public static boolean addTamTru(int idNhanKhau, String noiTamTru, LocalDate ngayHieuLuc, LocalDate ngayHetHieuLuc,
 							String lyDo) {
@@ -2569,7 +2568,7 @@ public class Connector {
 			if (rs.next()) {
 				modelLichSu = new ModelLichSu(rs.getInt("idLichSu"), rs.getString("thaoTac"),
 						rs.getInt("idUser"), rs.getTimestamp("thoiGian"));
-				ModelUser modelUser = getUser(rs.getInt("idUser"));
+//				ModelUser modelUser = getUser(rs.getInt("idUser"));
 //				modelLichSu.setModelUser(modelUser);
 			}
 		} catch (SQLException e) {

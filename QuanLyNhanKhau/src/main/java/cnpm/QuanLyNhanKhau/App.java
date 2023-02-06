@@ -23,7 +23,8 @@ public class App extends Application {
 
 	private static Connector connector;
 	
-    @Override
+    @SuppressWarnings("exports")
+	@Override
     public void start(Stage stage) throws IOException {
     	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     	double screenWidth = screenSize.getWidth();
@@ -78,9 +79,11 @@ public class App extends Application {
         launch();
     }
     
-    public static Scene getSceneForm() {
+    @SuppressWarnings("exports")
+	public static Scene getSceneForm() {
 		return sceneForm;
 	}
+	@SuppressWarnings("exports")
 	public static void setSceneForm(Scene sceneForm) {
 		App.sceneForm = sceneForm;
 	}

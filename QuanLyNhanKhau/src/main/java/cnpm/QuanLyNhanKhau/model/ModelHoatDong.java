@@ -20,9 +20,10 @@ public class ModelHoatDong {
 	private String xacNhan;
 	
 	private ModelNhanKhau modelNhanKhau;
-	private ModelNhaVanHoa modelNhaVanHoa;
+//	private ModelNhaVanHoa modelNhaVanHoa;
 
 	
+	@SuppressWarnings("exports")
 	public ModelHoatDong(int idHoatDong, int idNhanKhau, Date ngayBatDau, Date ngayKetThuc,
 			String hoatDong, int soLuongBan, int soLuongGhe, int soLuongLoa, int soLuongDai,
 			int soLuongManHinh, int soLuongDen, String lePhi, String ghiChu, String xacNhan) {
@@ -55,15 +56,19 @@ public class ModelHoatDong {
 	public void setIdNhanKhau(int idNhanKhau) {
 		this.idNhanKhau = idNhanKhau;
 	}
+	@SuppressWarnings("exports")
 	public Date getNgayBatDau() {
 		return ngayBatDau;
 	}
+	@SuppressWarnings("exports")
 	public void setNgayBatDau(Date ngayBatDau) {
 		this.ngayBatDau = ngayBatDau;
 	}
+	@SuppressWarnings("exports")
 	public Date getNgayKetThuc() {
 		return ngayKetThuc;
 	}
+	@SuppressWarnings("exports")
 	public void setNgayKetThuc(Date ngayKetThuc) {
 		this.ngayKetThuc = ngayKetThuc;
 	}

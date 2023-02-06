@@ -44,7 +44,7 @@ public class ControllerQuanLyUser implements Initializable{
 	private TableColumn<ModelUser, String> tablecolumnChucVuNV;
 	
 	private ModelUser user;
-	private ModelUser userNV;
+//	private ModelUser userNV;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

@@ -18,6 +18,7 @@ public class ModelLichSu {
 	private ModelUser modelUser;
 	private ModelNhanKhau modelNhanKhau;
 	
+	@SuppressWarnings("exports")
 	public ModelLichSu(int idLichSu, String thaoTac, int idUser, Timestamp thoiGian) {
 		super();
 		this.idLichSu = idLichSu;
@@ -44,9 +45,11 @@ public class ModelLichSu {
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
+	@SuppressWarnings("exports")
 	public Timestamp getThoiGian() {
 		return thoiGian;
 	}
+	@SuppressWarnings("exports")
 	public void setThoiGian(Timestamp thoiGian) {
 		this.thoiGian = thoiGian;
 	}

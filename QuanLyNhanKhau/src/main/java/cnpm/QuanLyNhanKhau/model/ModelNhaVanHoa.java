@@ -22,6 +22,7 @@ public class ModelNhaVanHoa {
 	
 	private ModelUser modelUser;
 	
+	@SuppressWarnings("exports")
 	public ModelNhaVanHoa(int idKiemTra, int idUser, Date ngayThucHien, int soLuongBan, String hienTrangBan,
 			int soLuongGhe, String hienTrangGhe, int soLuongLoa, String hienTrangLoa, int soLuongDai,
 			String hienTrangDai, int soLuongManHinh, String hienTrangManHinh, int soLuongDen,
@@ -56,9 +57,11 @@ public class ModelNhaVanHoa {
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
+	@SuppressWarnings("exports")
 	public Date getNgayThucHien() {
 		return ngayThucHien;
 	}
+	@SuppressWarnings("exports")
 	public void setNgayThucHien(Date ngayThucHien) {
 		this.ngayThucHien = ngayThucHien;
 	}

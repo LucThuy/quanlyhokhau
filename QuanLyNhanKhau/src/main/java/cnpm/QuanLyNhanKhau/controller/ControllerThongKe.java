@@ -1,20 +1,15 @@
 package cnpm.QuanLyNhanKhau.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
-import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -59,7 +54,7 @@ public class ControllerThongKe implements Initializable{
 	@FXML
 	private Button buttonChiTiet;
 	
-	private ModelNhanKhau nhanKhau;
+//	private ModelNhanKhau nhanKhau;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

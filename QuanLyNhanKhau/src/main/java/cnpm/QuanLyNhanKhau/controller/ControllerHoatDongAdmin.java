@@ -11,8 +11,6 @@ import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
 import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoatDong;
-import cnpm.QuanLyNhanKhau.model.ModelNhaVanHoa;
-import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

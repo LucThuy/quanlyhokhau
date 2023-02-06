@@ -57,7 +57,7 @@ public class ControllerTamTruTamVang implements Initializable {
 	
 	private ModelTamTru nhanKhauTamTru;
 	private ModelTamVang nhanKhauTamVang;
-	private boolean showChiTiet;
+//	private boolean showChiTiet;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resoursces) {

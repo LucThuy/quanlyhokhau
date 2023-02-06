@@ -1,9 +1,7 @@
 package cnpm.QuanLyNhanKhau.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -14,10 +12,10 @@ import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoatDong;
 import cnpm.QuanLyNhanKhau.model.ModelNhaVanHoa;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
-import cnpm.QuanLyNhanKhau.model.ModelTamTru;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
@@ -26,7 +24,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -252,33 +249,33 @@ public class ControllerFormDetailHoatDong implements Initializable {
 		App.closeStageForm();
 	}
 
-	private boolean isMissingField() {
-		boolean check = false;
-		if (textfieldHoTenNguoiDangKy.getText().isEmpty()) {
-			textfieldHoTenNguoiDangKy.getStyleClass().add("inputfield-error");
-			check = true;
-		}
-		if (textfieldHoatDong.getText().isEmpty()) {
-			textfieldHoatDong.getStyleClass().add("inputfield-error");
-			check = true;
-		}
-		if (datepickerNgayBatDau.getValue() == null) {
-			datepickerNgayBatDau.getStyleClass().add("inputfield-error");
-			check = true;
-		}
-		if (datepickerNgayKetThuc.getValue() == null) {
-			datepickerNgayKetThuc.getStyleClass().add("inputfield-error");
-			check = true;
-		}
-		
-		return check;
-	}
+//	private boolean isMissingField() {
+//		boolean check = false;
+//		if (textfieldHoTenNguoiDangKy.getText().isEmpty()) {
+//			textfieldHoTenNguoiDangKy.getStyleClass().add("inputfield-error");
+//			check = true;
+//		}
+//		if (textfieldHoatDong.getText().isEmpty()) {
+//			textfieldHoatDong.getStyleClass().add("inputfield-error");
+//			check = true;
+//		}
+//		if (datepickerNgayBatDau.getValue() == null) {
+//			datepickerNgayBatDau.getStyleClass().add("inputfield-error");
+//			check = true;
+//		}
+//		if (datepickerNgayKetThuc.getValue() == null) {
+//			datepickerNgayKetThuc.getStyleClass().add("inputfield-error");
+//			check = true;
+//		}
+//		
+//		return check;
+//	}
 	
-	private void setNotice(String notice) {
-		labelThongBao.setText(notice);
-		labelThongBao.setMinHeight(20);
-		labelThongBao.setMaxHeight(20);
-	}
+//	private void setNotice(String notice) {
+//		labelThongBao.setText(notice);
+//		labelThongBao.setMinHeight(20);
+//		labelThongBao.setMaxHeight(20);
+//	}
 	
 	private void hideNotice() {
 		labelThongBao.setMinHeight(0);

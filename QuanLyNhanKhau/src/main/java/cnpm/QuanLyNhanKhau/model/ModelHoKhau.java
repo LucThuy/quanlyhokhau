@@ -1,7 +1,5 @@
 package cnpm.QuanLyNhanKhau.model;
 
-import cnpm.QuanLyNhanKhau.Connector;
-
 public class ModelHoKhau {
 	private int idHoKhau;
 	private int idNhanKhau;

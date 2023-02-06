@@ -12,6 +12,7 @@ public class ModelTamVang {
 	
 	private ModelNhanKhau modelNhanKhau;
 	
+	@SuppressWarnings("exports")
 	public ModelTamVang(int idTamVang, int idNhanKhau, String noiTamTru,
 						Date ngayHieuLuc, Date ngayHetHieuLuc, String lyDo) {
 		super();
@@ -41,15 +42,19 @@ public class ModelTamVang {
 	public void setNoiTamTru(String noiTamTru) {
 		this.noiTamTru = noiTamTru;
 	}
+	@SuppressWarnings("exports")
 	public Date getNgayHieuLuc() {
 		return ngayHieuLuc;
 	}
+	@SuppressWarnings("exports")
 	public void setNgayHieuLuc(Date ngayHieuLuc) {
 		this.ngayHieuLuc = ngayHieuLuc;
 	}
+	@SuppressWarnings("exports")
 	public Date getNgayHetHieuLuc() {
 		return ngayHetHieuLuc;
 	}
+	@SuppressWarnings("exports")
 	public void setNgayHetHieuLuc(Date ngayHetHieuLuc) {
 		this.ngayHetHieuLuc = ngayHetHieuLuc;
 	}

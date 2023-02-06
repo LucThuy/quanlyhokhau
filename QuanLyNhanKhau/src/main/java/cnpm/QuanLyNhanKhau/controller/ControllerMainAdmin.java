@@ -7,15 +7,14 @@ import java.util.ResourceBundle;
 
 import cnpm.QuanLyNhanKhau.App;
 import cnpm.QuanLyNhanKhau.Connector;
-import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Alert.AlertType;
 import javafx.util.Duration;
 
 public class ControllerMainAdmin implements Initializable {

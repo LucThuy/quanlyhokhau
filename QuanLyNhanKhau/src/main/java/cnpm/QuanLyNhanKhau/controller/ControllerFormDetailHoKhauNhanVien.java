@@ -13,7 +13,6 @@ import cnpm.QuanLyNhanKhau.Connector;
 import cnpm.QuanLyNhanKhau.Holder;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhau;
 import cnpm.QuanLyNhanKhau.model.ModelHoKhauNhanKhau;
-import cnpm.QuanLyNhanKhau.model.ModelLichSu;
 import cnpm.QuanLyNhanKhau.model.ModelNhanKhau;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

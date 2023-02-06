@@ -26,9 +26,10 @@ public class ModelNhanKhau {
 	private String trangThai;
 	
 
-	private ModelHoKhau modelHoKhau;
+//	private ModelHoKhau modelHoKhau;
 	private ModelHoKhauNhanKhau modelHoKhauNhanKhau;
 	
+	@SuppressWarnings("exports")
 	public ModelNhanKhau(int idNhanKhau, String hoTen, String biDanh, Date ngaySinh, String gioiTinh, String cccd,
 						Date ngayCap, String noiCap, String nguyenQuan, String danToc,String noiThuongTru,
 						Date ngayDangKyThuongTru, String trinhDoHocVan, String trinhDoNgoaiNgu,String ngheNghiep,
@@ -76,9 +77,11 @@ public class ModelNhanKhau {
 	public void setBiDanh(String biDanh) {
 		this.biDanh = biDanh;
 	}
+	@SuppressWarnings("exports")
 	public Date getNgaySinh() {
 		return ngaySinh;
 	}
+	@SuppressWarnings("exports")
 	public void setNgaySinh(Date ngaySinh) {
 		this.ngaySinh = ngaySinh;
 	}
@@ -94,9 +97,11 @@ public class ModelNhanKhau {
 	public void setCccd(String cccd) {
 		this.cccd = cccd;
 	}	
+	@SuppressWarnings("exports")
 	public Date getNgayCap() {
 		return ngayCap;
 	}
+	@SuppressWarnings("exports")
 	public void setNgayCap(Date ngayCap) {
 		this.ngayCap = ngayCap;
 	}
@@ -124,9 +129,11 @@ public class ModelNhanKhau {
 	public void setNoiThuongTru(String noiThuongTru) {
 		this.noiThuongTru = noiThuongTru;
 	}
+	@SuppressWarnings("exports")
 	public Date getNgayDangKyThuongTru() {
 		return ngayDangKyThuongTru;
 	}
+	@SuppressWarnings("exports")
 	public void setNgayDangKyThuongTru(Date ngayDangKyThuongTru) {
 		this.ngayDangKyThuongTru = ngayDangKyThuongTru;
 	}

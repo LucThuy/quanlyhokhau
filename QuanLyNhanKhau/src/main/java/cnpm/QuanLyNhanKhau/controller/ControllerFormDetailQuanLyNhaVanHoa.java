@@ -1,9 +1,6 @@
 package cnpm.QuanLyNhanKhau.controller;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -15,14 +12,10 @@ import cnpm.QuanLyNhanKhau.model.ModelNhaVanHoa;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 public class ControllerFormDetailQuanLyNhaVanHoa implements Initializable {
 
@@ -114,11 +107,11 @@ public class ControllerFormDetailQuanLyNhaVanHoa implements Initializable {
 		}
 	}
 	
-	private void setNotice(String notice) {
-		labelThongBao.setText(notice);
-		labelThongBao.setMinHeight(20);
-		labelThongBao.setMaxHeight(20);
-	}
+//	private void setNotice(String notice) {
+//		labelThongBao.setText(notice);
+//		labelThongBao.setMinHeight(20);
+//		labelThongBao.setMaxHeight(20);
+//	}
 	
 	private void hideNotice() {
 		labelThongBao.setMinHeight(0);
